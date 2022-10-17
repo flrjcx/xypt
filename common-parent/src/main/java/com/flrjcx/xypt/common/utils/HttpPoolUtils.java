@@ -1,0 +1,272 @@
+package com.flrjcx.xypt.common.utils;
+
+import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpRequestRetryHandler;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+/**
+ * Created on 2019年12月11日 下午2:06:15
+ * <p>Title:       [公共工具模块]/p>
+ * <p>Description: [带连接池功能的httpUtil]</p >
+ * <p>Company:     羚羊极速</p >
+ *
+ * @author [wangyunliang]
+ * @version 1.0
+ */
+public class HttpPoolUtils {
+    private static final int MAX_TIMEOUT = 30000;
+    private static Logger log = LoggerFactory.getLogger(HttpUtils.class);
+    private static PoolingHttpClientConnectionManager connMgr;
+    private static RequestConfig requestConfig;
+
+    static {
+        // 设置连接池
+        connMgr = new PoolingHttpClientConnectionManager();
+        // 设置连接池大小
+        connMgr.setMaxTotal(2000);
+        connMgr.setDefaultMaxPerRoute(connMgr.getMaxTotal() - 10);
+
+        RequestConfig.Builder configBuilder = RequestConfig.custom();
+        // 设置连接超时
+        configBuilder.setConnectTimeout(MAX_TIMEOUT);
+        // 设置读取超时
+        configBuilder.setSocketTimeout(MAX_TIMEOUT);
+        // 设置从连接池获取连接实例的超时
+        configBuilder.setConnectionRequestTimeout(MAX_TIMEOUT);
+        // 在提交请求之前 测试连接是否可用
+        // configBuilder.setStaleConnectionCheckEnabled(true);
+        requestConfig = configBuilder.build();
+
+    }
+
+    /**
+     * 发送 GET 请求（HTTP），不带输入数据
+     *
+     * @param url
+     * @return
+     */
+    public static String get(String url) {
+        return get(url, new HashMap<String, Object>(), new HashMap<String, String>());
+    }
+
+    public static String get(String url, Map<String, String> headers) {
+        return get(url, new HashMap<String, Object>(), headers);
+    }
+
+    /**
+     * 发送 GET 请求（HTTP），K-V形式
+     *
+     * @param url
+     * @param params
+     * @return
+     */
+    public static String get(String url, Map<String, Object> params, Map<String, String> headers) {
+        String apiUrl = url;
+        StringBuffer param = new StringBuffer();
+        int i = 0;
+        if (params != null) {
+            for (String key : params.keySet()) {
+                if (i == 0) {
+                    param.append("?");
+                } else {
+                    param.append("&");
+                }
+                param.append(key).append("=").append(params.get(key));
+                i++;
+            }
+        }
+        apiUrl += param;
+        String result = null;
+        CloseableHttpClient httpclient = buildHttpClient();
+
+        CloseableHttpResponse response = null;
+        try {
+            URL url1 = new URL(apiUrl);
+            URI uri = new URI(url1.getProtocol(), url1.getAuthority(), url1.getPath(), url1.getQuery(), null);
+            HttpGet httpGet = new HttpGet(uri);
+            httpGet.setConfig(requestConfig);
+            if (headers != null) {
+                for (Entry<String, String> entry : headers.entrySet()) {
+                    httpGet.setHeader(entry.getKey(), entry.getValue());
+                }
+            }
+            response = httpclient.execute(httpGet);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpStatus.SC_OK) {
+                result = EntityUtils.toString(response.getEntity(), "UTF-8");
+            } else {
+                log.error("访问URL错误:" + url, statusCode);
+            }
+        } catch (IOException | URISyntaxException e) {
+            log.error("", e);
+        } finally {
+            if (response != null) {
+                try {
+                    EntityUtils.consume(response.getEntity());
+                } catch (IOException e) {
+                    log.error("", e);
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 发送 POST 请求（HTTP），不带输入数据
+     *
+     * @param apiUrl
+     * @return
+     */
+    public static String post(String apiUrl) {
+        return post(apiUrl, new HashMap<String, Object>());
+    }
+
+    private static String post(String apiUrl, HashMap<String, Object> params) {
+        return post(apiUrl, params, new HashMap<String, String>());
+    }
+
+    public static String post(String apiUrl, Map<String, String> headers) {
+        return post(apiUrl, new HashMap<String, Object>(), headers);
+    }
+
+    /**
+     * 发送 POST 请求（HTTP），K-V形式
+     *
+     * @param apiUrl API接口URL
+     * @param params 参数map
+     * @return
+     */
+    public static String post(String apiUrl, Map<String, Object> params, Map<String, String> headers) {
+        CloseableHttpClient httpClient = buildHttpClient();
+        String httpStr = null;
+        HttpPost httpPost = new HttpPost(apiUrl);
+        CloseableHttpResponse response = null;
+
+        try {
+            httpPost.setConfig(requestConfig);
+            List<NameValuePair> pairList = new ArrayList<NameValuePair>(params.size());
+            for (Entry<String, Object> entry : params.entrySet()) {
+                NameValuePair pair = new BasicNameValuePair(entry.getKey(), entry.getValue().toString());
+                pairList.add(pair);
+            }
+            if (headers != null) {
+                for (Entry<String, String> entry : headers.entrySet()) {
+                    httpPost.setHeader(entry.getKey(), entry.getValue());
+                }
+            }
+
+            httpPost.setEntity(new UrlEncodedFormEntity(pairList, Charset.forName("UTF-8")));
+            response = httpClient.execute(httpPost);
+
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpStatus.SC_OK) {
+                httpStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+            } else {
+                log.error("访问URL错误:" + apiUrl, statusCode);
+            }
+        } catch (IOException e) {
+            log.error("", e);
+        } finally {
+            if (response != null) {
+                try {
+                    EntityUtils.consume(response.getEntity());
+                } catch (IOException e) {
+                    log.error("", e);
+                }
+            }
+        }
+        return httpStr;
+    }
+
+
+    /**
+     * 发送 POST 请求（HTTP），JSON形式
+     *
+     * @param apiUrl
+     * @param json   json对象
+     * @return
+     */
+    public static String doPost(String apiUrl, Object json) {
+        CloseableHttpClient httpClient = buildHttpClient();
+        String httpStr = null;
+        HttpPost httpPost = new HttpPost(apiUrl);
+        CloseableHttpResponse response = null;
+
+        try {
+            log.warn("httpclient pool, totalStats : {} ", connMgr.getTotalStats());
+
+            final int available = connMgr.getTotalStats().getAvailable();
+            if (connMgr.getTotalStats().getMax() - available > available) {
+                log.warn("httpclient pool, totalStats:{}", connMgr.getTotalStats());
+            }
+
+            httpPost.setConfig(requestConfig);
+            // 解决中文乱码问题
+            StringEntity stringEntity = new StringEntity(json.toString(), "UTF-8");
+            stringEntity.setContentEncoding("UTF-8");
+            stringEntity.setContentType("application/json");
+            httpPost.setEntity(stringEntity);
+            response = httpClient.execute(httpPost);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpStatus.SC_OK) {
+                httpStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+            } else {
+                log.error("访问URL错误:{},statuscode:{}, resp={}", apiUrl, statusCode, EntityUtils.toString(response.getEntity(), "UTF-8"));
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+
+        } finally {
+            if (response != null) {
+                try {
+                    EntityUtils.consume(response.getEntity());
+                } catch (IOException e) {
+                    log.error(e.getMessage());
+                }
+            }
+        }
+        return httpStr;
+    }
+
+
+    private static CloseableHttpClient buildHttpClient() {
+        HttpClientBuilder cb = HttpClientBuilder.create().setRetryHandler(new HttpRequestRetryHandler() {
+            @Override
+            public boolean retryRequest(IOException exception, int executionCount, HttpContext context) {
+                log.warn("http retry times : {}", executionCount);
+                return executionCount <= 3;
+            }
+        }).setConnectionManager(connMgr).setDefaultRequestConfig(requestConfig);
+        return cb.build();
+    }
+
+    public static void main(String[] args) {
+        //get("http://192.2.12.8:6120/pic?=d6=i705z8e48s99f-600105m5ep=t6i4i*d1=*ipd4=*5s7=85b7i0d95*4efb036b2-9173f57-1869*0-b9i282d5e01");
+        get("http://192.168.100.47:19901/sysinfo", null, null);
+    }
+}
