@@ -1,9 +1,12 @@
 package com.flrjcx.xypt.controller;
 
+import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.param.UserVo;
+import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.Resource;
@@ -17,6 +20,7 @@ import java.util.Map;
  */
 @Api(tags = "登录模块")
 @ApiRestController("/api/backend/user")
+@Log4j2
 public class LoginController {
 
     @Resource
@@ -24,7 +28,12 @@ public class LoginController {
 
     @ApiOperation(value = "测试")
     @GetMapping("/login")
-    public List<UserVo> testUserList() {
-        return loginService.getUserList();
+    public ResponseData testUserList() {
+        try {
+            return ResponseData.buildResponse(loginService.getUserList());
+        } catch (Exception e) {
+            log.error("/login error " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
     }
 }
