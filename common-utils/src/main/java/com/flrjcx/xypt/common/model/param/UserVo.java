@@ -14,9 +14,9 @@ import java.util.Date;
 @Data
 public class UserVo implements Serializable {
     private static final long serialVersionUID = -5818798255750404065L;
-    private Long user_id;
-    private String nick_name;
-    private String nick_pic;
+    private Long userId;
+    private String nickName;
+    private String nickPic;
     private String content;
     private String sex;
     private Date birthday;
@@ -25,12 +25,12 @@ public class UserVo implements Serializable {
     private String account;
     private String password;
     private BigDecimal balance;
-    private Integer fans_num;
-    private Integer focus_num;
+    private Integer fansNum;
+    private Integer focusNum;
     private String site;
     private String school;
-    private Date create_time;
-    private Date update_time;
+    private Date createTime;
+    private Date updateTime;
     private String status;
 
 }
