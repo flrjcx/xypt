@@ -1,6 +1,6 @@
 package com.flrjcx.xypt.service;
 
-import com.flrjcx.xypt.common.model.param.UserVo;
+import com.flrjcx.xypt.common.model.param.common.UserVo;
 
 import java.util.List;
 

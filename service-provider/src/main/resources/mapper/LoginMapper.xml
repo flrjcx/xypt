@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flrjcx.xypt.mapper.LoginMapper">
-    <resultMap id="userModel" type="com.flrjcx.xypt.common.model.param.UserVo">
+    <resultMap id="userModel" type="com.flrjcx.xypt.common.model.param.common.UserVo">
         <id column="user_id" property="userId"/>
         <result column="nick_name" property="nickName"/>
         <result column="nick_pic" property="nickPic"/>
@@ -17,13 +17,13 @@
         <result column="balance" property="balance"/>
         <result column="fans_num" property="fansNum"/>
         <result column="focus_num" property="focusNum"/>
-        <result column="site" property="site"/>
+        <result column="address" property="address"/>
         <result column="school" property="school"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
         <result column="status" property="status"/>
     </resultMap>
-    <select id="testUserList" resultType="com.flrjcx.xypt.common.model.param.UserVo" resultMap="userModel">
+    <select id="testUserList" resultType="com.flrjcx.xypt.common.model.param.common.UserVo" resultMap="userModel">
 SELECT user_id,
        nick_name,
        nick_pic,
@@ -37,7 +37,7 @@ SELECT user_id,
        balance,
        fans_num,
        focus_num,
-       site,
+       address,
        school,
        create_time,
        update_time,

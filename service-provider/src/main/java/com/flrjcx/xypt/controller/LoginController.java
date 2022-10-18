@@ -1,18 +1,14 @@
 package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
-import com.flrjcx.xypt.common.model.param.UserVo;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 登录
