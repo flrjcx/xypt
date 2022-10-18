@@ -1,7 +1,7 @@
 package com.flrjcx.xypt.common.model.result;
 
 
-import com.flrjcx.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 
 import java.io.Serializable;
 

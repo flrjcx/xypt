@@ -16,6 +16,8 @@
         <module>jobs</module>
         <module>backend-service</module>
         <module>backend-serice-provider</module>
+        <module>common-utils</module>
+        <module>common-utils</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -1,4 +1,4 @@
-//package com.flrjcx.xypt.common.config;
+package com.flrjcx.xypt.common.config;//package com.flrjcx.xypt.common.config;
 //
 //import com.google.common.base.Predicates;
 //import org.springframework.context.annotation.Bean;

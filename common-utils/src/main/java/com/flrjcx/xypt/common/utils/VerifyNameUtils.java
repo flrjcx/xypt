@@ -1,6 +1,6 @@
 package com.flrjcx.xypt.common.utils;
 
-import com.flrjcx.xypt.common.constants.*;
+import com.flrjcx.xypt.common.constants.MessageConstants;
 import com.flrjcx.xypt.common.enums.FieldExceedEnum;
 import com.flrjcx.xypt.common.enums.MessageHintEnum;
 
