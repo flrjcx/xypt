@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @author Flrjcx
  */
 @Api(tags = "登录模块")
-@ApiRestController("/api/backend/user")
+@ApiRestController("/api/client/login")
 @Log4j2
 public class LoginController {
 
@@ -24,8 +24,8 @@ public class LoginController {
     private LoginService loginService;
 
     @ApiOperation(value = "查询用户列表")
-    @GetMapping("/login")
-    public ResponseData testUserList() {
+    @GetMapping("/userList")
+    public ResponseData userList() {
         try {
             return ResponseData.buildResponse(loginService.getUserList());
         } catch (Exception e) {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flrjcx.xypt.mapper.RegisterMapper">
+
+
+    <insert id="addUser">
+INSERT INTO users
+            (nick_name,
+             password,
+             sex,
+             email,
+             account,
+             user_id)
+VALUES     ( #{param.nickName},
+             #{param.password},
+             #{param.sex},
+             #{param.email},
+             #{param.account},
+             #{param.userId})
+    </insert>
+</mapper>

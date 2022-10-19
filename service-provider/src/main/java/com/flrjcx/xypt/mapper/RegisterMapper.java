@@ -1,6 +1,8 @@
 package com.flrjcx.xypt.mapper;
 
 import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.model.param.register.AddUserParam;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,4 +12,10 @@ import java.util.List;
  * @author Flrjcx
  */
 public interface RegisterMapper {
+    /**
+     * 注册用户
+     *
+     * @param param
+     */
+    void addUser(@Param("param") AddUserParam param);
 }
