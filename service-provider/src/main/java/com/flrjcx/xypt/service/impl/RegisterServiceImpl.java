@@ -7,6 +7,7 @@ import com.flrjcx.xypt.mapper.RegisterMapper;
 import com.flrjcx.xypt.service.LoginService;
 import com.flrjcx.xypt.service.RegisterService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,6 +24,7 @@ public class RegisterServiceImpl implements RegisterService {
     private RegisterMapper registerMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addUser(AddUserParam param) {
 //        param.setUserId(UUID.randomUUID().toString());
         param.setUserId(56182341241241224L);
