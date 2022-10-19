@@ -5,15 +5,9 @@ import com.flrjcx.xypt.common.model.param.common.UserVo;
 import java.util.List;
 
 /**
- * 登录
+ * 注册
  *
  * @author Flrjcx
  */
-public interface LoginMapper {
-    /**
-     * 获取全部用户
-     *
-     * @return
-     */
-    List<UserVo> testUserList();
+public interface RegisterMapper {
 }
