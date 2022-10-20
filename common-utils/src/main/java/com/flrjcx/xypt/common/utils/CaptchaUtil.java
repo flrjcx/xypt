@@ -3,18 +3,13 @@ package com.flrjcx.xypt.common.utils;
 import cn.hutool.core.lang.UUID;
 import com.flrjcx.xypt.common.model.dto.VerifyCodeDto;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
-import io.netty.handler.codec.base64.Base64Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import sun.misc.BASE64Encoder;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 

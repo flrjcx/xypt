@@ -4,11 +4,13 @@ import com.flrjcx.xypt.common.annotation.UserValidation;
 import com.flrjcx.xypt.common.enums.LoginTypeEnum;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.dto.LoginDto;
+import com.flrjcx.xypt.common.model.param.common.UserVo;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.CaptchaUtil;
 import com.flrjcx.xypt.common.utils.EmailSendUtils;
 import com.flrjcx.xypt.common.utils.TokenService;
+import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,7 +50,7 @@ public class LoginController {
     @ApiOperation("退出登录")
     @PostMapping("/logout")
     public ResponseData logout(@RequestHeader("Authorization") String token) {
-        System.out.println(token);
+        UserVo userVo = UserThreadLocal.get();
         tokenService.removeUserToken(token);
         return ResponseData.buildSuccess();
     }

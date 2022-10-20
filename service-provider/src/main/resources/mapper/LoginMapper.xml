@@ -57,7 +57,7 @@
         from
             users
         where
-            phone = #{phone}
+            phone = #{phone} and status = 1
         limit
             1
     </select>
@@ -67,7 +67,7 @@
         from
             users
         where
-            email = #{email}
+            email = #{email} and status = 1
         limit
             1
     </select>
@@ -78,7 +78,7 @@
         from
             users
         where
-            account = #{account}
+            account = #{account} and status = 1
         limit
             1
     </select>

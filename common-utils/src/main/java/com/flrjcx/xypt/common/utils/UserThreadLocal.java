@@ -22,8 +22,8 @@ public class UserThreadLocal {
         LOCAL.set(userVo);
     }
 
-    public static void get() {
-        LOCAL.get();
+    public static UserVo get() {
+        return LOCAL.get();
     }
 
     public static void remove() {
