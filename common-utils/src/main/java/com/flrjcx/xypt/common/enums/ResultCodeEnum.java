@@ -32,7 +32,7 @@ public enum ResultCodeEnum implements IResultCode {
     USER_LOGIN_CODE_INVALID_ERROR(100009, "账号已过有效期！"),
     USER_LOGIN_CODE_PASSWORD_INVALID_ERROR(100010, "账号密码已过期！"),
     USER_NOT_EXSIT_ERROR(100011, "用户不存在"),
-    USER_LOGIN_PWD_ERROR_CODE(100012, "用户名登录密码错误!"),
+    USER_LOGIN_PWD_ERROR_CODE(100012, "账号或登录密码错误!"),
     USER_LOGIN_OTHER_CODE(100013, "用户已在其他客户端登录!"),
     ERROR_CODE_NAME_REQUIRED(100014, "用户名必填"),
     ERROR_CODE_PASSWORD_ERROR(100015, "密码必填"),
@@ -40,6 +40,8 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_CODE_INTOKEN_ERROR(100017, "token无效"),
     CODE_EXSIT_POLICENO(100018, "警号已经存在！"),
     USER_ID_EXSIT_ERROR(100019, "用户ID不能为空"),
+    ERROR_CODE_VERIFICATION_REQUIRED(100020, "验证码必填"),
+    ERROR_CODE_VERIFICATION_ERROR_CODE(100021, "验证码错误"),
 
     /**
      * 接口转发服务编码
