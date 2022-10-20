@@ -13,6 +13,7 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
 /**
+ * @author malaka
  * 雪花ID配置
  */
 @Configuration

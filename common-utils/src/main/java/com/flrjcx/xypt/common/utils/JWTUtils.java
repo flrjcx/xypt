@@ -11,6 +11,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * jwt工具类
+ * @author malaka
+ */
 @Component
 public class JWTUtils {
 
@@ -23,10 +27,14 @@ public class JWTUtils {
         Map<String,Object> claims = new HashMap<>();
         claims.put("userId",userId);
         JwtBuilder jwtBuilder = Jwts.builder()
-                .signWith(SignatureAlgorithm.HS256, jwtToken) // 签发算法，秘钥为jwtToken
-                .setClaims(claims) // body数据，要唯一，自行设置
-                .setIssuedAt(new Date()) // 设置签发时间
-                .setExpiration(new Date(System.currentTimeMillis() + ONE_DAY));// 一天的有效时间
+                // 签发算法，秘钥为jwtToken
+                .signWith(SignatureAlgorithm.HS256, jwtToken)
+                // body数据，要唯一，自行设置
+                .setClaims(claims)
+                // 设置签发时间
+                .setIssuedAt(new Date())
+                // 一天的有效时间
+                .setExpiration(new Date(System.currentTimeMillis() + ONE_DAY));
         String token = jwtBuilder.compact();
         return token;
     }

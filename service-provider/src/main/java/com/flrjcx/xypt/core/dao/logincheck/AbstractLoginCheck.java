@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.Resource;
 import java.util.Objects;
 
+/**
+ * 登录检查
+ * @author malaka
+ */
 public abstract class AbstractLoginCheck {
 
     @Resource

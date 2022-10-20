@@ -16,7 +16,6 @@ import javax.annotation.Resource;
 
 /**
  * 注册
- *
  * @author Flrjcx
  */
 @Api(tags = "注册模块")
@@ -26,7 +25,6 @@ public class RegisterController {
 
     @Resource
     private RegisterService registerService;
-
 
     @ApiOperation(value = "用户注册")
     @PostMapping("/addUser")

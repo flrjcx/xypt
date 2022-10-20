@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 登录成功返回参数
+ * @author malaka
  */
 @Data
 @AllArgsConstructor

@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
+ * @author malaka
  * 验证码生成工具类
  */
 @Component

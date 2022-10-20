@@ -1,6 +1,7 @@
 package com.flrjcx.xypt.common.enums;
 
 /**
+ * @author malaka
  * 登录类型
  */
 public class LoginTypeEnum {
