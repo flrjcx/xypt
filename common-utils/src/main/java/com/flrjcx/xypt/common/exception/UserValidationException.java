@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 用户验证异常
  * @author malaka
  */
-public class UserValidationException extends WebServiceException implements Serializable {
+public class UserValidationException extends WebServiceException  {
     private static final long serialVersionUID = -637171558794830996L;
 
     @Override

@@ -4,6 +4,7 @@ import com.flrjcx.xypt.common.constants.HttpStateConstants;
 import com.flrjcx.xypt.common.constants.MessageConstants;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.SimpleMailMessage;
