@@ -7,11 +7,13 @@ import com.flrjcx.xypt.common.model.dto.LoginDto;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.CaptchaUtil;
+import com.flrjcx.xypt.common.utils.EmailSendUtils;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,11 +43,13 @@ public class LoginController {
     @Resource
     private TokenService tokenService;
 
+
     @UserValidation
     @ApiOperation("退出登录")
     @PostMapping("/logout")
-    public ResponseData logout(@RequestHeader Map<String, String> map) {
-        tokenService.removeUserToken(map.get(tokenService.getHeader()));
+    public ResponseData logout(@RequestHeader("Authorization") String token) {
+        System.out.println(token);
+        tokenService.removeUserToken(token);
         return ResponseData.buildSuccess();
     }
 
@@ -72,10 +76,10 @@ public class LoginController {
             }
 
             LoginDto login = loginService.login(loginParam);
-            if (ObjectUtils.isEmpty(login)) {
-                return ResponseData.buildErrorResponse(ResultCodeEnum.USER_LOGIN_PWD_ERROR_CODE);
-            }else {
+            if (!ObjectUtils.isEmpty(login)) {
                 return ResponseData.buildResponse(login);
+            }else {
+                return ResponseData.buildErrorResponse(ResultCodeEnum.USER_LOGIN_PWD_ERROR_CODE);
             }
         } catch (Exception e) {
             log.error("/login error " + e.getMessage());
