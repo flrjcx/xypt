@@ -3,7 +3,6 @@ package com.flrjcx.xypt.controller;
 import com.flrjcx.xypt.common.annotation.UserValidation;
 import com.flrjcx.xypt.common.constants.MessageConstants;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
-import com.flrjcx.xypt.common.model.dto.FansNumDto;
 import com.flrjcx.xypt.common.model.param.common.UserVo;
 import com.flrjcx.xypt.common.model.param.personal_center.RealNameParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
@@ -89,8 +88,7 @@ public class PersonalCenterController {
         UserVo currentUser = UserThreadLocal.get();
         try {
             Integer fansNum = personalCenterService.getUserFansNum(currentUser.getUserId());
-            FansNumDto fansNumDto = new FansNumDto(fansNum);
-            return ResponseData.buildResponse(fansNumDto);
+            return ResponseData.buildOnlyResponse("fansNum", fansNum);
         } catch (Exception e) {
             log.error("/userFansNum error, " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
