@@ -223,4 +223,19 @@ public class CheckAllUsersUtils {
         return b;
     }
 
+    /**
+     * 校验用户真实姓名
+     * @param realName 真实姓名
+     * @return
+     */
+    public static boolean checkRealName(String realName){
+        String regx = "^[\\u4E00-\\u9FA5]{2,10}$";
+        Pattern pattern = Pattern.compile(regx);
+        Matcher matcher = pattern.matcher(realName);
+        if (matcher.find()){
+            return true;
+        }
+        return false;
+    }
+
 }

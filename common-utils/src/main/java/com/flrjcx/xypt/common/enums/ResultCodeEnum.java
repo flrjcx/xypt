@@ -542,7 +542,15 @@ public enum ResultCodeEnum implements IResultCode {
 
     ERR_CODE_TRANSFER_ID_NOT_EMPTY(800002,"流程实例ID不能为空！"),
 
-    ERR_CODE_ACCESS_DEPART_NOT_EMPTY(800003,"流程接收单位不能为空！");
+    ERR_CODE_ACCESS_DEPART_NOT_EMPTY(800003,"流程接收单位不能为空！"),
+
+
+    ERROR_CODE_REAL_NAME_IS_EMPTY(800004, "真实姓名不能为空"),
+    ERROR_CODE_REAL_NAME_CONTAINS_ILLEGAL_CHARACTERS(800005, "真实姓名不能包含特殊字符"),
+    ERROR_CODE_REAL_NAME_INCONFORMITY(800006,"真实姓名必须是2到10位中文字符"),
+    ERROR_CODE_ID_CARD_IS_EMPTY(800007, "身份证号不能为空"),
+    ERROR_CODE_ID_CARD_INCONFORMITY(800008, "身份证号不符合"),
+    ERROR_CODE_REAL_REGISTERED(800009, "已实名，无需重复");
 
     private Integer code;
     private String message;
