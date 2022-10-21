@@ -11,6 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>common-parent</artifactId>
     <properties>
+        <pagehelper.boot.version>1.2.5</pagehelper.boot.version>
         <springboot-start-web-version>2.2.1.RELEASE</springboot-start-web-version>
         <mybatis.version>3.5.6</mybatis.version>
         <mybatis-spring.version>2.1.3</mybatis-spring.version>
@@ -40,6 +41,16 @@
             <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
+
+        <!--分页 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${pagehelper.boot.version}</version>
+        </dependency>
+
+
+
         <!--springboot-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -56,7 +67,12 @@
             <artifactId>spring-boot-starter</artifactId>
             <version>${springboot-start-web-version}</version>
         </dependency>
-
+        <!-- aop -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <version>${springboot-start-web-version}</version>
+        </dependency>
 
         <!--mybatis-->
         <dependency>

@@ -3,7 +3,9 @@ package com.flrjcx.xypt.common.utils;
 import java.util.Random;
 
 /**
+ *
  * 随机生成验证码工具类
+ * @author malaka
  */
 public class ValidateCodeUtils {
     /**

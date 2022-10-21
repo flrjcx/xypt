@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.controller;
 
+import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.annotation.UserValidation;
 import com.flrjcx.xypt.common.enums.LoginTypeEnum;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
@@ -89,11 +90,12 @@ public class LoginController {
         }
     }
 
+    @OpenPage
     @ApiOperation(value = "查询用户列表")
     @GetMapping("/userList")
     public ResponseData userList() {
         try {
-            return ResponseData.buildResponse(loginService.getUserList());
+            return ResponseData.buildPageResponse(loginService.getUserList());
         } catch (Exception e) {
             log.error("/login error " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());

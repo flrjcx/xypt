@@ -72,10 +72,19 @@ public class TokenService {
         redisCache.deleteObject(getUserToken(token));
     }
 
+    /**
+     * 获取用户缓存
+     * @param token
+     * @return
+     */
     public UserVo getUserCache(String token) {
         String userVoJson = redisCache.getCacheObject(getUserToken(token));
         UserVo userVo = JSON.parseObject(userVoJson, UserVo.class);
         return userVo;
+    }
+
+    public void updateUserCache(String token, UserVo userVo) {
+        redisCache.setCacheObject(getUserToken(token), userVo);
     }
 
     private String getUserToken(String s) {

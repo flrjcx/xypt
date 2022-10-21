@@ -4,8 +4,6 @@ package com.flrjcx.xypt.common.model.result;
 import com.flrjcx.xypt.common.enums.PageParam;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.github.pagehelper.PageInfo;
-import com.github.pagehelper.page.PageParams;
-import org.springframework.util.ObjectUtils;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -13,44 +11,43 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author yi'xiao'yi
+ * @author malaka
  * @title: ResponseData
- * @description: TODO
+ * @description: ResponseData文件备份
  * @date 2021/8/1715:24
  */
-public class ResponseData<T> extends HashMap<String, Object> implements Serializable {
+public class ResponseDataBak<T> implements Serializable {
     private static final long serialVersionUID = -2276444028766844527L;
-//    private int code;
-//    private String message;
-//    public T data;
+    private int code;
+    private String message;
+    public T data;
 
     public final static String PAGE_TOTAL_TAG = PageParam.PAGE_TOTAL_TAG;
 
-    public final static String CODE_TAG = "code";
-    public final static String MESSAGE_TAG = "message";
-    public final static String DATA_TAG = "data";
 
-    public ResponseData() {
-        this.put(CODE_TAG, ResultCodeEnum.SUCCESS.getCode());
-        this.put(MESSAGE_TAG, ResultCodeEnum.SUCCESS.getMessage());
+    public ResponseDataBak() {
+        this.code = ResultCodeEnum.SUCCESS.getCode();
+        this.message = ResultCodeEnum.SUCCESS.getMessage();
     }
 
-    public ResponseData(Integer code, String message, T data) {
-        this.put(CODE_TAG, ResultCodeEnum.SUCCESS.getCode());
-        this.put(MESSAGE_TAG, ResultCodeEnum.SUCCESS.getMessage());
-        this.put(DATA_TAG, data);
+    public ResponseDataBak(Integer code, String message, T data) {
+        this.code = ResultCodeEnum.SUCCESS.getCode();
+        this.message = ResultCodeEnum.SUCCESS.getMessage();
+        this.code = code;
+        this.message = message;
+        this.data = data;
     }
 
-    public static ResponseData buildResponse() {
-        ResponseData data = new ResponseData();
+    public static ResponseDataBak buildResponse() {
+        ResponseDataBak data = new ResponseDataBak();
         data.setCode(ResultCodeEnum.SUCCESS.getCode());
         data.setMessage(ResultCodeEnum.SUCCESS.getMessage());
         data.setData(null);
         return data;
     }
 
-    public static ResponseData buildResponse(String message) {
-        ResponseData data = new ResponseData();
+    public static ResponseDataBak buildResponse(String message) {
+        ResponseDataBak data = new ResponseDataBak();
         data.setCode(ResultCodeEnum.SUCCESS.getCode());
         data.setMessage(message);
         data.setData(null);
@@ -58,115 +55,109 @@ public class ResponseData<T> extends HashMap<String, Object> implements Serializ
     }
 
 
-    public static <T> ResponseData<T> buildResponse(String message, T t) {
-        ResponseData<T> data = new ResponseData<>();
+    public static <T> ResponseDataBak<T> buildResponse(String message, T t) {
+        ResponseDataBak<T> data = new ResponseDataBak<>();
         data.setCode(ResultCodeEnum.SUCCESS.getCode());
         data.setMessage(message);
         data.setData(t);
         return data;
     }
 
-    public static <T> ResponseData<T> buildResponseToStandar(T t) {
-        ResponseData<T> data = new ResponseData<>();
+    public static <T> ResponseDataBak<T> buildResponseToStandar(T t) {
+        ResponseDataBak<T> data = new ResponseDataBak<>();
         data.setCode(ResultCodeEnum.SUCCESS.getCode());
         data.setMessage(ResultCodeEnum.SUCCESS.getMessage());
         data.setData(t);
         return data;
     }
 
-    public static <T> ResponseData<T> buildResponse(T t) {
-        ResponseData<T> data = new ResponseData<>();
+    public static <T> ResponseDataBak<T> buildResponse(T t) {
+        ResponseDataBak<T> data = new ResponseDataBak<>();
         data.setCode(ResultCodeEnum.SUCCESS.getCode());
         data.setMessage(ResultCodeEnum.SUCCESS.getMessage());
         data.setData(t);
         return data;
     }
 
-    public static ResponseData buildErrorResponse(Integer code, String message) {
-        ResponseData data = new ResponseData();
+    public static ResponseDataBak buildErrorResponse(Integer code, String message) {
+        ResponseDataBak data = new ResponseDataBak();
         data.setCode(code);
         data.setMessage(message);
         data.setData(null);
         return data;
     }
 
-    public static ResponseData buildResponse(ResultCodeEnum httpResultCode) {
-        ResponseData data = new ResponseData();
+    public static ResponseDataBak buildResponse(ResultCodeEnum httpResultCode) {
+        ResponseDataBak data = new ResponseDataBak();
         data.setCode(httpResultCode.getCode());
         data.setMessage(httpResultCode.getMessage());
         data.setData(null);
         return data;
     }
 
-    public static <T> ResponseData buildPageResponse(List<T> list) {
-        ResponseData<Collection<T>> data = buildResponse(list);
-        long total = new PageInfo(list).getTotal();
-        data.put(PAGE_TOTAL_TAG, total);
-        return data;
-    }
 
 
-    public static ResponseData buildErrorResponse(ResultCodeEnum httpResultCode) {
-        ResponseData data = new ResponseData();
+    public static ResponseDataBak buildErrorResponse(ResultCodeEnum httpResultCode) {
+        ResponseDataBak data = new ResponseDataBak();
         data.setCode(httpResultCode.getCode());
         data.setMessage(httpResultCode.getMessage());
         data.setData(null);
         return data;
     }
 
-    public static <T> ResponseData<T> buildErrorResponse(Integer code, String message, T t) {
-        ResponseData<T> data = new ResponseData<>();
+    public static <T> ResponseDataBak<T> buildErrorResponse(Integer code, String message, T t) {
+        ResponseDataBak<T> data = new ResponseDataBak<>();
         data.setCode(code);
         data.setData(t);
         data.setMessage(message);
         return data;
     }
 
-    public static <T> ResponseData<T> buildErrorResponse(ResultCodeEnum httpResultCode, T t) {
-        ResponseData<T> data = new ResponseData<>();
+    public static <T> ResponseDataBak<T> buildErrorResponse(ResultCodeEnum httpResultCode, T t) {
+        ResponseDataBak<T> data = new ResponseDataBak<>();
         data.setCode(httpResultCode.getCode());
         data.setMessage(httpResultCode.getMessage());
         data.setData(t);
         return data;
     }
 
-    public static ResponseData buildSuccess() {
-        ResponseData data = new ResponseData();
+    public static ResponseDataBak buildSuccess() {
+        ResponseDataBak data = new ResponseDataBak();
         data.setCode(ResultCodeEnum.SUCCESS.getCode());
         data.setMessage(ResultCodeEnum.SUCCESS.getMessage());
         return data;
     }
 
     public boolean judgeSuccess() {
-        return this.get(CODE_TAG) == ResultCodeEnum.SUCCESS.getCode();
+        return this.code == ResultCodeEnum.SUCCESS.getCode();
     }
 
     public boolean judgeSuccessAndNotnull() {
-        return this.get(CODE_TAG) == ResultCodeEnum.SUCCESS.getCode() && this.get(CODE_TAG) != null;
+        return this.code == ResultCodeEnum.SUCCESS.getCode() && this.data != null;
     }
 
-    public Integer getCode() {
-        return Integer.parseInt(this.get(CODE_TAG).toString());
+    public int getCode() {
+        return this.code;
     }
 
     public void setCode(int code) {
-        this.put(CODE_TAG, code);
+        this.code = code;
     }
 
     public String getMessage() {
-        return this.get(MESSAGE_TAG).toString();
+        return this.message;
     }
 
     public void setMessage(String message) {
-        this.put(MESSAGE_TAG, message);
+        this.message = message;
     }
 
     public T getData() {
-        return (T) this.get(DATA_TAG);
+        return this.data;
     }
 
     public void setData(T data) {
-        this.put(DATA_TAG, data);
+        this.data = data;
     }
 
 
@@ -174,13 +165,13 @@ public class ResponseData<T> extends HashMap<String, Object> implements Serializ
     public boolean equals(Object o) {
         if (o == this) {
             return true;
-        } else if (!(o instanceof ResponseData)) {
+        } else if (!(o instanceof ResponseDataBak)) {
             return false;
         } else {
-            ResponseData<?> other = (ResponseData) o;
+            ResponseDataBak<?> other = (ResponseDataBak) o;
             if (!other.canEqual(this)) {
                 return false;
-            } else if (ObjectUtils.nullSafeEquals(this.getCode(), other.getCode())) {
+            } else if (this.getCode() != other.getCode()) {
                 return false;
             } else {
                 label49:
@@ -215,7 +206,7 @@ public class ResponseData<T> extends HashMap<String, Object> implements Serializ
     }
 
     protected boolean canEqual(Object other) {
-        return other instanceof ResponseData;
+        return other instanceof ResponseDataBak;
     }
 
     @Override
@@ -231,7 +222,7 @@ public class ResponseData<T> extends HashMap<String, Object> implements Serializ
     }
 
     public boolean isSuccess() {
-        return ObjectUtils.nullSafeEquals(this.getCode(), ResultCodeEnum.SUCCESS.getCode());
+        return this.code == ResultCodeEnum.SUCCESS.getCode();
     }
 
     @Override

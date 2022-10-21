@@ -24,6 +24,10 @@ public class IdWorkerConfiguration {
     @Value("${id.dateSource:noDateSource}")
     private String dateSource;
 
+    /**
+     * 注入雪花id生成对象 SnowflakeIdWorker
+     * @return
+     */
     @Bean
     @Primary
     public SnowflakeIdWorker idWorker() {
