@@ -137,6 +137,24 @@ public class ResponseData<T> extends HashMap<String, Object> implements Serializ
         return data;
     }
 
+    public static <T> ResponseData<T> buildOnlyResponse(T t,String key,T value) {
+        ResponseData<T> data = new ResponseData<>();
+        data.setCode(ResultCodeEnum.SUCCESS.getCode());
+        data.setMessage(ResultCodeEnum.SUCCESS.getMessage());
+        data.setData(t);
+        data.put(key,value);
+        return data;
+    }
+
+    public static <T> ResponseData<T> buildOnlyResponse(String key,T value) {
+        ResponseData<T> data = new ResponseData<>();
+        data.setCode(ResultCodeEnum.SUCCESS.getCode());
+        data.setMessage(ResultCodeEnum.SUCCESS.getMessage());
+        data.setData(null);
+        data.put(key,value);
+        return data;
+    }
+
     public boolean judgeSuccess() {
         return this.get(CODE_TAG) == ResultCodeEnum.SUCCESS.getCode();
     }
