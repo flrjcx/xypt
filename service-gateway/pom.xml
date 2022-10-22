@@ -9,19 +9,28 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common-interface</artifactId>
+    <artifactId>service-gateway</artifactId>
+
+
     <dependencies>
         <dependency>
-            <artifactId>common-utils</artifactId>
             <groupId>com.flrjcx.xypt</groupId>
+            <artifactId>common-utils</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <!--        nacos注册 -->
+
+<!--        gateway网关调用 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <version>2.2.1.RELEASE</version>
+        </dependency>
+
+        <!-- 服务注册 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
             <version>2.2.1.RELEASE</version>
         </dependency>
-    </dependencies>
-
+</dependencies>
 </project>

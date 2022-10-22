@@ -18,6 +18,7 @@
         <module>backend-service-provider</module>
         <module>common-utils</module>
         <module>common-interface</module>
+        <module>service-client</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.controller;
 
+import com.flrjcx.xypt.client.DictFeignClient;
 import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.annotation.Validation;
@@ -10,12 +11,15 @@ import com.flrjcx.xypt.common.model.param.common.UserVo;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.CaptchaUtil;
+import com.flrjcx.xypt.common.utils.EmailSendUtils;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import javax.annotation.Resource;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -43,6 +48,9 @@ public class LoginController {
 
     @Resource
     private TokenService tokenService;
+
+    @Resource
+    private DictFeignClient dictFeignClient;
 
 
     @Validation
@@ -87,14 +95,13 @@ public class LoginController {
         }
     }
 
-    @OpenPage
-    @ApiOperation(value = "查询用户列表")
-    @GetMapping("/userList")
-    public ResponseData userList() {
+    @ApiOperation(value = "测试feign远程调用")
+    @GetMapping("/feign")
+    public ResponseData testFeign() {
         try {
-            return ResponseData.buildPageResponse(loginService.getUserList());
+            return dictFeignClient.createVerificationCode();
         } catch (Exception e) {
-            log.error("/login error " + e.getMessage());
+            log.error("/feign error " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
         }
     }

@@ -20,6 +20,11 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>com.flrjcx.xypt</groupId>
+            <artifactId>service-client</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
             <artifactId>common-utils</artifactId>
             <groupId>com.flrjcx.xypt</groupId>
             <version>1.0.0</version>
@@ -31,9 +36,17 @@
         </dependency>
 
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>${springboot-start-web-version}</version>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        <version>${springboot-start-web-version}</version>
+    </dependency>
+
+        <!-- 服务调用feign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>2.2.1.RELEASE</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

@@ -305,12 +305,7 @@
         <!--            <optional>true</optional>-->
         <!--            <version>${springboot-start-web-version}</version>-->
         <!--        </dependency>-->
-        <!--        &lt;!&ndash; 服务调用feign &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.cloud</groupId>-->
-        <!--            <artifactId>spring-cloud-starter-openfeign</artifactId>-->
-        <!--            <version>${springboot-start-web-version}</version>-->
-        <!--        </dependency>-->
+
                 <!-- 服务注册 -->
         <!--        &lt;!&ndash; 流量控制 &ndash;&gt;-->
         <!--        <dependency>-->
@@ -330,12 +325,6 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <version>3.0.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>${springboot-start-web-version}</version>
         </dependency>
 
     </dependencies>
