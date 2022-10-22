@@ -15,8 +15,7 @@
         <module>service-provider</module>
         <module>jobs</module>
         <module>backend-service</module>
-        <module>backend-serice-provider</module>
-        <module>common-utils</module>
+        <module>backend-service-provider</module>
         <module>common-utils</module>
         <module>common-interface</module>
     </modules>
@@ -35,7 +34,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <!--                如果有jsp文件，必须指定maven-plugin插件版本是1.4.2.RELEASE-->
-                <!--                <version>1.4.2.RELEASE</version>-->
+                <version>1.4.2.RELEASE</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
