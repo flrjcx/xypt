@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
@@ -67,13 +68,43 @@ public class IdWorkerConfiguration {
         }
     }
 
-    private Long getDataCenterId() {
-        int[] ints = StringUtils.toCodePoints(SystemUtils.getHostName());
+    //private Long getDataCenterId() {
+    //    int[] ints = StringUtils.toCodePoints(SystemUtils.getHostName());
+    //    int sums = 0;
+    //    for (int i : ints) {
+    //        sums += i;
+    //    }
+    //    return (long) (sums % 32);
+    //}
+
+    private static Long getDataCenterId() {
+        int[] ints = StringUtils.toCodePoints(getHostName());
         int sums = 0;
-        for (int i : ints) {
+        for (int i: ints) {
             sums += i;
         }
-        return (long) (sums % 32);
+        return (long)(sums % 32);
     }
 
+    /**
+     * 获取 hostName
+     *   SystemUtils.getHostName() 在mac 或 linux系统为空处理
+     * @return
+     */
+    public static String getHostName() {
+        //获取当前操作系统名称,例如:windows xp,linux 等;
+        String osName = System.getProperty("os.name").toLowerCase();
+        String hostName = null;
+        if(osName.startsWith("mac") || osName.startsWith("linux")){
+            try {
+                hostName = InetAddress.getLocalHost().getHostName().toUpperCase();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+                hostName = "N/A";
+            }
+        }else{
+            hostName = SystemUtils.getHostName();
+        }
+        return hostName;
+    }
 }

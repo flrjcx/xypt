@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @Author: aftermath
- * @Date: 2022-10-21 11:35:21
- * @Desc:
+ * @author wby
  */
 @Service
 public class ManagerLoginServiceImpl implements ManagerLoginService {
@@ -28,6 +26,7 @@ public class ManagerLoginServiceImpl implements ManagerLoginService {
 
     @Override
     public LoginDto login(LoginParam loginParam) {
+
         return null;
     }
 }
