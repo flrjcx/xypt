@@ -10,15 +10,17 @@
         <result property="managerAccount" column=""/>
         <result property="managerPassword" column=""/>
     </resultMap>
-    <select id="testUserList" resultType="com.flrjcx.xypt.common.model.param.common.UserVo">
-        select
-            <include refid="allInfo"></include>
-        from
-            manager
-    </select>
 
-    <sql id="allInfo">
+    <sql id="allManagerInfo">
         manager_id,
+        nick_name,
+        nick_pic,
+        manager_account,
+        manager_password,
+    </sql>
+
+    <sql id="allUserInfo">
+        user_id,
         nick_name,
         nick_pic,
         content,
@@ -38,14 +40,20 @@
         status
     </sql>
 
-    <select id="findUserByAccount" resultType="com.flrjcx.xypt.common.model.param.common.UserVo">
+    <select id="getUserList" resultType="com.flrjcx.xypt.common.model.param.common.UserVo">
         select
-            <include refid="allInfo"></include>
+            <include refid="allUserInfo"></include>
         from
             users
+    </select>
+
+    <select id="findManagerByAccount" resultType="com.flrjcx.xypt.common.model.param.common.ManagerVo">
+        select
+            <include refid="allManagerInfo"></include>
+        from
+            manager
         where
-            account = #{account} and status = 1
-        limit
-            1
+            manger_account = #{account}
+        limit 1
     </select>
 </mapper>

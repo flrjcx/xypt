@@ -1,11 +1,11 @@
 package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
-import com.flrjcx.xypt.common.annotation.UserValidation;
+import com.flrjcx.xypt.common.annotation.OpenPage;
+import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.LoginTypeEnum;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.dto.LoginDto;
-import com.flrjcx.xypt.common.model.param.common.ManagerVo;
 import com.flrjcx.xypt.common.model.param.common.UserVo;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
@@ -20,7 +20,6 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -42,12 +41,11 @@ public class ManagerLoginController {
     private ManagerLoginService managerLoginService;
 
 
-    @UserValidation
+    @Validation
     @ApiOperation("管理员退出登录")
     @PostMapping("/logout")
     public ResponseData logout(@RequestHeader("Authorization") String token) {
-        UserVo userVo = UserThreadLocal.get();
-        tokenService.removeUserToken(token);
+        tokenService.removeManagerToken(token);
         return ResponseData.buildSuccess();
     }
 
@@ -85,10 +83,16 @@ public class ManagerLoginController {
         }
     }
 
-    @UserValidation
-    @ApiOperation(value = "查询管理员列表")
-    @PostMapping("getManagerList/{page}/{size}")
-    public ResponseData getManagerList(@PathVariable int page, @PathVariable int size) {
-        return null;
+    @OpenPage
+    //@Validation
+    @ApiOperation(value = "查询用户列表")
+    @GetMapping("/userList")
+    public ResponseData userList() {
+        try {
+            return ResponseData.buildPageResponse(managerLoginService.getUserList());
+        } catch (Exception e) {
+            log.error("/login error " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
     }
 }

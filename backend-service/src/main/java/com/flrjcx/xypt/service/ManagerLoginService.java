@@ -18,7 +18,7 @@ public interface ManagerLoginService {
      *
      * @return
      */
-    List<ManagerVo> getManagerList();
+    List<UserVo> getUserList();
 
     LoginDto login(LoginParam loginParam);
 }
