@@ -1,7 +1,7 @@
 package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
-import com.flrjcx.xypt.common.annotation.UserValidation;
+import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.constants.MessageConstants;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.param.common.UserVo;
@@ -36,7 +36,7 @@ public class PersonalCenterController {
     @Resource
     private TokenService tokenService;
 
-    @UserValidation
+    @Validation
     @ApiOperation(value = "用户实名注册")
     @PostMapping("/realRegister")
     public ResponseData userRealName(@RequestBody RealNameParam realNameParam){
@@ -82,7 +82,7 @@ public class PersonalCenterController {
         }
     }
 
-    @UserValidation
+    @Validation
     @ApiOperation(value = "获取用户粉丝数量")
     @GetMapping("/userFansNum")
     public ResponseData userFansNum(){

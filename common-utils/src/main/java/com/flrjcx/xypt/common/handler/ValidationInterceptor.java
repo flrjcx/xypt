@@ -1,16 +1,13 @@
 package com.flrjcx.xypt.common.handler;
 
-import com.alibaba.fastjson.JSON;
-import com.flrjcx.xypt.common.annotation.UserValidation;
-import com.flrjcx.xypt.common.enums.ResultCodeEnum;
-import com.flrjcx.xypt.common.exception.UserValidationException;
+import com.flrjcx.xypt.common.annotation.Validation;
+import com.flrjcx.xypt.common.exception.ValidationException;
+import com.flrjcx.xypt.common.model.param.common.ManagerVo;
 import com.flrjcx.xypt.common.model.param.common.UserVo;
-import com.flrjcx.xypt.common.model.result.ResponseData;
+import com.flrjcx.xypt.common.utils.ManagerThreadLocal;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
-import jdk.nashorn.internal.parser.Token;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -25,7 +22,7 @@ import java.util.Objects;
  * 用户登录验证
  */
 @Component
-public class UserValidationInterceptor implements HandlerInterceptor {
+public class ValidationInterceptor implements HandlerInterceptor {
 
     @Resource
     private TokenService tokenService;
@@ -40,17 +37,25 @@ public class UserValidationInterceptor implements HandlerInterceptor {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
         // 验证用户
-        // 获取带了注解 UserValidation 的 handler
-        UserValidation userAnnotation = method.getAnnotation(UserValidation.class);
+        // 获取带了注解 Validation 的 handler
+        Validation annotation = method.getAnnotation(Validation.class);
         // 有，说明需要用户验证
-        if (userAnnotation != null) {
+        if (annotation != null) {
             // 获取请求头的token
             String header = request.getHeader(tokenService.getHeader());
-            UserVo userVo = tokenService.getUserCache(header);
-            if (Objects.isNull(userVo)) {
-                throw new UserValidationException();
+            if(request.getRequestURI().startsWith("/xypt/api/backend")) {
+                UserVo userVo = tokenService.getUserCache(header);
+                if (Objects.isNull(userVo)) {
+                    throw new ValidationException();
+                }
+                UserThreadLocal.put(userVo);
+            } else {
+                ManagerVo managerVo = tokenService.getManagerCache(header);
+                if (Objects.isNull(managerVo)) {
+                    throw new ValidationException();
+                }
+                ManagerThreadLocal.put(managerVo);
             }
-            UserThreadLocal.put(userVo);
         }
         // 没有，不需要用户验证
         return true;

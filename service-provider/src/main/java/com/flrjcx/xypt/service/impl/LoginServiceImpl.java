@@ -49,7 +49,7 @@ public class LoginServiceImpl implements LoginService {
         if (ObjectUtils.isEmpty(userVo)) {
             return null;
         }
-        String userToken = tokenService.createUserToken(userVo);
+        String userToken = tokenService.createToken(userVo);
         return new LoginDto(userToken);
     }
 

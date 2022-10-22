@@ -1,8 +1,7 @@
 package com.flrjcx.xypt.common.web.exception;
 
-import com.aliyun.oss.ServiceException;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
-import com.flrjcx.xypt.common.exception.UserValidationException;
+import com.flrjcx.xypt.common.exception.ValidationException;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,8 +17,8 @@ public class GlobalExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(UserValidationException.class)
-    public ResponseData handlerUserValidationException(UserValidationException e) {
+    @ExceptionHandler(ValidationException.class)
+    public ResponseData handlerValidationException(ValidationException e) {
         return e.getResponseData();
     }
 

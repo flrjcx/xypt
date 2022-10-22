@@ -2,7 +2,7 @@ package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.OpenPage;
-import com.flrjcx.xypt.common.annotation.UserValidation;
+import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.LoginTypeEnum;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.dto.LoginDto;
@@ -10,14 +10,12 @@ import com.flrjcx.xypt.common.model.param.common.UserVo;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.CaptchaUtil;
-import com.flrjcx.xypt.common.utils.EmailSendUtils;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import javax.annotation.Resource;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -48,11 +45,10 @@ public class LoginController {
     private TokenService tokenService;
 
 
-    @UserValidation
+    @Validation
     @ApiOperation("退出登录")
     @PostMapping("/logout")
     public ResponseData logout(@RequestHeader("Authorization") String token) {
-        UserVo userVo = UserThreadLocal.get();
         tokenService.removeUserToken(token);
         return ResponseData.buildSuccess();
     }

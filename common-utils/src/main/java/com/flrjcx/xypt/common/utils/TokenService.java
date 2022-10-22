@@ -2,6 +2,7 @@ package com.flrjcx.xypt.common.utils;
 
 import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
+import com.flrjcx.xypt.common.model.param.common.ManagerVo;
 import com.flrjcx.xypt.common.model.param.common.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,9 @@ public class TokenService {
     @Value("${token.userExpireTime:1440}")
     private int userExpireTime;
 
+    @Value("${token.userExpireTime:1440}")
+    private int managerExpireTime;
+
     public String getHeader() {
         return header;
     }
@@ -50,17 +54,23 @@ public class TokenService {
     // 用户token
     public static final String USER_TAG = "CACHE_USER:";
     // 管理员
-    public static final String ADMIN_TAG = "CACHE_ADMIN:";
+    public static final String MANAGER_TAG = "CACHE_MANAGER:";
 
     @Autowired
     private RedisCache redisCache;
 
     /**
-     * 创建用户token缓存
+     * 创建token缓存
      */
-    public String createUserToken(UserVo userVo) {
+    public String createToken(UserVo userVo) {
         String token = jwtUtils.createToken(userVo.getUserId());
         redisCache.setCacheObject(getUserToken(token), JSON.toJSONString(userVo), userExpireTime, TimeUnit.MINUTES);
+        return token;
+    }
+
+    public String createToken(ManagerVo managerVo) {
+        String token = jwtUtils.createToken(managerVo.getManagerId());
+        redisCache.setCacheObject(getManagerToken((token)), JSON.toJSONString(managerVo), managerExpireTime, TimeUnit.MINUTES);
         return token;
     }
 
@@ -70,6 +80,9 @@ public class TokenService {
      */
     public void removeUserToken(String token) {
         redisCache.deleteObject(getUserToken(token));
+    }
+    public void removeManagerToken(String token) {
+        redisCache.deleteObject(getManagerToken(token));
     }
 
     /**
@@ -83,16 +96,26 @@ public class TokenService {
         return userVo;
     }
 
-    public void updateUserCache(String token, UserVo userVo) {
+    public ManagerVo getManagerCache(String token) {
+        String managerVoJson = redisCache.getCacheObject(getManagerToken(token));
+        ManagerVo managerVo = JSON.parseObject(managerVoJson, ManagerVo.class);
+        return managerVo;
+    }
+
+    public void updateCache(String token, UserVo userVo) {
         redisCache.setCacheObject(getUserToken(token), userVo);
+    }
+
+    public void updateCache(String token, ManagerVo managerVo) {
+        redisCache.setCacheObject(getUserToken(token), managerVo);
     }
 
     private String getUserToken(String s) {
         return getToken(USER_TAG , s);
     }
 
-    private String getAdminToken(String s) {
-        return getToken(ADMIN_TAG , s);
+    private String getManagerToken(String s) {
+        return getToken(MANAGER_TAG , s);
     }
 
     private String getToken(String pre, String s) {

@@ -1,13 +1,11 @@
 package com.flrjcx.xypt.common.config;
 
-import com.flrjcx.xypt.common.handler.UserValidationInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.flrjcx.xypt.common.handler.ValidationInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -20,7 +18,7 @@ import javax.annotation.Resource;
 public class WebMVCConfig implements WebMvcConfigurer {
 
     @Resource
-    private UserValidationInterceptor userValidationInterceptor;
+    private ValidationInterceptor userValidationInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
