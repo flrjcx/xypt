@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.controller;
 
+import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.UserValidation;
 import com.flrjcx.xypt.common.constants.MessageConstants;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;

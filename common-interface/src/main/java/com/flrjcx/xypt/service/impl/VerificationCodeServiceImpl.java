@@ -1,6 +1,5 @@
 package com.flrjcx.xypt.service.impl;
 
-import cn.hutool.captcha.CircleCaptcha;
 import com.flrjcx.xypt.common.model.dto.VerifyCodeDto;
 import com.flrjcx.xypt.common.utils.CaptchaUtil;
 import com.flrjcx.xypt.service.VerificationCodeService;

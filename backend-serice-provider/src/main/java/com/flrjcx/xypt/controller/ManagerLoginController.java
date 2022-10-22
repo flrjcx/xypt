@@ -1,55 +1,49 @@
 package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
-import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.annotation.UserValidation;
 import com.flrjcx.xypt.common.enums.LoginTypeEnum;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.dto.LoginDto;
+import com.flrjcx.xypt.common.model.param.common.ManagerVo;
 import com.flrjcx.xypt.common.model.param.common.UserVo;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.CaptchaUtil;
-import com.flrjcx.xypt.common.utils.EmailSendUtils;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
-import com.flrjcx.xypt.service.LoginService;
+import com.flrjcx.xypt.service.ManagerLoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Map;
+import java.util.List;
 import java.util.Objects;
 
 /**
- * 登录
+ * 登陆
  *
- * @author Flrjcx
+ * @author aftermath
  */
-@Api(tags = "登录模块")
-@ApiRestController("/api/client/login")
+@Api(tags = "管理员登录模块")
+@ApiRestController("/api/backend/login")
 @Log4j2
-public class LoginController {
-
-    @Resource
-    private LoginService loginService;
-
+public class ManagerLoginController {
     @Resource
     private CaptchaUtil captchaUtil;
 
     @Resource
     private TokenService tokenService;
 
+    @Resource
+    private ManagerLoginService managerLoginService;
+
 
     @UserValidation
-    @ApiOperation("退出登录")
+    @ApiOperation("管理员退出登录")
     @PostMapping("/logout")
     public ResponseData logout(@RequestHeader("Authorization") String token) {
         UserVo userVo = UserThreadLocal.get();
@@ -57,7 +51,7 @@ public class LoginController {
         return ResponseData.buildSuccess();
     }
 
-    @ApiOperation(value = "登录功能")
+    @ApiOperation(value = "管理员登录功能")
     @PostMapping
     public ResponseData login(@RequestBody LoginParam loginParam) {
         try {
@@ -79,7 +73,7 @@ public class LoginController {
                 loginParam.setLoginType(LoginTypeEnum.LOGIN_TYPE_ACCOUNT_PASSWORD);
             }
 
-            LoginDto login = loginService.login(loginParam);
+            LoginDto login = managerLoginService.login(loginParam);
             if (!ObjectUtils.isEmpty(login)) {
                 return ResponseData.buildResponse(login);
             }else {
@@ -91,16 +85,10 @@ public class LoginController {
         }
     }
 
-    @OpenPage
-    @ApiOperation(value = "查询用户列表")
-    @GetMapping("/userList")
-    public ResponseData userList() {
-        try {
-            return ResponseData.buildPageResponse(loginService.getUserList());
-        } catch (Exception e) {
-            log.error("/login error " + e.getMessage());
-            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
-        }
+    @UserValidation
+    @ApiOperation(value = "查询管理员列表")
+    @PostMapping("getManagerList/{page}/{size}")
+    public ResponseData getManagerList(@PathVariable int page, @PathVariable int size) {
+        return null;
     }
-
 }

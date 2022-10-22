@@ -4,7 +4,6 @@ package com.flrjcx.xypt.common.model.result;
 import com.flrjcx.xypt.common.enums.PageParam;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.github.pagehelper.PageInfo;
-import com.github.pagehelper.page.PageParams;
 import org.springframework.util.ObjectUtils;
 
 import java.io.Serializable;
@@ -66,7 +65,7 @@ public class ResponseData<T> extends HashMap<String, Object> implements Serializ
         return data;
     }
 
-    public static <T> ResponseData<T> buildResponseToStandar(T t) {
+    public static <T> ResponseData<T> buildResponseToStandard(T t) {
         ResponseData<T> data = new ResponseData<>();
         data.setCode(ResultCodeEnum.SUCCESS.getCode());
         data.setMessage(ResultCodeEnum.SUCCESS.getMessage());

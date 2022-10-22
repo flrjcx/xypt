@@ -1,4 +1,4 @@
-package com.flrjcx.xypt.controller;
+package com.flrjcx.xypt.common.annotation;
 
 /**
  * @author yi'xiao'yi

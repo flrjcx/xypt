@@ -1,14 +1,13 @@
 package com.flrjcx.xypt.controller;
 
+import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.param.register.AddUserParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
-import com.flrjcx.xypt.service.LoginService;
 import com.flrjcx.xypt.service.RegisterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
