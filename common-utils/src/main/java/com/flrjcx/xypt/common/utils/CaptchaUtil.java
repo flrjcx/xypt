@@ -58,6 +58,7 @@ public class CaptchaUtil {
     public VerifyCodeDto catchaImgCreator() throws IOException {
         //生成文字验证码
         String text = producer.createText();
+        System.out.println(text);
         //生成文字对应的图片验证码
         BufferedImage image = producer.createImage(text);
         //将图片写出
