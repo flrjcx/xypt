@@ -31,5 +31,13 @@ public class VerificationCodeController {
         }
         return ResponseData.buildResponse(verificationCode);
     }
+    @GetMapping("/test")
+    public ResponseData test() {
+        VerifyCodeDto verificationCode = verificationCodeService.createVerificationCode();
+        if (verificationCode == null) {
+            ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR);
+        }
+        return ResponseData.buildResponse(verificationCode);
+    }
 
 }
