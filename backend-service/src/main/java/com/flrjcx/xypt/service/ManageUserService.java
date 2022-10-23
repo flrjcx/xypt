@@ -1,0 +1,22 @@
+package com.flrjcx.xypt.service;
+
+import com.flrjcx.xypt.common.model.param.common.UserVo;
+
+import java.util.List;
+
+/**
+ * @Author: aftermath
+ * @Date: 2022-10-23 19:49:11
+ * @Desc:
+ */
+public interface ManageUserService {
+    /**
+     * 获取全部用户(分页)
+     *
+     * @return
+     */
+    List<UserVo> getUserList();
+
+    long updateUser(UserVo userVo);
+}
+

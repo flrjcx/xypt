@@ -19,22 +19,10 @@ import java.util.List;
 @Service
 public class ManagerLoginServiceImpl implements ManagerLoginService {
     @Resource
-    ManagerLoginMapper managerLoginMapper;
-
-    @Resource
     TokenService tokenService;
 
     @Resource
     AccountLoginCheck check;
-    /**
-     * 获取全部用户(分页)
-     *
-     * @return
-     */
-    @Override
-    public List<UserVo> getUserList() {
-        return managerLoginMapper.getUserList();
-    }
 
     @Override
     public LoginDto login(LoginParam loginParam) {

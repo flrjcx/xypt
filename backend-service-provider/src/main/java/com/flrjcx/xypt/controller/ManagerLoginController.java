@@ -82,17 +82,4 @@ public class ManagerLoginController {
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
         }
     }
-
-    @OpenPage
-    //@Validation
-    @ApiOperation(value = "查询用户列表")
-    @GetMapping("/userList")
-    public ResponseData userList() {
-        try {
-            return ResponseData.buildPageResponse(managerLoginService.getUserList());
-        } catch (Exception e) {
-            log.error("/login error " + e.getMessage());
-            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
-        }
-    }
 }

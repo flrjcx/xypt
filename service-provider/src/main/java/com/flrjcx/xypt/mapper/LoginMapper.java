@@ -33,8 +33,8 @@ public interface LoginMapper {
 
     /**
      * 通过账号查询用户
-     * @param email 账号
+     * @param account 账号
      * @return 用户
      */
-    UserVo findUserByAccount(String email);
+    UserVo findUserByAccount(String account);
 }

@@ -31,7 +31,7 @@ public class TokenService {
     @Value("${token.userExpireTime:1440}")
     private int userExpireTime;
 
-    @Value("${token.userExpireTime:1440}")
+    @Value("${token.managerExpireTime:30}")
     private int managerExpireTime;
 
     public String getHeader() {

@@ -13,12 +13,5 @@ import java.util.List;
  * @author Flrjcx
  */
 public interface ManagerLoginService {
-    /**
-     * 获取全部用户(分页)
-     *
-     * @return
-     */
-    List<UserVo> getUserList();
-
     LoginDto login(LoginParam loginParam);
 }

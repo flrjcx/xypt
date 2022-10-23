@@ -40,13 +40,6 @@
         status
     </sql>
 
-    <select id="getUserList" resultType="com.flrjcx.xypt.common.model.param.common.UserVo">
-        select
-            <include refid="allUserInfo"></include>
-        from
-            users
-    </select>
-
     <select id="findManagerByAccount" resultType="com.flrjcx.xypt.common.model.param.common.ManagerVo">
         select
             <include refid="allManagerInfo"></include>

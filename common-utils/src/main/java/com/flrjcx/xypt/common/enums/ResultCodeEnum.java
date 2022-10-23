@@ -25,7 +25,7 @@ public enum ResultCodeEnum implements IResultCode {
     USER_LOGIN_CODE_UN_VALID_FROM_ERROR(100008, "账号还未到开始使用期限！"),
     USER_LOGIN_CODE_INVALID_ERROR(100009, "账号已过有效期！"),
     USER_LOGIN_CODE_PASSWORD_INVALID_ERROR(100010, "账号密码已过期！"),
-    USER_NOT_EXSIT_ERROR(100011, "用户不存在"),
+    USER_NOT_EXIST_ERROR(100011, "用户不存在"),
     USER_LOGIN_PWD_ERROR_CODE(100012, "账号或登录密码错误!"),
     USER_LOGIN_OTHER_CODE(100013, "用户已在其他客户端登录!"),
     ERROR_CODE_NAME_REQUIRED(100014, "用户名必填"),
