@@ -1,4 +1,4 @@
-package com.flrjcx.xypt.core.factory.mapper;
+package com.flrjcx.xypt.mapper;
 
 import com.flrjcx.xypt.common.model.param.common.UserVo;
 import com.flrjcx.xypt.common.model.param.focus.Attent;

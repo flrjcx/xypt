@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,6 +64,7 @@ public class LoginController {
 
     @ApiOperation(value = "登录功能")
     @PostMapping
+    @Async
     public ResponseData login(@RequestBody LoginParam loginParam) {
         try {
             if (Objects.isNull(loginParam.getUser())) {

@@ -2,7 +2,7 @@ package com.flrjcx.xypt.service.impl;
 
 import com.flrjcx.xypt.common.model.param.common.UserVo;
 import com.flrjcx.xypt.common.model.param.focus.Attent;
-import com.flrjcx.xypt.core.factory.mapper.FocusMapper;
+import com.flrjcx.xypt.mapper.FocusMapper;
 import com.flrjcx.xypt.service.FocusService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

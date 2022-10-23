@@ -2,28 +2,34 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>common-parent</artifactId>
         <groupId>com.flrjcx.xypt</groupId>
         <version>1.0.0</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-
     <artifactId>service-gateway</artifactId>
 
 
     <dependencies>
-        <dependency>
-            <groupId>com.flrjcx.xypt</groupId>
-            <artifactId>common-utils</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-<!--        gateway网关调用 -->
+        <!--引入gateway 网关-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
             <version>2.2.1.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.2.1.RELEASE</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- 服务注册 -->
@@ -32,5 +38,5 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
             <version>2.2.1.RELEASE</version>
         </dependency>
-</dependencies>
+    </dependencies>
 </project>
