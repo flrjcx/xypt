@@ -32,7 +32,7 @@ public class EncryptUtils {
      * @return 比对结果
      */
     public static boolean check(String plaintext, String hashed) {
-        return BCrypt.checkpw(plaintext, hashed);
+        return BCrypt.checkpw(md5(plaintext), hashed);
     }
 
 }
