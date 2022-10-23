@@ -6,6 +6,7 @@ import com.flrjcx.xypt.common.model.param.common.UserVo;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.utils.EncryptUtils;
 import com.flrjcx.xypt.core.dao.logincheck.AbstractLoginCheck;
+import com.flrjcx.xypt.core.dao.logincheck.AbstractLoginMapperCheck;
 import com.flrjcx.xypt.core.dao.logincheck.LoginVerification;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -15,10 +16,10 @@ import org.springframework.util.ObjectUtils;
  * @author malaka
  */
 @Component(LoginTypeEnum.LOGIN_TYPE_ACCOUNT_PASSWORD)
-public class AccountLoginCheck  extends AbstractLoginCheck implements LoginVerification {
+public class AccountLoginCheck  extends AbstractLoginMapperCheck implements LoginVerification {
 
     @Override
-    public UserVo checkLogin(LoginParam loginParam) {
+    public UserVo check(LoginParam loginParam) {
         UserVo userVo = loginMapper.findUserByAccount(loginParam.getUser());
         if (ObjectUtils.isEmpty(userVo)) {
             return userVo;

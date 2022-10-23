@@ -16,8 +16,6 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class TokenService {
 
-    @Autowired
-    private JWTUtils jwtUtils;
 
     /**
      * 令牌自定义标识
@@ -56,6 +54,10 @@ public class TokenService {
     // 管理员
     public static final String MANAGER_TAG = "CACHE_MANAGER:";
 
+
+    @Autowired
+    private JWTUtils jwtUtils;
+
     @Autowired
     private RedisCache redisCache;
 
@@ -64,6 +66,7 @@ public class TokenService {
      */
     public String createToken(UserVo userVo) {
         String token = jwtUtils.createToken(userVo.getUserId());
+        //CACHE_USER:eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NjY1MjI2MTMsInVzZXJJZCI6NjQsImlhdCI6MTY2NjQzNjIxM30.EpaSpXP2EriwHugC_51tvpaLA9I5JgBBFdLWjxtkNY8:userVo{}
         redisCache.setCacheObject(getUserToken(token), JSON.toJSONString(userVo), userExpireTime, TimeUnit.MINUTES);
         return token;
     }

@@ -21,7 +21,7 @@ public class JWTUtils {
     @Value("token.secret")
     private String jwtToken;
 
-    private Long ONE_DAY = 24 * 60 * 60 * 60 * 1000L;
+    private final static Long ONE_DAY = 24 * 60 * 60 * 1000L;
 
     public String createToken(Long userId){
         Map<String,Object> claims = new HashMap<>();

@@ -2,6 +2,7 @@ package com.flrjcx.xypt.common.web.exception;
 
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.exception.ValidationException;
+import com.flrjcx.xypt.common.exception.WebServiceException;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -22,6 +23,15 @@ public class GlobalExceptionHandler {
         return e.getResponseData();
     }
 
+    /**
+     * 业务异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(WebServiceException.class)
+    public ResponseData handlerWebServiceException(WebServiceException e) {
+        return e.getResponseData();
+    }
 
     /**
      * 未知异常
@@ -31,7 +41,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseData handlerException(Exception e) {
         e.printStackTrace();
-        return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_USER_SYSTEM_ERROR);
+        return ResponseData.buildErrorResponse(ResultCodeEnum.FAIL.getCode(), e.getMessage(), e);
     }
 
 }

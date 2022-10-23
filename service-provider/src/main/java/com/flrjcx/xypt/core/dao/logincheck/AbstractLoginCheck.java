@@ -14,15 +14,12 @@ import java.util.Objects;
  */
 public abstract class AbstractLoginCheck {
 
-    @Resource
-    protected LoginMapper loginMapper;
-
     /**
      * 检查登录
      * @param loginParam 用户请求输入信息
      * @return 查询出来的对象
      */
-    public abstract UserVo checkLogin(LoginParam loginParam);
+    public abstract UserVo check(LoginParam loginParam);
 
 
 }
