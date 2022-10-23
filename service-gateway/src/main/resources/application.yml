@@ -16,4 +16,12 @@ spring:
         - id: campus-service-common
           uri: lb://campus-service-common
           predicates:
-            - Path=/xypt/api/common/*
+            - Path=/xypt/api/common/**
+        - id: campus-backend-service-provider
+          uri: lb://campus-backend-service-provider
+          predicates:
+            - Path=/xypt/api/backend/**
+        - id: campus-service-provider
+          uri: lb://campus-service-provider
+          predicates:
+            - Path=/xypt/api/client/**

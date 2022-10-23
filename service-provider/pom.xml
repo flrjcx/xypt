@@ -35,11 +35,12 @@
             <version>1.0.0</version>
         </dependency>
 
+        <!--        nacos-->
         <dependency>
-        <groupId>com.alibaba.cloud</groupId>
-        <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        <version>${springboot-start-web-version}</version>
-    </dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <version>${springboot-start-web-version}</version>
+        </dependency>
 
         <!-- 服务调用feign -->
         <dependency>
