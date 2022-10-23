@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /xypt
 spring:
+  profiles:
+    active: prod
   application:
     name: campus-gateway-provider
   cloud:
