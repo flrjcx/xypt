@@ -35,8 +35,4 @@ public class EncryptUtils {
         return BCrypt.checkpw(plaintext, hashed);
     }
 
-    public static void main(String[] args) {
-        String s = md5AndBCrypt("123456");
-        System.out.println("s = " + s);
-    }
 }

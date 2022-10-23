@@ -1,9 +1,7 @@
 package com.flrjcx.xypt.controller;
 
-import com.flrjcx.xypt.client.DictFeignClient;
-import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.OpenPage;
-import com.flrjcx.xypt.common.annotation.Validation;
+import com.flrjcx.xypt.common.annotation.UserValidation;
 import com.flrjcx.xypt.common.enums.LoginTypeEnum;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.dto.LoginDto;
@@ -18,9 +16,7 @@ import com.flrjcx.xypt.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,21 +46,18 @@ public class LoginController {
     @Resource
     private TokenService tokenService;
 
-    @Resource
-    private DictFeignClient dictFeignClient;
 
-
-    @Validation
+    @UserValidation
     @ApiOperation("退出登录")
     @PostMapping("/logout")
     public ResponseData logout(@RequestHeader("Authorization") String token) {
+        UserVo userVo = UserThreadLocal.get();
         tokenService.removeUserToken(token);
         return ResponseData.buildSuccess();
     }
 
     @ApiOperation(value = "登录功能")
     @PostMapping
-    @Async
     public ResponseData login(@RequestBody LoginParam loginParam) {
         try {
             if (Objects.isNull(loginParam.getUser())) {
@@ -97,13 +90,14 @@ public class LoginController {
         }
     }
 
-    @ApiOperation(value = "测试feign远程调用")
-    @GetMapping("/feign")
-    public ResponseData testFeign() {
+    @OpenPage
+    @ApiOperation(value = "查询用户列表")
+    @GetMapping("/userList")
+    public ResponseData userList() {
         try {
-            return dictFeignClient.createVerificationCode();
+            return ResponseData.buildPageResponse(loginService.getUserList());
         } catch (Exception e) {
-            log.error("/feign error " + e.getMessage());
+            log.error("/login error " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
         }
     }
