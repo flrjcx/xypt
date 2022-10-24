@@ -42,7 +42,27 @@
         </dependency>
     </dependencies>
     <build>
-<finalName>service-provider</finalName>
+        <!--        指定打包后的名字-->
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                    <mainClass>com.flrjcx.xypt.XyptProvider2995</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
 </project>
