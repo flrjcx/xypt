@@ -1,7 +1,8 @@
 package com.flrjcx.xypt.controller;
 
+import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.OpenPage;
-import com.flrjcx.xypt.common.annotation.UserValidation;
+import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.LoginTypeEnum;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.dto.LoginDto;
@@ -47,7 +48,7 @@ public class LoginController {
     private TokenService tokenService;
 
 
-    @UserValidation
+    @Validation
     @ApiOperation("退出登录")
     @PostMapping("/logout")
     public ResponseData logout(@RequestHeader("Authorization") String token) {

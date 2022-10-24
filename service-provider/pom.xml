@@ -3,10 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>common-parent</artifactId>
+        <artifactId>xypt</artifactId>
         <groupId>com.flrjcx.xypt</groupId>
         <version>1.0.0</version>
-        <relativePath></relativePath>
     </parent>
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
@@ -20,8 +19,8 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>com.flrjcx.xypt</groupId>
             <artifactId>service-client</artifactId>
+            <groupId>com.flrjcx.xypt</groupId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
@@ -42,5 +41,8 @@
             <version>${springboot-start-web-version}</version>
         </dependency>
     </dependencies>
+    <build>
+<finalName>service-provider</finalName>
+    </build>
 
 </project>
