@@ -4,7 +4,7 @@ server:
     context-path: /xypt
 spring:
   profiles:
-    active: prod
+    active: dev
   application:
     name: campus-gateway-provider
   cloud:
