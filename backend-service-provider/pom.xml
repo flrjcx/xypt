@@ -43,14 +43,25 @@
     </dependencies>
     <build>
         <!--        指定打包后的名字-->
-        <finalName>backend-backend-service-provider</finalName>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
 
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!--                如果有jsp文件，必须指定maven-plugin插件版本是1.4.2.RELEASE-->
-                <!--                <version>1.4.2.RELEASE</version>-->
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                    <mainClass>com.flrjcx.xypt.XyptService2996</mainClass>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
