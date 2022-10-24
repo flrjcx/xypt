@@ -18,7 +18,16 @@ public class EncryptUtils {
      */
     public static String md5AndBCrypt(String str) {
         String md5 = md5(str);
-        return BCrypt.hashpw(md5);
+        return bCrypt(md5);
+    }
+
+    /**
+     * 用来加密密码，先MD5加密，然后对加密后的数据进行BCrypt二次加密
+     * @param str 未加密密码
+     * @return 加密后
+     */
+    public static String bCrypt(String str) {
+        return BCrypt.hashpw(str);
     }
 
     public static String md5(String str) {
@@ -27,12 +36,16 @@ public class EncryptUtils {
 
     /**
      * 检查密码是否一致
-     * @param plaintext 明文，数据库存储的是调用md5AndBCrypt加密后的值
-     * @param hashed 密文
+     * @param plaintext 明文，前端需要进行md5加密
+     * @param hashed 密文，数据库存储的是调用md5AndBCrypt加密后的值
      * @return 比对结果
      */
     public static boolean check(String plaintext, String hashed) {
-        return BCrypt.checkpw(md5(plaintext), hashed);
+        return BCrypt.checkpw(plaintext, hashed);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(md5AndBCrypt("123456"));
     }
 
 }
