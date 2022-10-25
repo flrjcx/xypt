@@ -16,25 +16,10 @@ import java.util.concurrent.TimeUnit;
 public class TokenService {
 
 
-    /**
-     * 令牌自定义标识
-     */
-    @Value("${token.header:Authorization}")
-    private String header;
-
-    /**
-     * 令牌超时时间
-     */
-    @Value("${token.userExpireTime:1440}")
-    private int userExpireTime;
-
-    @Value("${token.managerExpireTime:30}")
-    private int managerExpireTime;
-
-    public String getHeader() {
-        return header;
-    }
-
+    // 用户token
+    public static final String USER_TAG = "CACHE_USER:";
+    // 管理员
+    public static final String MANAGER_TAG = "CACHE_MANAGER:";
     /**
      * 1秒
      */
@@ -47,18 +32,26 @@ public class TokenService {
      * 1天
      */
     private static final long MILLIS_DAY = 24 * 60 * MILLIS_MINUTE;
-
-    // 用户token
-    public static final String USER_TAG = "CACHE_USER:";
-    // 管理员
-    public static final String MANAGER_TAG = "CACHE_MANAGER:";
-
-
+    /**
+     * 令牌自定义标识
+     */
+    @Value("${token.header:Authorization}")
+    private String header;
+    /**
+     * 令牌超时时间
+     */
+    @Value("${token.userExpireTime:1440}")
+    private int userExpireTime;
+    @Value("${token.managerExpireTime:30}")
+    private int managerExpireTime;
     @Autowired
     private JWTUtils jwtUtils;
-
     @Autowired
     private RedisCache redisCache;
+
+    public String getHeader() {
+        return header;
+    }
 
     /**
      * 创建token缓存
@@ -78,17 +71,20 @@ public class TokenService {
 
     /**
      * 删除用户缓存
+     *
      * @param token
      */
     public void removeUserToken(String token) {
         redisCache.deleteObject(getUserToken(token));
     }
+
     public void removeManagerToken(String token) {
         redisCache.deleteObject(getManagerToken(token));
     }
 
     /**
      * 获取用户缓存
+     *
      * @param token
      * @return
      */
@@ -113,17 +109,16 @@ public class TokenService {
     }
 
     private String getUserToken(String s) {
-        return getToken(USER_TAG , s);
+        return getToken(USER_TAG, s);
     }
 
     private String getManagerToken(String s) {
-        return getToken(MANAGER_TAG , s);
+        return getToken(MANAGER_TAG, s);
     }
 
     private String getToken(String pre, String s) {
         return pre + s;
     }
-
 
 
 }

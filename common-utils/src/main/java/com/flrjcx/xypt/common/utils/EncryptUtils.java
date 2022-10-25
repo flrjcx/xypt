@@ -5,6 +5,7 @@ import cn.hutool.crypto.digest.DigestUtil;
 
 /**
  * 加密工具类
+ *
  * @author malaka
  */
 public class EncryptUtils {
@@ -13,6 +14,7 @@ public class EncryptUtils {
 
     /**
      * 用来加密密码，先MD5加密，然后对加密后的数据进行BCrypt二次加密
+     *
      * @param str 未加密密码
      * @return 加密后
      */
@@ -23,6 +25,7 @@ public class EncryptUtils {
 
     /**
      * 用来加密密码，先MD5加密，然后对加密后的数据进行BCrypt二次加密
+     *
      * @param str 未加密密码
      * @return 加密后
      */
@@ -31,13 +34,14 @@ public class EncryptUtils {
     }
 
     public static String md5(String str) {
-        return  DigestUtil.md5Hex(str + MD5_SALT);
+        return DigestUtil.md5Hex(str + MD5_SALT);
     }
 
     /**
      * 检查密码是否一致
+     *
      * @param plaintext 明文，前端需要进行md5加密
-     * @param hashed 密文，数据库存储的是调用md5AndBCrypt加密后的值
+     * @param hashed    密文，数据库存储的是调用md5AndBCrypt加密后的值
      * @return 比对结果
      */
     public static boolean check(String plaintext, String hashed) {
@@ -45,6 +49,7 @@ public class EncryptUtils {
     }
 
     public static void main(String[] args) {
+        System.out.println(md5("123456"));
         System.out.println(md5AndBCrypt("123456"));
     }
 
