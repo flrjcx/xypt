@@ -1,17 +1,14 @@
 package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
-import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.LoginTypeEnum;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.dto.LoginDto;
-import com.flrjcx.xypt.common.model.param.common.UserVo;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.CaptchaUtil;
 import com.flrjcx.xypt.common.utils.TokenService;
-import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.service.ManagerLoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

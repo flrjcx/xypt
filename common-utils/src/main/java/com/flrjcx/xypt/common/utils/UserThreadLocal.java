@@ -1,6 +1,6 @@
 package com.flrjcx.xypt.common.utils;
 
-import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.model.param.common.Users;
 
 /**
  * 当前登录用户
@@ -16,13 +16,13 @@ public class UserThreadLocal {
 
     private UserThreadLocal(){}
 
-    private static final  ThreadLocal<UserVo> LOCAL = new ThreadLocal<>();
+    private static final  ThreadLocal<Users> LOCAL = new ThreadLocal<>();
 
-    public static void put(UserVo userVo) {
-        LOCAL.set(userVo);
+    public static void put(Users users) {
+        LOCAL.set(users);
     }
 
-    public static UserVo get() {
+    public static Users get() {
         return LOCAL.get();
     }
 

@@ -1,5 +1,9 @@
 package com.flrjcx.xypt.service;
 
+import com.flrjcx.xypt.common.model.param.focus.UserPartList;
+
+import java.util.List;
+
 /**
  * @Author: code muxiaoming
  * @Date Created in 2022/10/19 21:09
@@ -16,4 +20,20 @@ public interface FocusService {
      *            ids[1] idolId
      */
     boolean focus(long[] ids);
+
+    /**
+     * 查询用户的关注列表
+     *
+     * @param id
+     * @return
+     */
+    List<UserPartList> focusList(Long id);
+
+    /**
+     * 查询用户的粉丝列表
+     *
+     * @param id
+     * @return
+     */
+    List<UserPartList> fansList(Long id);
 }

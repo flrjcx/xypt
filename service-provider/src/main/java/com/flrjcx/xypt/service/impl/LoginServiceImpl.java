@@ -1,8 +1,7 @@
 package com.flrjcx.xypt.service.impl;
 
-import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.model.dto.LoginDto;
-import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.core.dao.logincheck.AbstractLoginCheck;
@@ -32,18 +31,18 @@ public class LoginServiceImpl implements LoginService {
     private TokenService tokenService;
 
     @Override
-    public List<UserVo> getUserList() {
+    public List<Users> getUserList() {
         return loginMapper.testUserList();
     }
 
     @Override
     public LoginDto login(LoginParam loginParam) {
         AbstractLoginCheck check = loginCheckFactory.getBean(loginParam.getLoginType());
-        UserVo userVo = check.check(loginParam);
-        if (ObjectUtils.isEmpty(userVo)) {
+        Users users = check.check(loginParam);
+        if (ObjectUtils.isEmpty(users)) {
             return null;
         }
-        String userToken = tokenService.createToken(userVo);
+        String userToken = tokenService.createToken(users);
         return new LoginDto(userToken);
     }
 

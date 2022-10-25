@@ -1,7 +1,6 @@
 package com.flrjcx.xypt.common.utils;
 
 import com.flrjcx.xypt.common.model.param.common.ManagerVo;
-import com.flrjcx.xypt.common.model.param.common.UserVo;
 
 /**
  * 当前登录管理员

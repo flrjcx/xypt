@@ -1,6 +1,5 @@
 package com.flrjcx.xypt.core.dao.logincheck;
 
-import com.flrjcx.xypt.common.model.param.common.UserVo;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.mapper.ManagerLoginMapper;
 

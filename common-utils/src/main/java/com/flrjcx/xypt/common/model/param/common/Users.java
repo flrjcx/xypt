@@ -14,7 +14,7 @@ import java.util.LinkedHashMap;
  * @author Flrjcx
  */
 @Data
-public class UserVo implements Serializable {
+public class Users implements Serializable {
     private static final long serialVersionUID = -5818798255750404065L;
     @ApiModelProperty(value = "用户id", name = "userId")
     private Long userId;

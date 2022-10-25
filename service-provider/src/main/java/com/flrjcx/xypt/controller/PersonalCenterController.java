@@ -4,7 +4,7 @@ import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.constants.MessageConstants;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
-import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.personal_center.RealNameParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.CheckAllUsersUtils;
@@ -41,7 +41,7 @@ public class PersonalCenterController {
     @PostMapping("/realRegister")
     public ResponseData userRealName(@RequestBody RealNameParam realNameParam){
         //获取userId
-        UserVo currentUser = UserThreadLocal.get();
+        Users currentUser = UserThreadLocal.get();
         realNameParam.setRealRegisterUserId(currentUser.getUserId());
         String realName = realNameParam.getRealName();
         String idCard = realNameParam.getIdCard();
@@ -86,7 +86,7 @@ public class PersonalCenterController {
     @ApiOperation(value = "获取用户粉丝数量")
     @GetMapping("/userFansNum")
     public ResponseData userFansNum(){
-        UserVo currentUser = UserThreadLocal.get();
+        Users currentUser = UserThreadLocal.get();
         try {
             Integer fansNum = personalCenterService.getUserFansNum(currentUser.getUserId());
             return ResponseData.buildOnlyResponse("fansNum", fansNum);

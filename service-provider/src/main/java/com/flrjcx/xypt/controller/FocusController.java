@@ -1,14 +1,21 @@
 package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
+import com.flrjcx.xypt.common.annotation.OpenPage;
+import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.result.ResponseData;
+import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.service.FocusService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 
@@ -28,8 +35,8 @@ public class FocusController {
     private FocusService focusService;
 
     @ApiOperation("用户关注")
-    @PostMapping
-    //@UserValidation
+    @PostMapping("/clickFocus")
+//    @UserValidation
     //@RequestParam(value="goodsId",defaultValue=“0”)
     // 需要有默认值required = true(默认)
     public ResponseData focus(@RequestBody long[] ids) {
@@ -38,6 +45,32 @@ public class FocusController {
             return ResponseData.buildResponse();
         } catch (Exception e) {
             log.error("/focus error {}", e);
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
+    }
+
+    @ApiOperation("关注列表")
+    @GetMapping("/focusList")
+    @Validation
+    public ResponseData focusList() {
+        try {
+            Users users = UserThreadLocal.get();
+            return ResponseData.buildPageResponse(focusService.focusList(users.getUserId()));
+        } catch (Exception e) {
+            log.error("/focusList error {}", e);
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
+    }
+
+    @ApiOperation("粉丝列表")
+    @GetMapping("/fansList")
+    @Validation
+    public ResponseData fansList() {
+        try {
+            Users users = UserThreadLocal.get();
+            return ResponseData.buildPageResponse(focusService.fansList(users.getUserId()));
+        } catch (Exception e) {
+            log.error("/fansList error {}", e);
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
         }
     }

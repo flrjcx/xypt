@@ -1,6 +1,6 @@
 package com.flrjcx.xypt.mapper;
 
-import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.model.param.common.Users;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * @Desc:
  */
 public interface ManageUserMapper {
-    List<UserVo> getUserList();
+    List<Users> getUserList();
 
-    long updateUser(UserVo userVo);
+    long updateUser(Users users);
 }

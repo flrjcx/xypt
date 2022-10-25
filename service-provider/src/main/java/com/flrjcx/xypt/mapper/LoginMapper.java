@@ -1,7 +1,6 @@
 package com.flrjcx.xypt.mapper;
 
-import com.flrjcx.xypt.common.annotation.OpenPage;
-import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.model.param.common.Users;
 
 import java.util.List;
 
@@ -16,26 +15,26 @@ public interface LoginMapper {
      *
      * @return
      */
-    List<UserVo> testUserList();
+    List<Users> testUserList();
 
     /**
      * 通过手机查询用户
      * @param phone 手机号
      * @return 查询到的用户
      */
-    UserVo findUserByPhone(String phone);
+    Users findUserByPhone(String phone);
 
     /**
      * 通过邮箱查询用户
      * @param email 邮箱
      * @return 用户
      */
-    UserVo findUserByEmail(String email);
+    Users findUserByEmail(String email);
 
     /**
      * 通过账号查询用户
      * @param account 账号
      * @return 用户
      */
-    UserVo findUserByAccount(String account);
+    Users findUserByAccount(String account);
 }

@@ -41,7 +41,7 @@
         email
     </sql>
 
-    <select id="getUserList" resultType="com.flrjcx.xypt.common.model.param.common.UserVo">
+    <select id="getUserList" resultType="com.flrjcx.xypt.common.model.param.common.Users">
         select
         <include refid="manageUserInfo"></include>
         from

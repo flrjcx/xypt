@@ -16,7 +16,8 @@ import java.util.Date;
 @Data
 public class Attent implements Serializable {
     private static final long serialVersionUID = 5426215250016949594L;
-    @ApiModelProperty(value = "用户id", notes = "就是粉丝id")
+//    加上name
+    @ApiModelProperty(value = "用户id",name = "userId", notes = "就是粉丝id")
     private Long userId;
     @ApiModelProperty(value = "被关注用户id", notes = "就是偶像id")
     private Long attentUserId;

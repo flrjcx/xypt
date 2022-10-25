@@ -26,7 +26,7 @@
         status
     </sql>
 
-    <select id="queryByArray" resultType="com.flrjcx.xypt.common.model.param.common.UserVo">
+    <select id="queryByArray" resultType="com.flrjcx.xypt.common.model.param.common.Users">
         select
         <include refid="allInfo"></include>
         from users
@@ -42,12 +42,35 @@
         VALUES (#{param.userId},
                 #{param.attentUserId})
     </insert>
-    <select id="getById" resultType="com.flrjcx.xypt.common.model.param.common.UserVo">
+    <select id="getById" resultType="com.flrjcx.xypt.common.model.param.common.Users">
         select
         <include refid="allInfo"></include>
         from
         users where user_id = #{userId}
     </select>
+    <select id="idolIdList" resultType="java.lang.Long">
+        select attent_user_id from attent where user_id = #{id}
+    </select>
+    <select id="focusList" resultType="com.flrjcx.xypt.common.model.param.focus.UserPartList">
+        select nick_name as nickName,nick_pic as nickPic,content,fans_num as fansNum
+        from users
+        where user_id in
+        <foreach collection="userIdList" item="idNo" open="(" close=")" separator=",">
+            #{idNo}
+        </foreach>
+    </select>
+    <select id="fansIdList" resultType="java.lang.Long">
+        select user_id from attent where attent_user_id = #{id}
+    </select>
+    <select id="getUserPartList" resultType="com.flrjcx.xypt.common.model.param.focus.UserPartList">
+        select nick_name as nickName,nick_pic as nickPic,content,fans_num as fansNum
+        from users
+        where user_id in
+        <foreach collection="userIdList" item="idNo" open="(" close=")" separator=",">
+            #{idNo}
+        </foreach>
+    </select>
+
     <update id="updateFocus">
         update users
         <set>

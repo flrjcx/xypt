@@ -1,11 +1,9 @@
 package com.flrjcx.xypt.core.dao.logincheck.impl;
 
-import cn.hutool.crypto.digest.BCrypt;
 import com.flrjcx.xypt.common.enums.LoginTypeEnum;
-import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.utils.EncryptUtils;
-import com.flrjcx.xypt.core.dao.logincheck.AbstractLoginCheck;
 import com.flrjcx.xypt.core.dao.logincheck.AbstractLoginMapperCheck;
 import com.flrjcx.xypt.core.dao.logincheck.LoginVerification;
 import org.springframework.stereotype.Component;
@@ -19,14 +17,14 @@ import org.springframework.util.ObjectUtils;
 public class EmailLoginCheck extends AbstractLoginMapperCheck implements LoginVerification {
 
     @Override
-    public UserVo check(LoginParam loginParam) {
-        UserVo userVo = loginMapper.findUserByEmail(loginParam.getUser());
-        if (ObjectUtils.isEmpty(userVo)) {
+    public Users check(LoginParam loginParam) {
+        Users users = loginMapper.findUserByEmail(loginParam.getUser());
+        if (ObjectUtils.isEmpty(users)) {
             return null;
         }
-        String dbPwd = userVo.getPassword();
+        String dbPwd = users.getPassword();
         if (verificationPassed(loginParam, dbPwd)) {
-            return userVo;
+            return users;
         }else {
             return null;
         }

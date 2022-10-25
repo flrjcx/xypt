@@ -2,16 +2,13 @@ package com.flrjcx.xypt.service.impl;
 
 import com.flrjcx.xypt.common.model.dto.LoginDto;
 import com.flrjcx.xypt.common.model.param.common.ManagerVo;
-import com.flrjcx.xypt.common.model.param.common.UserVo;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.core.dao.logincheck.AccountLoginCheck;
-import com.flrjcx.xypt.mapper.ManagerLoginMapper;
 import com.flrjcx.xypt.service.ManagerLoginService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author wby

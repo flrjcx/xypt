@@ -1,7 +1,9 @@
 package com.flrjcx.xypt.mapper;
 
-import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.annotation.OpenPage;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.focus.Attent;
+import com.flrjcx.xypt.common.model.param.focus.UserPartList;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public interface FocusMapper {
      * @param ids
      * @return
      */
-    public List<UserVo> queryByArray(long[] ids);
+    public List<Users> queryByArray(long[] ids);
 
     /**
      * 根据id查询用户信息,主要是查询fansNum与focusNum
@@ -29,7 +31,7 @@ public interface FocusMapper {
      * @param UserId userId
      * @return
      */
-    UserVo getById(Long UserId);
+    Users getById(Long UserId);
 
     /**
      * 根据id更新用户信息(动态sql,只更新users对象中非空字段)
@@ -39,7 +41,7 @@ public interface FocusMapper {
      * @param user 用户
      * @return
      */
-    int updateFocus(@Param("user") UserVo user);
+    int updateFocus(@Param("user") Users user);
 
     /**
      * 动态批量更新
@@ -47,7 +49,7 @@ public interface FocusMapper {
      * @param users
      * @return
      */
-    int updateByList(List<UserVo> users);
+    int updateByList(List<Users> users);
 
     /**
      * 生成关注记录:关注者与被关注者
@@ -56,4 +58,30 @@ public interface FocusMapper {
      * @return
      */
     int addAttent(@Param("param") Attent param);
+
+    /**
+     * 获取用户关注的用户id
+     *
+     * @param id
+     * @return
+     */
+    List<Long> idolIdList(@Param("id") Long id);
+
+    /**
+     * 根据id获取用户列表(粉丝/关注列表)
+     *
+     * @param userIdList
+     * @return
+     */
+    @OpenPage
+    List<UserPartList> getUserPartList(@Param("userIdList")List<Long> userIdList);
+
+    /**
+     * 获取用户的粉丝id
+     *
+     * @param id
+     * @return
+     */
+    List<Long> fansIdList(@Param("id") Long id);
+
 }

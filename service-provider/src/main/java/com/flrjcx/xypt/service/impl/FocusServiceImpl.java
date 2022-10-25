@@ -1,7 +1,8 @@
 package com.flrjcx.xypt.service.impl;
 
-import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.focus.Attent;
+import com.flrjcx.xypt.common.model.param.focus.UserPartList;
 import com.flrjcx.xypt.mapper.FocusMapper;
 import com.flrjcx.xypt.service.FocusService;
 import org.springframework.stereotype.Service;
@@ -32,10 +33,10 @@ public class FocusServiceImpl implements FocusService {
     @Transactional(rollbackFor = Exception.class)
     public boolean focus(long[] ids) {
         //粉丝即关注者 focus_num++
-        //UserVo fansInfo = focusMapper.getById(fansId);
-        List<UserVo> list = focusMapper.queryByArray(ids);
-        UserVo fans = new UserVo();
-        UserVo idol = new UserVo();
+        //Users fansInfo = focusMapper.getById(fansId);
+        List<Users> list = focusMapper.queryByArray(ids);
+        Users fans = new Users();
+        Users idol = new Users();
         //fansId和idolId是按前端传参的顺序,没有变化
         fans.setUserId(ids[0]);
         idol.setUserId(ids[1]);
@@ -49,7 +50,7 @@ public class FocusServiceImpl implements FocusService {
             idol.setFansNum(list.get(0).getFansNum() + 1);
         }
         /*
-        ArrayList<UserVo> users = new ArrayList<>();
+        ArrayList<Users> users = new ArrayList<>();
         users.add(fans);
         users.add(idol);
         //减少调用updateById次数
@@ -71,5 +72,29 @@ public class FocusServiceImpl implements FocusService {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 查询用户的关注列表
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public List<UserPartList> focusList(Long id) {
+        List<Long> userIdList = focusMapper.idolIdList(id);
+        return focusMapper.getUserPartList(userIdList);
+    }
+
+    /**
+     * 查询用户的粉丝列表
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public List<UserPartList> fansList(Long id) {
+        List<Long> fansIdList = focusMapper.fansIdList(id);
+        return focusMapper.getUserPartList(fansIdList);
     }
 }

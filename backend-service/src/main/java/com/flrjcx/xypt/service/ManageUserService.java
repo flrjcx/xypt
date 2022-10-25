@@ -1,6 +1,6 @@
 package com.flrjcx.xypt.service;
 
-import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.model.param.common.Users;
 
 import java.util.List;
 
@@ -15,8 +15,8 @@ public interface ManageUserService {
      *
      * @return
      */
-    List<UserVo> getUserList();
+    List<Users> getUserList();
 
-    long updateUser(UserVo userVo);
+    long updateUser(Users users);
 }
 

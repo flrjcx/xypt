@@ -1,9 +1,8 @@
 package com.flrjcx.xypt.common.utils;
 
-import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
 import com.flrjcx.xypt.common.model.param.common.ManagerVo;
-import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -64,10 +63,10 @@ public class TokenService {
     /**
      * 创建token缓存
      */
-    public String createToken(UserVo userVo) {
-        String token = jwtUtils.createToken(userVo.getUserId());
-        //CACHE_USER:eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NjY1MjI2MTMsInVzZXJJZCI6NjQsImlhdCI6MTY2NjQzNjIxM30.EpaSpXP2EriwHugC_51tvpaLA9I5JgBBFdLWjxtkNY8:userVo{}
-        redisCache.setCacheObject(getUserToken(token), JSON.toJSONString(userVo), userExpireTime, TimeUnit.MINUTES);
+    public String createToken(Users users) {
+        String token = jwtUtils.createToken(users.getUserId());
+        //CACHE_USER:eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NjY1MjI2MTMsInVzZXJJZCI6NjQsImlhdCI6MTY2NjQzNjIxM30.EpaSpXP2EriwHugC_51tvpaLA9I5JgBBFdLWjxtkNY8:users{}
+        redisCache.setCacheObject(getUserToken(token), JSON.toJSONString(users), userExpireTime, TimeUnit.MINUTES);
         return token;
     }
 
@@ -93,10 +92,10 @@ public class TokenService {
      * @param token
      * @return
      */
-    public UserVo getUserCache(String token) {
+    public Users getUserCache(String token) {
         String userVoJson = redisCache.getCacheObject(getUserToken(token));
-        UserVo userVo = JSON.parseObject(userVoJson, UserVo.class);
-        return userVo;
+        Users users = JSON.parseObject(userVoJson, Users.class);
+        return users;
     }
 
     public ManagerVo getManagerCache(String token) {
@@ -105,8 +104,8 @@ public class TokenService {
         return managerVo;
     }
 
-    public void updateCache(String token, UserVo userVo) {
-        redisCache.setCacheObject(getUserToken(token), userVo);
+    public void updateCache(String token, Users users) {
+        redisCache.setCacheObject(getUserToken(token), users);
     }
 
     public void updateCache(String token, ManagerVo managerVo) {

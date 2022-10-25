@@ -4,7 +4,7 @@ import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
-import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.service.ManageUserService;
 import io.swagger.annotations.Api;
@@ -44,9 +44,9 @@ public class ManageUserController {
     @Validation
     @ApiOperation(value = "修改用户")
     @PostMapping("/updateUser")
-    public ResponseData updateUser(@RequestBody UserVo userVo) {
+    public ResponseData updateUser(@RequestBody Users users) {
         try {
-            return ResponseData.buildResponse(manageUserService.updateUser(userVo));
+            return ResponseData.buildResponse(manageUserService.updateUser(users));
         } catch (Exception e) {
             log.error("/updateUser error" + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_UPDATE);
