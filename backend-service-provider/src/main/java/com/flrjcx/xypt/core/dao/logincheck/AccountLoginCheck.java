@@ -1,10 +1,9 @@
 package com.flrjcx.xypt.core.dao.logincheck;
 
 import com.flrjcx.xypt.common.enums.LoginTypeEnum;
-import com.flrjcx.xypt.common.model.param.common.ManagerVo;
+import com.flrjcx.xypt.common.model.param.common.Manager;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.utils.EncryptUtils;
-import com.flrjcx.xypt.core.dao.logincheck.LoginVerification;
 import com.flrjcx.xypt.mapper.ManagerLoginMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -21,14 +20,14 @@ public class AccountLoginCheck implements LoginVerification {
     @Resource
     ManagerLoginMapper managerLoginMapper;
 
-    public ManagerVo checkLogin(LoginParam loginParam) {
-        ManagerVo managerVo = managerLoginMapper.findManagerByAccount(loginParam.getUser());
-        if (ObjectUtils.isEmpty(managerVo)) {
-            return managerVo;
+    public Manager checkLogin(LoginParam loginParam) {
+        Manager manager = managerLoginMapper.findManagerByAccount(loginParam.getUser());
+        if (ObjectUtils.isEmpty(manager)) {
+            return manager;
         }
-        String dbPwd = managerVo.getManagerPassword();
+        String dbPwd = manager.getManagerPassword();
         if (verificationPassed(loginParam, dbPwd)) {
-            return managerVo;
+            return manager;
         }else {
             return null;
         }

@@ -1,7 +1,7 @@
 package com.flrjcx.xypt.mapper;
 
 
-import com.flrjcx.xypt.common.model.param.common.ManagerVo;
+import com.flrjcx.xypt.common.model.param.common.Manager;
 
 /**
  * 管理员登陆模块
@@ -14,5 +14,5 @@ public interface ManagerLoginMapper {
      * @param account 账号
      * @return 用户
      */
-    ManagerVo findManagerByAccount(String account);
+    Manager findManagerByAccount(String account);
 }

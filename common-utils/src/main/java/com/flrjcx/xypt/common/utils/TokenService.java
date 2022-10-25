@@ -1,7 +1,7 @@
 package com.flrjcx.xypt.common.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.flrjcx.xypt.common.model.param.common.ManagerVo;
+import com.flrjcx.xypt.common.model.param.common.Manager;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,9 +63,9 @@ public class TokenService {
         return token;
     }
 
-    public String createToken(ManagerVo managerVo) {
-        String token = jwtUtils.createToken(managerVo.getManagerId());
-        redisCache.setCacheObject(getManagerToken((token)), JSON.toJSONString(managerVo), managerExpireTime, TimeUnit.MINUTES);
+    public String createToken(Manager manager) {
+        String token = jwtUtils.createToken(manager.getManagerId());
+        redisCache.setCacheObject(getManagerToken((token)), JSON.toJSONString(manager), managerExpireTime, TimeUnit.MINUTES);
         return token;
     }
 
@@ -94,18 +94,18 @@ public class TokenService {
         return users;
     }
 
-    public ManagerVo getManagerCache(String token) {
+    public Manager getManagerCache(String token) {
         String managerVoJson = redisCache.getCacheObject(getManagerToken(token));
-        ManagerVo managerVo = JSON.parseObject(managerVoJson, ManagerVo.class);
-        return managerVo;
+        Manager manager = JSON.parseObject(managerVoJson, Manager.class);
+        return manager;
     }
 
     public void updateCache(String token, Users users) {
         redisCache.setCacheObject(getUserToken(token), users);
     }
 
-    public void updateCache(String token, ManagerVo managerVo) {
-        redisCache.setCacheObject(getManagerToken(token), managerVo);
+    public void updateCache(String token, Manager manager) {
+        redisCache.setCacheObject(getManagerToken(token), manager);
     }
 
     private String getUserToken(String s) {

@@ -4,7 +4,7 @@ import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
-import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.ManagerThreadLocal;
 import com.flrjcx.xypt.common.utils.TokenService;

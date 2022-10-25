@@ -2,7 +2,7 @@ package com.flrjcx.xypt.common.handler;
 
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.exception.ValidationException;
-import com.flrjcx.xypt.common.model.param.common.ManagerVo;
+import com.flrjcx.xypt.common.model.param.common.Manager;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.utils.ManagerThreadLocal;
 import com.flrjcx.xypt.common.utils.TokenService;
@@ -44,11 +44,11 @@ public class ValidationInterceptor implements HandlerInterceptor {
             // 获取请求头的token
             String header = request.getHeader(tokenService.getHeader());
             if(request.getRequestURI().startsWith("/xypt/api/backend")) {
-                ManagerVo managerVo = tokenService.getManagerCache(header);
-                if (Objects.isNull(managerVo)) {
+                Manager manager = tokenService.getManagerCache(header);
+                if (Objects.isNull(manager)) {
                     throw new ValidationException();
                 }
-                ManagerThreadLocal.put(managerVo);
+                ManagerThreadLocal.put(manager);
             } else {
                 Users users = tokenService.getUserCache(header);
                 if (Objects.isNull(users)) {

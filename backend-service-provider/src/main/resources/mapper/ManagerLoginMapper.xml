@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flrjcx.xypt.mapper.ManagerLoginMapper">
-    <resultMap id="managerModel" type="com.flrjcx.xypt.common.model.param.common.ManagerVo">
+    <resultMap id="managerModel" type="com.flrjcx.xypt.common.model.param.common.Manager">
         <id property="managerId" column="managerId"/>
         <result property="nickName" column=""/>
         <result property="nickPic" column=""/>
@@ -40,7 +40,7 @@
         status
     </sql>
 
-    <select id="findManagerByAccount" resultType="com.flrjcx.xypt.common.model.param.common.ManagerVo">
+    <select id="findManagerByAccount" resultType="com.flrjcx.xypt.common.model.param.common.Manager">
         select
             <include refid="allManagerInfo"></include>
         from

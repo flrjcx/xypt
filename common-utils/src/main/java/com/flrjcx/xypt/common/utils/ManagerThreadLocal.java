@@ -1,6 +1,6 @@
 package com.flrjcx.xypt.common.utils;
 
-import com.flrjcx.xypt.common.model.param.common.ManagerVo;
+import com.flrjcx.xypt.common.model.param.common.Manager;
 
 /**
  * 当前登录管理员
@@ -16,13 +16,13 @@ public class ManagerThreadLocal {
 
     private ManagerThreadLocal(){}
 
-    private static final  ThreadLocal<ManagerVo> LOCAL = new ThreadLocal<>();
+    private static final  ThreadLocal<Manager> LOCAL = new ThreadLocal<>();
 
-    public static void put(ManagerVo managerVo) {
-        LOCAL.set(managerVo);
+    public static void put(Manager manager) {
+        LOCAL.set(manager);
     }
 
-    public static ManagerVo get() {
+    public static Manager get() {
         return LOCAL.get();
     }
 

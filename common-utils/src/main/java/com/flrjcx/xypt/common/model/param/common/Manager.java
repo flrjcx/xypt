@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author wby
  */
 @Data
-public class ManagerVo implements Serializable {
+public class Manager implements Serializable {
     private static final long serialVersionUID = -5818798255750404065L;
     @ApiModelProperty(value = "管理员id", name = "managerId")
     private Long managerId;

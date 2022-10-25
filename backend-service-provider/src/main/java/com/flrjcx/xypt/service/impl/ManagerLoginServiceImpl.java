@@ -1,7 +1,7 @@
 package com.flrjcx.xypt.service.impl;
 
 import com.flrjcx.xypt.common.model.dto.LoginDto;
-import com.flrjcx.xypt.common.model.param.common.ManagerVo;
+import com.flrjcx.xypt.common.model.param.common.Manager;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.core.dao.logincheck.AccountLoginCheck;
@@ -23,8 +23,8 @@ public class ManagerLoginServiceImpl implements ManagerLoginService {
 
     @Override
     public LoginDto login(LoginParam loginParam) {
-        ManagerVo managerVo = check.checkLogin(loginParam);
-        String managerToken = tokenService.createToken(managerVo);
+        Manager manager = check.checkLogin(loginParam);
+        String managerToken = tokenService.createToken(manager);
         return new LoginDto(managerToken);
     }
 }

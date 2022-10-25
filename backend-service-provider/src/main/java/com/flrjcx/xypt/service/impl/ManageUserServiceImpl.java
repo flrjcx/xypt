@@ -1,6 +1,6 @@
 package com.flrjcx.xypt.service.impl;
 
-import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.mapper.ManageUserMapper;
 import com.flrjcx.xypt.service.ManageUserService;
