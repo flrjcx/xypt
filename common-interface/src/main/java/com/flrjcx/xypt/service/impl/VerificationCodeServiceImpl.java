@@ -17,6 +17,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     @Resource
     private CaptchaUtil captchaUtil;
 
+
     @Override
     public VerifyCodeDto createVerificationCode() {
         try {

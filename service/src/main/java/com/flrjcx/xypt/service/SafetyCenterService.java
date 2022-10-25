@@ -44,7 +44,7 @@ public interface SafetyCenterService {
     boolean setPrivacy(Long userId, String privacy);
 
     /**
-     * 检查userPrivacy中需要修改的隐私字段
+     * 返回隐私处理过的隐私对象
      *
      * @param userPrivacy 用户隐私对象
      * @param privacy     需要隐藏的字段名

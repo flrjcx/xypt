@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SafetyCenterImpl implements SafetyCenterService {
     private static final String CACHE_PREFIX = "xypt:SafetyCenter";
+
+    private static final String MAIL_PREFIX = "xypt:SafetyCenter:resetPasswordMail";
     @Resource
     private EmailSendUtils emailSendUtils;
     @Resource
@@ -44,7 +46,7 @@ public class SafetyCenterImpl implements SafetyCenterService {
     @Override
     public boolean sendResetPassWordMail(Long userId, String toMail) {
         Integer code = ValidateCodeUtils.generateValidateCode(6);
-        String mailPrefix = CACHE_PREFIX + ":resetPasswordMail" + ':' + userId;
+        String mailPrefix = MAIL_PREFIX + ':' + userId;
         try {
             redisCache.setCacheObject(mailPrefix, code.toString(), 5, TimeUnit.MINUTES);
             emailSendUtils.sendMail(toMail, "重置你的密码", "你的验证码为:", code);
@@ -68,7 +70,7 @@ public class SafetyCenterImpl implements SafetyCenterService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean modifyPassword(Long userId, String submitPassword, String validateCode) {
-        String mailPrefix = CACHE_PREFIX + ":resetPasswordMail" + ':' + userId;
+        String mailPrefix = MAIL_PREFIX + ':' + userId;
         String code = redisCache.getCacheObject(mailPrefix);
         if (StringUtils.isEmpty(code)) {
             log.info("无法在redis中找到修改密码的验证码");
@@ -98,23 +100,20 @@ public class SafetyCenterImpl implements SafetyCenterService {
     @Transactional(rollbackFor = Exception.class)
     public boolean setPrivacy(Long userId, String privacy) {
         String privacySetting = safetyCenterMapper.selectUserPrivacySetting(userId);
+        UserPrivacy userPrivacy;
         if (StringUtils.isEmpty(privacySetting)) {
-            UserPrivacy userPrivacy = new UserPrivacy();
-            userPrivacy = getPrivacyUser(userPrivacy, privacy);
-            String userPrivacyString = JsonUtils.fastJsonToString(userPrivacy);
-            boolean savePrivacy = safetyCenterMapper.savePrivacy(userId, userPrivacyString) > 0;
-            if (savePrivacy) {
-                Users users = tokenService.getUserCache(TokenService.USER_TAG + userId);
-                users.setPrivacySetting(userPrivacyString);
-                tokenService.updateCache(TokenService.USER_TAG + userId, users);
-            }
-            return savePrivacy;
+            //新建用户隐私对象
+            userPrivacy = new UserPrivacy();
+        } else {
+            userPrivacy = JsonUtils.fastJsonParse(privacySetting, UserPrivacy.class);
         }
-        UserPrivacy userPrivacy = JsonUtils.fastJsonParse(privacySetting, UserPrivacy.class);
+        //设置隐私对象的值
         userPrivacy = getPrivacyUser(userPrivacy, privacy);
+        //序列化userPrivacy
         String userPrivacyString = JsonUtils.fastJsonToString(userPrivacy);
         boolean savePrivacy = safetyCenterMapper.savePrivacy(userId, userPrivacyString) > 0;
         if (savePrivacy) {
+            //若数据库未更新，则不更新缓存
             Users users = tokenService.getUserCache(TokenService.USER_TAG + userId);
             users.setPrivacySetting(userPrivacyString);
             tokenService.updateCache(TokenService.USER_TAG + userId, users);
