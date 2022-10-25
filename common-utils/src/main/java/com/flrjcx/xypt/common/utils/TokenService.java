@@ -105,7 +105,7 @@ public class TokenService {
     }
 
     public void updateCache(String token, ManagerVo managerVo) {
-        redisCache.setCacheObject(getUserToken(token), managerVo);
+        redisCache.setCacheObject(getManagerToken(token), managerVo);
     }
 
     private String getUserToken(String s) {

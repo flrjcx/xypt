@@ -17,6 +17,8 @@ public interface ManageUserService {
      */
     List<Users> getUserList();
 
-    long updateUser(Users users);
+    long updateUser(Users user, String token);
+
+    boolean deleteUser(long userId, String token);
 }
 

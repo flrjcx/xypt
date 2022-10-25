@@ -12,5 +12,7 @@ import java.util.List;
 public interface ManageUserMapper {
     List<Users> getUserList();
 
-    long updateUser(Users users);
+    long updateUser(Users user);
+
+    boolean deleteUser(long userId);
 }

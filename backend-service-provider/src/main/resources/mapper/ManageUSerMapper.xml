@@ -65,7 +65,16 @@
             <if test="focusNum != null"> focus_num = #{focusNum}, </if>
             <if test="address != null"> address = #{address}, </if>
             <if test="school != null"> school = #{school}, </if>
+            <if test="createTime != null"> create_time = #{createTime}, </if>
+            <if test="updateTime != null"> update_time = #{updateTime}, </if>
+            <if test="status != null"> status = #{status}, </if>
         </trim>
+        where user_id = #{userId}
+    </update>
+
+    <update id="deleteUser">
+        update users
+        set status = 0
         where user_id = #{userId}
     </update>
 </mapper>
