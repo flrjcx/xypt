@@ -44,17 +44,17 @@ public class ValidationInterceptor implements HandlerInterceptor {
             // 获取请求头的token
             String header = request.getHeader(tokenService.getHeader());
             if(request.getRequestURI().startsWith("/xypt/api/backend")) {
-                UserVo userVo = tokenService.getUserCache(header);
-                if (Objects.isNull(userVo)) {
-                    throw new ValidationException();
-                }
-                UserThreadLocal.put(userVo);
-            } else {
                 ManagerVo managerVo = tokenService.getManagerCache(header);
                 if (Objects.isNull(managerVo)) {
                     throw new ValidationException();
                 }
                 ManagerThreadLocal.put(managerVo);
+            } else {
+                UserVo userVo = tokenService.getUserCache(header);
+                if (Objects.isNull(userVo)) {
+                    throw new ValidationException();
+                }
+                UserThreadLocal.put(userVo);
             }
         }
         // 没有，不需要用户验证
