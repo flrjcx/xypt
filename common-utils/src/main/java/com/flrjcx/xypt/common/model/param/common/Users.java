@@ -6,7 +6,6 @@ import lombok.Data;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.LinkedHashMap;
 
 /**
  * 用户实体类
@@ -52,5 +51,7 @@ public class Users implements Serializable {
     private Date updateTime;
     @ApiModelProperty(value = "账号状态", name = "status")
     private String status;
+    @ApiModelProperty(value = "隐私状态", name = "privacySetting")
+    private String privacySetting;
 
 }

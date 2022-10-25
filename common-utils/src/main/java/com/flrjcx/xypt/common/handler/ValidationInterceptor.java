@@ -3,7 +3,7 @@ package com.flrjcx.xypt.common.handler;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.exception.ValidationException;
 import com.flrjcx.xypt.common.model.param.common.ManagerVo;
-import com.flrjcx.xypt.common.model.param.common.UserVo;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.utils.ManagerThreadLocal;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
@@ -43,18 +43,18 @@ public class ValidationInterceptor implements HandlerInterceptor {
         if (annotation != null) {
             // 获取请求头的token
             String header = request.getHeader(tokenService.getHeader());
-            if(request.getRequestURI().startsWith("/xypt/api/backend")) {
+            if (request.getRequestURI().startsWith("/xypt/api/client")) {
                 ManagerVo managerVo = tokenService.getManagerCache(header);
                 if (Objects.isNull(managerVo)) {
                     throw new ValidationException();
                 }
                 ManagerThreadLocal.put(managerVo);
             } else {
-                UserVo userVo = tokenService.getUserCache(header);
-                if (Objects.isNull(userVo)) {
+                Users Users = tokenService.getUserCache(header);
+                if (Objects.isNull(Users)) {
                     throw new ValidationException();
                 }
-                UserThreadLocal.put(userVo);
+                UserThreadLocal.put(Users);
             }
         }
         // 没有，不需要用户验证
