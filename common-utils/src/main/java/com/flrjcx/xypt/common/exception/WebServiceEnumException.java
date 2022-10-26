@@ -18,13 +18,18 @@ public class WebServiceEnumException extends WebServiceException implements Seri
     private WebServiceEnumException() {
     }
 
-    public WebServiceEnumException(ResultCodeEnum resultCodeEnum) {
-        this.resultCodeEnum = resultCodeEnum;
-    }
-
     @Override
     protected ResponseData buildResponseData() {
         return ResponseData.buildErrorResponse(resultCodeEnum);
+    }
+
+    public static WebServiceException buildResponseData(ResultCodeEnum codeEnum) {
+        return new WebServiceException() {
+            @Override
+            protected ResponseData buildResponseData() {
+                return ResponseData.buildResponse(codeEnum);
+            }
+        };
     }
 
 }

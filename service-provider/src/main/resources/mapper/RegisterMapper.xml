@@ -6,18 +6,47 @@
 
 
     <insert id="addUser">
-INSERT INTO users
-            (nick_name,
-             password,
-             sex,
-             email,
-             account,
-             user_id)
-VALUES     ( #{param.nickName},
-             #{param.password},
-             #{param.sex},
-             #{param.email},
-             #{param.account},
-             #{param.userId})
+        INSERT INTO users
+                    (nick_name,
+                     password,
+                     sex,
+                     email,
+                     account,
+                     user_id)
+        VALUES     ( #{nickName},
+                     #{password},
+                     #{sex},
+                     #{email},
+                     #{account},
+                     #{userId})
     </insert>
+    <update id="setStatusOk">
+        update
+            users
+        set
+            status = '1'
+        where
+            user_id = #{uid}
+    </update>
+
+    <select id="selectUserByEmail" resultType="com.flrjcx.xypt.common.model.param.common.Users">
+        select
+            email
+        from
+            users
+        where
+            email = #{email}
+        limit
+            1
+    </select>
+    <select id="selectUserByAccount" resultType="com.flrjcx.xypt.common.model.param.common.Users">
+         select
+            account
+        from
+            users
+        where
+            account = #{account}
+        limit
+            1
+    </select>
 </mapper>

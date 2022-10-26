@@ -37,6 +37,14 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_CODE_VERIFICATION_REQUIRED(100020, "验证码必填"),
     ERROR_CODE_VERIFICATION_ERROR_CODE(100021, "验证码错误"),
 
+    ERROR_CODE_NAME_ERROR_CODE(100022, "用户名格式错误"),
+    ERROR_CODE_PASSWORD_ERROR_CODE(100023, "密码格式错误"),
+    ERROR_CODE_EMAIL_REQUIRED(100024, "邮箱必填"),
+    ERROR_CODE_EMAIL_ERROR_CODE(100025, "邮箱格式错误"),
+    ERROR_CODE_SEX_REQUIRED(100026, "性别必填"),
+    ERROR_USER_IS_EXIST(100027, "用户已被注册"),
+    ERROR_EMAIL_IS_EXIST(100028, "邮箱已被注册"),
+
     /**
      * 接口转发服务编码
      */
@@ -217,7 +225,10 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_CODE_REAL_NAME_INCONFORMITY(800006, "真实姓名必须是2到10位中文字符"),
     ERROR_CODE_ID_CARD_IS_EMPTY(800007, "身份证号不能为空"),
     ERROR_CODE_ID_CARD_INCONFORMITY(800008, "身份证号不符合"),
-    ERROR_CODE_REAL_REGISTERED(800009, "已实名，无需重复");
+    ERROR_CODE_REAL_REGISTERED(800009, "已实名，无需重复"),
+
+    ERROR_EMAIL_SEND_KEY_WRONG(900001, "密钥错误");
+
 
     private Integer code;
     private String message;

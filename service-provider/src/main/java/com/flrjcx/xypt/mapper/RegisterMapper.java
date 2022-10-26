@@ -1,7 +1,7 @@
 package com.flrjcx.xypt.mapper;
 
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.register.AddUserParam;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * 注册
@@ -12,7 +12,21 @@ public interface RegisterMapper {
     /**
      * 注册用户
      *
-     * @param param
+     * @param users
      */
-    void addUser(@Param("param") AddUserParam param);
+    void addUser(Users users);
+
+    /**
+     * 通过账号查询用户
+     * @param account
+     * @return
+     */
+    Users selectUserByAccount(String account);
+    /**
+     * 通过邮箱查询用户
+     * @param email
+     * @return
+     */
+    Users selectUserByEmail(String email);
+
 }

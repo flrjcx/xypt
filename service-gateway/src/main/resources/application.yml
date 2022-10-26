@@ -27,3 +27,7 @@ spring:
           uri: lb://campus-service-provider
           predicates:
             - Path=/xypt/api/client/**
+        - id: campus-email-service
+          uri: lb://campus-email-service
+          predicates:
+            - Path=/xypt/api/email/**

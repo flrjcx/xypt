@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 业务异常
  * @author malaka
  */
-public abstract class WebServiceException extends Exception {
+public abstract class WebServiceException extends RuntimeException {
 
     private static final long serialVersionUID = 768521430079465528L;
 

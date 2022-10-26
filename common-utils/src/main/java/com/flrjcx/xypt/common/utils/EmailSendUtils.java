@@ -56,6 +56,162 @@ public class EmailSendUtils {
     /**
      * 发送固定内容
      * @param address:收件地址
+     * @param validateAddress:验证地址
+     * @param name:用户名
+     * @return
+     */
+    public ResponseData sendFixedMail(String address,String validateAddress,String name) {
+        String subject = "校园达伦注册";
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper;
+        try {
+            helper = new MimeMessageHelper(mimeMessage, true);
+            helper.setFrom(account);
+            helper.setTo(address);
+            helper.setSubject(subject);//主题
+            mimeMessage.setContent("<!DOCTYPE html>\n" +
+                            "<html lang=\"en\">\n" +
+                            "<head>\n" +
+                            "    <meta charset=\"UTF-8\">\n" +
+                            "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n" +
+                            "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                            "    <title>Document</title>\n" +
+                            "</head>\n" +
+                            "<body>\n" +
+                            "    <div>\n" +
+                            "        <includetail>\n" +
+                            "            <div align=\"center\">\n" +
+                            "                <div class=\"open_email\" style=\"margin-left: 8px; margin-top: 8px; margin-bottom: 8px; margin-right: 8px;\">\n" +
+                            "                    <div>\n" +
+                            "                        <br>\n" +
+                            "                        <span class=\"genEmailContent\">\n" +
+                            "                            <div id=\"cTMail-Wrap\"\n" +
+                            "                                 style=\"word-break: break-all;box-sizing:border-box;text-align:center;min-width:320px; max-width:660px; border:1px solid #f6f6f6; background-color:#f7f8fa; margin:auto; padding:20px 0 30px; font-family:'helvetica neue',PingFangSC-Light,arial,'hiragino sans gb','microsoft yahei ui','microsoft yahei',simsun,sans-serif\">\n" +
+                            "                                <div class=\"main-content\" style=\"\">\n" +
+                            "                                    <table style=\"width:100%;font-weight:300;margin-bottom:10px;border-collapse:collapse\">\n" +
+                            "                                        <tbody>\n" +
+                            "                                        <tr style=\"font-weight:300\">\n" +
+                            "                                            <td style=\"width:3%;max-width:30px;\"></td>\n" +
+                            "                                            <td style=\"max-width:600px;\">\n" +
+                            "                                                <div id=\"cTMail-logo\" style=\"width:92px; height:30px;\">\n" +
+                            "                                                    <a href=\"\">\n" +
+                            "                                                        <img border=\"0\" src=\"http://qnjs.flrjcx.cn/images/zili-house-logo.jpg\"\n" +
+                            "                                                             style=\"width:46px; height:5px; display:block\">\n" +
+                            "                                                    </a>\n" +
+                            "                                                </div>\n" +
+                            "                                                <p style=\"height:2px;background-color: #eb0a86;border: 0;font-size:0;padding:0;width:100%;margin-top:20px;\"></p>\n" +
+                            "    \n" +
+                            "                                                <div id=\"cTMail-inner\" style=\"background-color:#fff; padding:23px 0 20px;box-shadow: 0px 1px 1px 0px rgba(122, 55, 55, 0.2);text-align:left;\">\n" +
+                            "                                                    <table style=\"width:100%;font-weight:300;margin-bottom:10px;border-collapse:collapse;text-align:left;\">\n" +
+                            "                                                        <tbody>\n" +
+                            "                                                        <tr style=\"font-weight:300\">\n" +
+                            "                                                            <td style=\"width:3.2%;max-width:30px;\"></td>\n" +
+                            "                                                            <td style=\"max-width:480px;text-align:left;\">\n" +
+                            "                                                                <h1 id=\"cTMail-title\" style=\"font-size: 20px; line-height: 36px; margin: 0px 0px 22px;\">\n" +
+                            "                                                                    【校园达伦】欢迎注册\n" +
+                            "                                                                </h1>\n" +
+                            "    \n" +
+                            "                                                                <p id=\"cTMail-userName\" style=\"font-size:14px;color:#333; line-height:24px; margin:0;\">\n" +
+                            "                                                                    尊敬的用户"+name+"，您好！\n" +
+                            "                                                                </p>\n" +
+                            "    \n" +
+                            "                                                                <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\">\n" +
+                            "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">\n" +
+                            "                                                                        欢迎注册校园达伦，全球领先的中文社区。。\n" +
+                            "                                                                    </span>\n" +
+                            "                                                                </p>\n" +
+                            "                                                                <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\">\n" +
+                            "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">完成注册，<b>请点击下方链接验证邮箱。<b/>\n" +
+                            "                                                                        <span style=\"font-weight: bold;\">非本人操作请忽略。</span>\n" +
+                            "                                                                    </span>\n" +
+                            "                                                                </p>\n" +
+                            "                                                                <p class=\"cTMail-content\"\n" +
+                            "                                                                   style=\"font-size: 14px; color: rgb(51, 51, 51); line-height: 24px; margin: 6px 0px 0px; word-wrap: break-word; word-break: break-all;\">\n" +
+                            "                                                                     <a href=\""+validateAddress+"\" title=\"\"\n" +
+                            "                                                                           style=\"color: rgb(0, 164, 255); text-decoration: none; word-break: break-all; overflow-wrap: normal; font-size: 14px;\">\n" +
+                            "                                                                            "+validateAddress+"" +
+                            "                                                                        </a>\n" +
+                            "                                                                </p>\n" +
+                            "    \n" +
+                            "                                                                <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 3px 0px 0px; overflow-wrap: break-word; word-break: break-all;\">\n" +
+                            "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">\n" +
+                            "                                                                        <br>\n" +
+                            "                                                                        无法正常激活？请将链接复制到浏览器手动激活\n" +
+                            "                                                                        <br>\n" +
+                            "                                                                       \n" +
+                            "                                                                    </span>\n" +
+                            "                                                                </p>\n" +
+                            "                                                                <dl style=\"font-size: 14px; color: rgb(51, 51, 51); line-height: 18px;\">\n" +
+                            "                                                                    <dd style=\"margin: 0px 0px 6px; padding: 0px; font-size: 12px; line-height: 22px;\">\n" +
+                            "                                                                        <p id=\"cTMail-sender\" style=\"font-size: 14px; line-height: 26px; word-wrap: break-word; word-break: break-all; margin-top: 32px;\">\n" +
+                            "                                                                            此致\n" +
+                            "                                                                            <br>\n" +
+                            "                                                                            <strong>Flrjcx团队</strong>\n" +
+                            "                                                                        </p>\n" +
+                            "                                                                    </dd>\n" +
+                            "                                                                </dl>\n" +
+                            "                                                            </td>\n" +
+                            "                                                            <td style=\"width:3.2%;max-width:30px;\"></td>\n" +
+                            "                                                        </tr>\n" +
+                            "                                                        </tbody>\n" +
+                            "                                                    </table>\n" +
+                            "                                                </div>\n" +
+                            "                                                <div id=\"cTMail-copy\" style=\"text-align:center; font-size:12px; line-height:18px; color:#999\">\n" +
+                            "                                                    <table style=\"width:100%;font-weight:300;margin-bottom:10px;border-collapse:collapse\">\n" +
+                            "                                                        <tbody>\n" +
+                            "                                                        <tr style=\"font-weight:300\">\n" +
+                            "                                                            <td style=\"width:3.2%;max-width:30px;\"></td>\n" +
+                            "                                                            <td style=\"max-width:540px;\">\n" +
+                            "    \n" +
+                            "                                                                <p style=\"text-align:center; margin:20px auto 14px auto;font-size:12px;color:#999;\">\n" +
+                            "                                                                    此为系统邮件，请勿回复。\n" +
+                            "                                                                    <a href=\"\"\n" +
+                            "                                                                       style=\"text-decoration:none;word-break:break-all;word-wrap:normal; color: #333;\" target=\"_blank\">\n" +
+                            "                                                                        取消订阅\n" +
+                            "                                                                    </a>\n" +
+                            "                                                                </p>\n" +
+                            "                                                                <p id=\"cTMail-rights\" style=\"max-width: 100%; margin:auto;font-size:12px;color:#999;text-align:center;line-height:22px;\">\n" +
+                            "                                                                    \n" +
+                            "                                                                    关注服务号，掌握TA的动态\n" +
+                            "                                                                    <br>\n" +
+                            "                                                                   <p>CopyRight @ 2021-2022 </p>\n" +
+                            "                                                                   <p>All Rights Reserved. flrjcx 版权所有</p>\n" +
+                            "                                                                </p>\n" +
+                            "                                                            </td>\n" +
+                            "                                                            <td style=\"width:3.2%;max-width:30px;\"></td>\n" +
+                            "                                                        </tr>\n" +
+                            "                                                        </tbody>\n" +
+                            "                                                    </table>\n" +
+                            "                                                </div>\n" +
+                            "                                            </td>\n" +
+                            "                                            <td style=\"width:3%;max-width:30px;\"></td>\n" +
+                            "                                        </tr>\n" +
+                            "                                        </tbody>\n" +
+                            "                                    </table>\n" +
+                            "                                </div>\n" +
+                            "                            </div>\n" +
+                            "                        </span>\n" +
+                            "                    </div>\n" +
+                            "                </div>\n" +
+                            "            </div>\n" +
+                            "        </includetail>\n" +
+                            "    </div>\n" +
+                            "    \n" +
+                            "    </form>\n" +
+                            "</body>\n" +
+                            "</html>\n"
+                    , "text/html ;charset=gbk");
+            javaMailSender.send(mimeMessage);
+            return ResponseData.buildResponse( MessageConstants.SEND_EMAIL_PASS,HttpStateConstants.HTTP_STATE_200);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseData.buildErrorResponse(HttpStateConstants.HTTP_STATE_402,MessageConstants.SEND_EMAIL_FAIL);
+        }
+    }
+
+    /**
+     * 发送固定内容
+     * @param address:收件地址
      * @param validateCode:系统验证码
      * @return
      */

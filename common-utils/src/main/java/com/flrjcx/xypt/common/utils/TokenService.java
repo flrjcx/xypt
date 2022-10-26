@@ -1,12 +1,14 @@
 package com.flrjcx.xypt.common.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.flrjcx.xypt.common.enums.CacheTokenEnum;
 import com.flrjcx.xypt.common.model.param.common.Manager;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -53,6 +55,19 @@ public class TokenService {
         return header;
     }
 
+
+    /**
+     * 通过枚举创建token缓存
+     */
+    public String createToken(CacheTokenEnum tokenEnum, Object data) {
+        String token = UUID.randomUUID().toString();
+        String key = tokenEnum.getKey() + token;
+        Long cacheTime = tokenEnum.getCacheTime();
+        TimeUnit timeUnit = tokenEnum.getTimeUnit();
+        redisCache.setCacheObject(key, data, cacheTime, timeUnit);
+        return token;
+    }
+
     /**
      * 创建token缓存
      */
@@ -80,6 +95,10 @@ public class TokenService {
 
     public void removeManagerToken(String token) {
         redisCache.deleteObject(getManagerToken(token));
+    }
+
+    public<T> T getCache(String key) {
+        return redisCache.getCacheObject(key);
     }
 
     /**
