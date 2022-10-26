@@ -8,6 +8,7 @@ import com.flrjcx.xypt.common.constants.IResultCode;
  */
 public enum ResultCodeEnum implements IResultCode {
 
+
     /**
      * 成功消息码
      */
@@ -119,7 +120,15 @@ public enum ResultCodeEnum implements IResultCode {
     TOO_FREQUENT_WRONG_LOGIN(50108, "密码错误,您还可以输入##次"),
     NOT_LOGIN_CURRENT_DEVICE_IN_30_DAYS(50109, "您的账号30日内未在本设备登录,请输入验证码"),
     CURRENT_ACCOUNT_NOT_BIND_PHONE(50110, "您的账号未绑定手机号,请联系管理员"),
+
+    /**
+     * 文件
+     */
     ERROR_UPLOADFILE_FAILED(508000, "上传文件失败！"),
+    ERR_CODE_FILE_SIZE_FAILED(508001,"文件大小最大为2M"),
+    ERR_CODE_FILE_FORMATTER_FAILED(508002,"文件格式不支持"),
+    ERR_CODE_FILE_NULL_ERROR(508003,"文件不能为空"),
+
     ERROR_CODE_50111(50111, "根据权限查询用户失败 "),
     ERROR_CODE_50000(50000, "微服务调用异常 "),
     ERROR_CODE_50200(50200, "根据组织机构ID查询组织机构信息失败"),
