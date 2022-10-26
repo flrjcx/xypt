@@ -17,6 +17,12 @@
             <groupId>com.flrjcx.xypt</groupId>
             <artifactId>common-utils</artifactId>
             <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- 服务调用feign -->
@@ -25,8 +31,7 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <version>2.2.1.RELEASE</version>
         </dependency>
-
-
     </dependencies>
+
 
 </project>

@@ -21,9 +21,15 @@
             <groupId>com.flrjcx.xypt</groupId>
             <artifactId>common-utils</artifactId>
             <version>1.0.0</version>
-            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
+
     <build>
         <!--        指定打包后的名字-->
         <finalName>service</finalName>

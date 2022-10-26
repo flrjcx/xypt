@@ -11,13 +11,14 @@
 
     <artifactId>backend-service</artifactId>
 
-<dependencies>
-    <dependency>
-        <artifactId>common-utils</artifactId>
-        <groupId>com.flrjcx.xypt</groupId>
-        <version>1.0.0</version>
-    </dependency>
-</dependencies>
+    <dependencies>
+        <dependency>
+            <artifactId>common-utils</artifactId>
+            <groupId>com.flrjcx.xypt</groupId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <!--        指定打包后的名字-->
         <finalName>backend-service</finalName>

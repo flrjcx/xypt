@@ -23,6 +23,7 @@
             <version>2.2.1.RELEASE</version>
         </dependency>
     </dependencies>
+
     <build>
         <!--        指定打包后的名字-->
         <finalName>${project.artifactId}</finalName>

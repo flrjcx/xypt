@@ -16,16 +16,36 @@
             <groupId>com.flrjcx.xypt</groupId>
             <artifactId>service-client</artifactId>
             <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
         <dependency>
             <artifactId>common-utils</artifactId>
             <groupId>com.flrjcx.xypt</groupId>
             <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
         <dependency>
             <groupId>com.flrjcx.xypt</groupId>
             <artifactId>backend-service</artifactId>
             <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--        nacos-->
         <dependency>

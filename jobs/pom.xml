@@ -8,6 +8,7 @@
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+
     <dependencies>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
@@ -18,6 +19,12 @@
             <artifactId>common-utils</artifactId>
             <groupId>com.flrjcx.xypt</groupId>
             <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
@@ -25,7 +32,9 @@
             <version>2.2.1</version>
         </dependency>
     </dependencies>
+
     <artifactId>jobs</artifactId>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
