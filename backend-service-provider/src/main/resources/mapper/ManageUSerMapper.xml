@@ -33,6 +33,7 @@
     </sql>
 
     <sql id="manageUserInfo">
+        user_id,
         nick_name,
         account,
         sex,
@@ -44,8 +45,28 @@
     <select id="getUserList" resultType="com.flrjcx.xypt.common.model.param.common.Users">
         select
         <include refid="manageUserInfo"></include>
-        from
-        users
+        from users
+    </select>
+
+    <select id="getUserListByStatus" resultType="com.flrjcx.xypt.common.model.param.common.Users">
+        select
+        <include refid="manageUserInfo"></include>
+        from users
+        <where>
+            <if test="status != null">
+                and
+                status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="getUserInfo" resultType="com.flrjcx.xypt.common.model.param.common.Users">
+        select
+            <include refid="allUserInfo"></include>
+        from users
+        <where>
+            user_id = #{userId}
+        </where>
     </select>
 
     <update id="updateUser">

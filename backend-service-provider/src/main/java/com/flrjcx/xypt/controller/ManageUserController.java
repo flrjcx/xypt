@@ -39,19 +39,32 @@ public class ManageUserController {
         try {
             return ResponseData.buildPageResponse(manageUserService.getUserList());
         } catch (Exception e) {
-            log.error("/get user list error " + e.getMessage());
+            log.error("/getUserList error " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_QUERY_LIST);
+        }
+    }
+
+    @OpenPage
+    @Validation
+    @ApiOperation(value = "查询正常或异常用户列表")
+    @GetMapping("/getUserListByStatus")
+    public ResponseData getUserListByStatus(@RequestParam(value = "status") int status) {
+        try {
+            return ResponseData.buildPageResponse(manageUserService.getUserListByStatus(status));
+        } catch (Exception e) {
+            log.error("/getUserListByStatus error " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_QUERY_STATUS_LIST);
         }
     }
 
     @Validation
     @ApiOperation(value = "查询用户详情")
     @GetMapping("/getUserInfo")
-    public ResponseData getUserInfo() {
+    public ResponseData getUserInfo(@RequestParam(value = "userId") long userId) {
         try {
-            return ResponseData.buildResponse(ManagerThreadLocal.get());
+            return ResponseData.buildResponse(manageUserService.getUserInfo(userId));
         } catch (Exception e) {
-            log.error("/get user list error " + e.getMessage());
+            log.error("/getUserInfo error " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_DETAIL);
         }
     }
@@ -80,7 +93,7 @@ public class ManageUserController {
             }
         } catch (Exception e) {
             log.error("/deleteUser error" + e.getMessage());
-            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_UPDATE);
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_DELETE);
         }
     }
 }

@@ -12,6 +12,15 @@ import java.util.List;
 public interface ManageUserMapper {
     List<Users> getUserList();
 
+    /**
+     * 根据用户状态获取列表
+     * @param status 用户状态
+     * @return Users列表
+     */
+    List<Users> getUserListByStatus(int status);
+
+    Users getUserInfo(long userId);
+
     long updateUser(Users user);
 
     boolean deleteUser(long userId);

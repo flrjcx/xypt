@@ -33,6 +33,11 @@ public class ManageUserServiceImpl implements ManageUserService {
     }
 
     @Override
+    public List<Users> getUserListByStatus(int status) {
+        return manageUserMapper.getUserListByStatus(status);
+    }
+
+    @Override
     public long updateUser(Users user, String token) {
         long rows = manageUserMapper.updateUser(user);
         tokenService.updateCache(token, user);
@@ -46,5 +51,10 @@ public class ManageUserServiceImpl implements ManageUserService {
             tokenService.removeManagerToken(token);
         }
         return flag;
+    }
+
+    @Override
+    public Users getUserInfo(long userId) {
+        return manageUserMapper.getUserInfo(userId);
     }
 }
