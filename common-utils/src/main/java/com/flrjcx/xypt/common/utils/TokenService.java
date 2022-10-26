@@ -140,4 +140,7 @@ public class TokenService {
     }
 
 
+    public void removeToken(String key) {
+        redisCache.deleteObject(key);
+    }
 }

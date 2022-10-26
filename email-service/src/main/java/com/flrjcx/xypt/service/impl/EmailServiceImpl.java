@@ -62,10 +62,12 @@ public class EmailServiceImpl implements EmailService {
     @Transactional
     @Override
     public ResponseData verificationRegister(String token) {
-        Long uid = tokenService.getCache(CacheTokenEnum.CACHE_EMAIL.getKey() + token);
+        String key = CacheTokenEnum.CACHE_EMAIL.getKey() + token;
+        Long uid = tokenService.getCache(key);
         if (ObjectUtils.isEmpty(uid)) {
             return ResponseData.buildErrorResponse(FAIL);
         }
+        tokenService.removeToken(key);
         emailRegisterMapper.setStatusOk(String.valueOf(uid));
         return ResponseData.buildSuccess();
     }
