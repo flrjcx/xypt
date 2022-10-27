@@ -42,22 +42,42 @@ public class ValidationInterceptor implements HandlerInterceptor {
         // 有，说明需要用户验证
         if (annotation != null) {
             // 获取请求头的token
-            String header = request.getHeader(tokenService.getHeader());
-            if(request.getRequestURI().startsWith("/xypt/api/backend")) {
-                Manager manager = tokenService.getManagerCache(header);
-                if (Objects.isNull(manager)) {
+            String token = request.getHeader(tokenService.getHeader());
+            String uri = request.getRequestURI();
+            if(uri.indexOf("/api/backend") > -1) {
+                //indexOf 比 contains 效率高
+                if (!managerValidation(token)) {
                     throw new ValidationException();
                 }
-                ManagerThreadLocal.put(manager);
+            } else if(uri.indexOf("/api/common") > -1) {
+                if (!userValidation(token) && !managerValidation(token)) {
+                    throw new ValidationException();
+                }
             } else {
-                Users users = tokenService.getUserCache(header);
-                if (Objects.isNull(users)) {
+                if (!userValidation(token)) {
                     throw new ValidationException();
                 }
-                UserThreadLocal.put(users);
             }
         }
         // 没有，不需要用户验证
+        return true;
+    }
+
+    public boolean managerValidation(String token) {
+        Manager manager = tokenService.getManagerCache(token);
+        if (Objects.isNull(manager)) {
+            return false;
+        }
+        ManagerThreadLocal.put(manager);
+        return true;
+    }
+
+    public boolean userValidation(String token) {
+        Users user = tokenService.getUserCache(token);
+        if (Objects.isNull(user)) {
+            return false;
+        }
+        UserThreadLocal.put(user);
         return true;
     }
 

@@ -22,13 +22,9 @@ public class FileUtil {
     }
 
     //判断文件大小不超过2M
-    public static boolean fileSizeIsOK(MultipartFile multipartFile) {
+    public static boolean isFileSizeOK(MultipartFile multipartFile) {
         long size = multipartFile.getSize();
-        if(size>IMAGE_FILE_SIZE){
-            return false;
-        }
-
-        return true;
+        return size <= IMAGE_FILE_SIZE;
     }
 
 }

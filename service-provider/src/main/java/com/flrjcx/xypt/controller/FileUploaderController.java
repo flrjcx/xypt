@@ -49,7 +49,7 @@ public class FileUploaderController {
         //判断文件是否为空
         if (!(ObjectUtils.isEmpty(file) || file.getSize() <= 0)) {
             //判断文件大小是否合适
-            if(!FileUtil.fileSizeIsOK(file)){
+            if(!FileUtil.isFileSizeOK(file)){
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERR_CODE_FILE_SIZE_FAILED);
             }
             //获得文件上传的名称
@@ -90,7 +90,7 @@ public class FileUploaderController {
             //判断文件是否为空
             if (!(ObjectUtils.isEmpty(file) || file.getSize() <= 0)) {
                 //判断文件大小是否合适
-                if(!FileUtil.fileSizeIsOK(file)){
+                if(!FileUtil.isFileSizeOK(file)){
 //                    return ResponseData.buildErrorResponse(ResultCodeEnum.ERR_CODE_FILE_SIZE_FAILED);
                     continue;
                 }

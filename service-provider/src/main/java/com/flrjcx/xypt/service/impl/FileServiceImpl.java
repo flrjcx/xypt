@@ -52,7 +52,7 @@ public class FileServiceImpl implements FileService {
         if (!(res.isOK() && res.isJson())) {
 
             //七牛云服务异常
-        throw  new WebServiceEnumException(ResultCodeEnum.ERR_CODE_QINIU_ERR);
+            throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERR_CODE_QINIU_ERR);
 
         }
 

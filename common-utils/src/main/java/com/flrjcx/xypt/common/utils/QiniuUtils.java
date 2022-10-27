@@ -1,5 +1,7 @@
 package com.flrjcx.xypt.common.utils;
 
+import com.flrjcx.xypt.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.exception.WebServiceEnumException;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
@@ -9,60 +11,97 @@ import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
+import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 七牛云工具类
  */
+@Component
 public class QiniuUtils {
-    public static String accessKey = "RuCuE2nETbt88icvIPR7dCYEfr7ioPwQ60vSR8_s";
-    public static String secretKey = "0l_5Tq_lgkRxYfiP3Vb2hwh_DM3BToWCEydnudCF";
-    public static String bucket = "flrjcx-health-space1";
+    @Value("${qiniu.accessKey}")
+    private static String accessKey;
 
-    public static void upload2Qiniu(String filePath, String fileName) {
-        //构造一个带指定Zone对象的配置类
-        Configuration cfg = new Configuration(Region.huanan());
-        UploadManager uploadManager = new UploadManager(cfg);
-        Auth auth = Auth.create(accessKey, secretKey);
-        String upToken = auth.uploadToken(bucket);
+    @Value("${qiniu.accessSecretKey}")
+    private static String accessSecretKey;
+
+    @Value("${qiniu.bucket}")
+    private static String bucket;
+
+    @Value("${qiniu.domain}")
+    private static String domain;
+
+    /**
+     * 处理多文件
+     * @param multipartFiles
+     * @return
+     */
+    public Map<String, List<String>> uploadImage2Qiniu(MultipartFile[] multipartFiles){
         try {
-            Response response = uploadManager.put(filePath, fileName, upToken);
-            //解析上传成功的结果
-            DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-        } catch (QiniuException ex) {
-            Response r = ex.response;
-            try {
-                System.err.println(r.bodyString());
-            } catch (QiniuException ex2) {
-                //ignore
+            Map<String,List<String>> map = new HashMap<>();
+            List<String> imageUrls = new ArrayList<>();
+            for(MultipartFile file : multipartFiles){
+                checkImage(file);
+                imageUrls.add(uploadImage2Qiniu(file));
             }
+            map.put("imageUrl",imageUrls);
+            return map;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
-    //上传文件
-    public static void upload2Qiniu(byte[] bytes, String fileName) {
-        //构造一个带指定Zone对象的配置类
-        Configuration cfg = new Configuration(Region.huanan());
-        //...其他参数参考类注释
-        UploadManager uploadManager = new UploadManager(cfg);
-
-        //默认不指定key的情况下，以文件内容的hash值作为文件名
-        String key = fileName;
-        Auth auth = Auth.create(accessKey, secretKey);
-        String upToken = auth.uploadToken(bucket);
+    /**
+     * 上传图片到七牛云
+     * @param multipartFile
+     * @return
+     */
+    private String uploadImage2Qiniu(MultipartFile multipartFile){
         try {
-            Response response = uploadManager.put(bytes, key, upToken);
-            //解析上传成功的结果
-            DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-            System.out.println("FileName:" + putRet.key);
-            System.out.println("Status:200");
-        } catch (QiniuException ex) {
-            Response r = ex.response;
-            System.err.println(r.toString());
-            try {
-                System.err.println(r.bodyString());
-            } catch (QiniuException ex2) {
-                //ignore
-            }
+            //1、获取文件上传的流
+            byte[] fileBytes = multipartFile.getBytes();
+            //2、创建日期目录分隔
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            String datePath = dateFormat.format(new Date());
+
+            //3、获取文件名
+            String originalFilename = multipartFile.getOriginalFilename();
+            String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String filename = datePath+"/"+UUID.randomUUID().toString().replace("-", "")+ suffix;
+
+            //4.构造一个带指定 Region 对象的配置类
+            Configuration cfg = new Configuration(Region.huanan());
+            UploadManager uploadManager = new UploadManager(cfg);
+
+            //5.获取七牛云提供的 token
+            Auth auth = Auth.create(accessKey, accessSecretKey);
+            String upToken = auth.uploadToken(bucket);
+            uploadManager.put(fileBytes,filename,upToken);
+
+            return domain+filename;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void checkImage(MultipartFile multipartFile) {
+        if (ObjectUtils.isEmpty(multipartFile)) {
+            throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERR_CODE_FILE_NULL_ERROR);
+        }
+        if (!FileUtil.isFileSizeOK(multipartFile)) {
+            throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERR_CODE_FILE_SIZE_FAILED);
+        }
+        if (!FileUtil.isFileAllowed(multipartFile.getOriginalFilename())) {
+            throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERR_CODE_FILE_FORMATTER_FAILED);
         }
     }
 
@@ -71,7 +110,7 @@ public class QiniuUtils {
         //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(Region.huanan());
         String key = fileName;
-        Auth auth = Auth.create(accessKey, secretKey);
+        Auth auth = Auth.create(accessKey, accessSecretKey);
         BucketManager bucketManager = new BucketManager(auth, cfg);
         try {
             bucketManager.delete(bucket, key);

@@ -5,6 +5,7 @@ import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.mapper.ManageUserMapper;
 import com.flrjcx.xypt.service.ManageUserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -38,6 +39,7 @@ public class ManageUserServiceImpl implements ManageUserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public long updateUser(Users user, String token) {
         long rows = manageUserMapper.updateUser(user);
         tokenService.updateCache(token, user);
@@ -45,6 +47,7 @@ public class ManageUserServiceImpl implements ManageUserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean deleteUser(long userId, String token) {
         boolean flag = manageUserMapper.deleteUser(userId);
         if (flag) {
