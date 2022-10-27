@@ -20,10 +20,13 @@ public class KaptchaConfig {
         Properties properties = new Properties();
         // 图片边框
         properties.setProperty("kaptcha.border", "yes");
+        // 背景渐变
+        properties.setProperty("kaptcha.background.clear.from", "245,245,255");
+        properties.setProperty("kaptcha.background.clear.to", "245,245,255");
         // 边框颜色
-        properties.setProperty("kaptcha.border.color", "255,255,255");
+        properties.setProperty("kaptcha.border.color", "233,233,233");
         // 字体颜色
-        properties.setProperty("kaptcha.textproducer.font.color", "blue");
+        properties.setProperty("kaptcha.textproducer.font.color", "45,55,95");
         // 图片宽
         properties.setProperty("kaptcha.image.width", "110");
         // 图片高

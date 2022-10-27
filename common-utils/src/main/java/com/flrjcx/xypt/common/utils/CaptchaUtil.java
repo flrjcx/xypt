@@ -1,12 +1,19 @@
 package com.flrjcx.xypt.common.utils;
 
+import cn.hutool.captcha.CircleCaptcha;
+import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.lang.UUID;
 import com.flrjcx.xypt.common.model.dto.VerifyCodeDto;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.wf.captcha.SpecCaptcha;
+import com.wf.captcha.base.Captcha;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import sun.misc.BASE64Encoder;
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -49,16 +56,43 @@ public class CaptchaUtil {
         }
     }
 
-
-    /**
-     * 生成 VerifyCodeDto对象
-     * @return 返回验证码对象
-     * @throws IOException 流异常
-     */
-    public VerifyCodeDto catchaImgCreator() throws IOException {
+    public VerifyCodeDto catchaImgCreator() throws IOException, FontFormatException {
         //生成文字验证码
-        String text = producer.createText();
-        System.out.println(text);
+        SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 4);
+        specCaptcha.setCharType(Captcha.TYPE_DEFAULT);
+        specCaptcha.setFont(Captcha.FONT_8);
+        String text = specCaptcha.text().toLowerCase();
+
+        //生成token
+        String uuid = UUID.fastUUID().toString();
+        createToken(uuid, text);
+        VerifyCodeDto verifyCodeDto = new VerifyCodeDto();
+        verifyCodeDto.setImg(specCaptcha.toBase64(""));
+        verifyCodeDto.setUuid(uuid);
+        return verifyCodeDto;
+    }
+
+    // 备份
+//    /**
+//     * 生成 VerifyCodeDto对象
+//     * @return 返回验证码对象
+//     * @throws IOException 流异常
+//     */
+//    public VerifyCodeDto catchaImgCreator() throws IOException {
+//        //生成文字验证码
+//        String text = producer.createText();
+//        System.out.println(text);
+//
+//        //生成token
+//        String uuid = UUID.fastUUID().toString();
+//        createToken(uuid, text);
+//        VerifyCodeDto verifyCodeDto = new VerifyCodeDto();
+//        verifyCodeDto.setImg(createBase64Code(text));
+//        verifyCodeDto.setUuid(uuid);
+//        return verifyCodeDto;
+//    }
+
+    private String createBase64Code(String text) throws IOException {
         //生成文字对应的图片验证码
         BufferedImage image = producer.createImage(text);
         //将图片写出
@@ -66,14 +100,10 @@ public class CaptchaUtil {
         ImageIO.write(image, "jpg", outputStream);
         //对写出的字节数组进行Base64编码 ==> 用于传递8比特字节码
         BASE64Encoder encoder = new BASE64Encoder();
-        //生成token
-        String uuid = UUID.fastUUID().toString();
-        createToken(uuid, text);
-        VerifyCodeDto verifyCodeDto = new VerifyCodeDto();
-        verifyCodeDto.setImg(encoder.encode(outputStream.toByteArray()));
-        verifyCodeDto.setUuid(uuid);
-        return verifyCodeDto;
+        return encoder.encode(outputStream.toByteArray());
     }
+
+
 
     /**
      * 创建token
@@ -94,4 +124,5 @@ public class CaptchaUtil {
     private String getKey(String uuid) {
         return KEY_PRE + uuid;
     }
+
 }
