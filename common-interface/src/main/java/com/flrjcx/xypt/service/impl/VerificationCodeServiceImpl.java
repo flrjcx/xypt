@@ -6,6 +6,7 @@ import com.flrjcx.xypt.service.VerificationCodeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -21,7 +22,12 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     @Override
     public VerifyCodeDto createVerificationCode() {
         try {
-            VerifyCodeDto verifyCodeDto = captchaUtil.catchaImgCreator();
+            VerifyCodeDto verifyCodeDto = null;
+            try {
+                verifyCodeDto = captchaUtil.catchaImgCreator();
+            } catch (FontFormatException e) {
+                e.printStackTrace();
+            }
             return verifyCodeDto;
         } catch (IOException e) {
             e.printStackTrace();

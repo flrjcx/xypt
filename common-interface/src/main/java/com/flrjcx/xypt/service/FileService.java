@@ -9,12 +9,13 @@ public interface FileService {
 
     /**
      *
-     * @param file  文件
+     * @param file  上传文件
      * @param fileExtName   文件后缀名
-     * @return      文件url
+     * @param QiNuiPath 文件储存目录
+     * @return  文件访问地址
      * @throws Exception
      */
-    public String uploadToQiNui(MultipartFile file, String fileExtName) throws Exception;
+    public String uploadToQiNui(MultipartFile file, String fileExtName, String QiNuiPath) throws Exception;
 
 
 

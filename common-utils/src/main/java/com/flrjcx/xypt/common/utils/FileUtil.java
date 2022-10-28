@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.common.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -12,9 +13,18 @@ public class FileUtil {
     // 图片允许的后缀扩展名
     public static String[] IMAGE_FILE_EXTD = new String[] { "jpg","jpeg","bmp","gif","png"};
 
+
+    //获取文件名后缀
+    public static String getFileSuffix(String filename){
+
+        String[] split = StringUtils.split(filename, "\\.");
+        return split[split.length-1];
+    }
+
     public static boolean isFileAllowed(String fileName) {
+        String fileSuffix = getFileSuffix(fileName);
         for (String ext : IMAGE_FILE_EXTD) {
-            if (ext.equals(fileName)) {
+            if (ext.equals(fileSuffix)) {
                 return true;
             }
         }
