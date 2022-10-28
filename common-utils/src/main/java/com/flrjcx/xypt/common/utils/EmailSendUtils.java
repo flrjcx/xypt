@@ -61,7 +61,7 @@ public class EmailSendUtils {
      * @return
      */
     public ResponseData sendFixedMail(String address,String validateAddress,String name) {
-        String subject = "校园达伦注册";
+        String subject = "校园达论注册";
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper;
         try {
@@ -99,7 +99,7 @@ public class EmailSendUtils {
                             "                                                             style=\"width:46px; height:5px; display:block\">\n" +
                             "                                                    </a>\n" +
                             "                                                </div>\n" +
-                            "                                                <p style=\"height:2px;background-color: #eb0a86;border: 0;font-size:0;padding:0;width:100%;margin-top:20px;\"></p>\n" +
+                            "                                                <p style=\"height:2px;background-color: #00a4ff;border: 0;font-size:0;padding:0;width:100%;margin-top:20px;\"></p>\n" +
                             "    \n" +
                             "                                                <div id=\"cTMail-inner\" style=\"background-color:#fff; padding:23px 0 20px;box-shadow: 0px 1px 1px 0px rgba(122, 55, 55, 0.2);text-align:left;\">\n" +
                             "                                                    <table style=\"width:100%;font-weight:300;margin-bottom:10px;border-collapse:collapse;text-align:left;\">\n" +
@@ -108,7 +108,7 @@ public class EmailSendUtils {
                             "                                                            <td style=\"width:3.2%;max-width:30px;\"></td>\n" +
                             "                                                            <td style=\"max-width:480px;text-align:left;\">\n" +
                             "                                                                <h1 id=\"cTMail-title\" style=\"font-size: 20px; line-height: 36px; margin: 0px 0px 22px;\">\n" +
-                            "                                                                    【校园达伦】欢迎注册\n" +
+                            "                                                                    【校园达论】欢迎注册\n" +
                             "                                                                </h1>\n" +
                             "    \n" +
                             "                                                                <p id=\"cTMail-userName\" style=\"font-size:14px;color:#333; line-height:24px; margin:0;\">\n" +
@@ -117,7 +117,7 @@ public class EmailSendUtils {
                             "    \n" +
                             "                                                                <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\">\n" +
                             "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">\n" +
-                            "                                                                        欢迎注册校园达伦，全球领先的中文社区。。\n" +
+                            "                                                                        欢迎注册校园达论，全国大学领先社区。。\n" +
                             "                                                                    </span>\n" +
                             "                                                                </p>\n" +
                             "                                                                <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\">\n" +
@@ -146,7 +146,7 @@ public class EmailSendUtils {
                             "                                                                        <p id=\"cTMail-sender\" style=\"font-size: 14px; line-height: 26px; word-wrap: break-word; word-break: break-all; margin-top: 32px;\">\n" +
                             "                                                                            此致\n" +
                             "                                                                            <br>\n" +
-                            "                                                                            <strong>Flrjcx团队</strong>\n" +
+                            "                                                                            <strong>校园达论团队</strong>\n" +
                             "                                                                        </p>\n" +
                             "                                                                    </dd>\n" +
                             "                                                                </dl>\n" +
@@ -175,7 +175,6 @@ public class EmailSendUtils {
                             "                                                                    关注服务号，掌握TA的动态\n" +
                             "                                                                    <br>\n" +
                             "                                                                   <p>CopyRight @ 2021-2022 </p>\n" +
-                            "                                                                   <p>All Rights Reserved. flrjcx 版权所有</p>\n" +
                             "                                                                </p>\n" +
                             "                                                            </td>\n" +
                             "                                                            <td style=\"width:3.2%;max-width:30px;\"></td>\n" +
