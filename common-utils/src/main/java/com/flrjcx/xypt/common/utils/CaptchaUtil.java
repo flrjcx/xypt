@@ -1,16 +1,12 @@
 package com.flrjcx.xypt.common.utils;
 
-import cn.hutool.captcha.CircleCaptcha;
-import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.lang.UUID;
 import com.flrjcx.xypt.common.model.dto.VerifyCodeDto;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import sun.misc.BASE64Encoder;
 import javax.imageio.ImageIO;
 import java.awt.*;
