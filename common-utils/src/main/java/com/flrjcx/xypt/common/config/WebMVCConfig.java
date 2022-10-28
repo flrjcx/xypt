@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.common.config;
 
+import com.flrjcx.xypt.common.handler.ApiInterceptor;
 import com.flrjcx.xypt.common.handler.ValidationInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,13 +21,22 @@ public class WebMVCConfig implements WebMvcConfigurer {
     @Resource
     private ValidationInterceptor userValidationInterceptor;
 
+    @Resource
+    private ApiInterceptor apiInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        System.out.println("sss");
+        registry.addInterceptor(apiInterceptor)
+                .addPathPatterns(
+                        "/**"
+                );
         registry.addInterceptor(userValidationInterceptor)
                 .addPathPatterns(
                         "/**"
                 );
     }
+
 
     /**
      * 跨域配置

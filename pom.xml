@@ -19,6 +19,7 @@
         <module>common-utils</module>
         <module>common-interface</module>
         <module>jobs</module>
+        <module>backend-log</module>
     </modules>
 
     <properties>
