@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 /**
  * 文件上传
  *
- * @author 疯了~
+ * @author 疯了~   10-28-23:00
  */
 @Api(tags = "文件上传")
 @ApiRestController("/api/client/fileUploader")
@@ -31,7 +32,7 @@ public class FileUploaderController {
 
     @ApiOperation(value = "单文件上传")
     @PostMapping("uploadFile")
-    public ResponseData uploadFace(MultipartFile file, String QiNuiPath) throws Exception {
+    public ResponseData uploadFace(MultipartFile file,@RequestParam(name = "QiNiuPath") String QiNiuPath) throws Exception {
 
         //验证文件是否符合条件
         QiniuUtils.checkImage(file);
@@ -39,7 +40,7 @@ public class FileUploaderController {
         String path = "";
 
         //上传
-        path = fileService.uploadToQiNui(file, FileUtil.getFileSuffix(file.getOriginalFilename()), QiNuiPath);
+        path = fileService.uploadToQiNiu(file, FileUtil.getFileSuffix(file.getOriginalFilename()), QiNiuPath);
 
 
         //返回文件路径
@@ -48,7 +49,7 @@ public class FileUploaderController {
 
     @ApiOperation(value = "上传多个图片文件")
     @PostMapping("uploadSomeFiles")
-    public ResponseData uploadSomeFace(MultipartFile[] files, String QiNuiPath) throws Exception {
+    public ResponseData uploadSomeFace(MultipartFile[] files, String QiNiuPath) throws Exception {
         //声明一个list, 用于存放多个图片url路径 , 返回给前端
         ArrayList<String> imageUrlList = new ArrayList<>();
         for (MultipartFile file : files) {
@@ -58,7 +59,7 @@ public class FileUploaderController {
 
             String path = "";
             //上传
-            path = fileService.uploadToQiNui(file, FileUtil.getFileSuffix(file.getOriginalFilename()), QiNuiPath);
+            path = fileService.uploadToQiNiu(file, FileUtil.getFileSuffix(file.getOriginalFilename()), QiNiuPath);
 
             if (StringUtils.isNotBlank(path)) {
                 imageUrlList.add(path);

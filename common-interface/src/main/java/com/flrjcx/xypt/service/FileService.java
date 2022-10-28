@@ -15,7 +15,7 @@ public interface FileService {
      * @return  文件访问地址
      * @throws Exception
      */
-    public String uploadToQiNui(MultipartFile file, String fileExtName, String QiNuiPath) throws Exception;
+    public String uploadToQiNiu(MultipartFile file, String fileExtName, String QiNuiPath) throws Exception;
 
 
 
