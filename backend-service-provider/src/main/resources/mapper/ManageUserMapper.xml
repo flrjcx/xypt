@@ -45,18 +45,36 @@
 
     <select id="getUserList" resultType="com.flrjcx.xypt.common.model.param.common.Users">
         select
-        <include refid="manageUserInfo"></include>
+        <include refid="manageUserInfo"/>
         from users
     </select>
 
     <select id="getUserListByStatus" resultType="com.flrjcx.xypt.common.model.param.common.Users">
         select
-        <include refid="manageUserInfo"></include>
+        <include refid="manageUserInfo"/>
         from users
         <where>
             <if test="status != null">
                 and
                 status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="getUserListByRegisterTime" resultType="com.flrjcx.xypt.common.model.param.common.Users">
+        select
+        <include refid="manageUserInfo"/>
+        from users
+        <where>
+            <if test="begin != null and begin !=''">
+                <![CDATA[
+                    and create_time >= #{begin}
+                ]]>
+            </if>
+            <if test="end != null and end !=''">
+                <![CDATA[
+                    and create_time <= #{end}
+                ]]>
             </if>
         </where>
     </select>

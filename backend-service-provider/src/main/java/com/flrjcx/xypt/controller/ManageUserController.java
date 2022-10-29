@@ -6,7 +6,6 @@ import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.result.ResponseData;
-import com.flrjcx.xypt.common.utils.ManagerThreadLocal;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.service.ManageUserService;
 import io.swagger.annotations.Api;
@@ -54,6 +53,20 @@ public class ManageUserController {
         } catch (Exception e) {
             log.error("/getUserListByStatus error " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_QUERY_STATUS_LIST);
+        }
+    }
+
+    @OpenPage
+    @Validation
+    @ApiOperation(value = "注册时间范围查询用户列表")
+    @GetMapping("/getUserListByRegisterTime")
+    public ResponseData getUserListByRegisterTime(@RequestParam(value = "begin") String begin,
+                                                  @RequestParam(value = "end") String end) {
+        try {
+            return ResponseData.buildPageResponse(manageUserService.getUserListByRegisterTime(begin, end));
+        } catch (Exception e) {
+            log.error("/getUserListByRegisterTime error " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_QUERY_REGISTER_TIME_LIST);
         }
     }
 

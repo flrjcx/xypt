@@ -71,6 +71,7 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_ROLE_TEMPLATE_UPDATE(110014, "修改角色模板列表信息失败！"),
     ERROR_ROLE_TEMPLATE_DELETE(110015, "删除角色模板列表信息失败！"),
     ERROR_ROLE_QUERY_STATUS_LIST(110016, "获取指定状态角色列表信息失败！"),
+    ERROR_ROLE_QUERY_REGISTER_TIME_LIST(110017, "获取指定注册时间范围的角色列表信息失败！"),
 
 
     /**

@@ -60,4 +60,9 @@ public class ManageUserServiceImpl implements ManageUserService {
     public Users getUserInfo(long userId) {
         return manageUserMapper.getUserInfo(userId);
     }
+
+    @Override
+    public List<Users> getUserListByRegisterTime(String begin, String end) {
+        return manageUserMapper.getUserListByRegisterTime(begin, end);
+    }
 }
