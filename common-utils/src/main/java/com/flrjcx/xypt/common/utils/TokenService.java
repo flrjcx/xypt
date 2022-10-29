@@ -72,29 +72,76 @@ public class TokenService {
      * 创建token缓存
      */
     public String createToken(Users users) {
-        String token = jwtUtils.createToken(users.getUserId());
+        Long userId = users.getUserId();
+        String token = jwtUtils.createToken(userId);
         //CACHE_USER:eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NjY1MjI2MTMsInVzZXJJZCI6NjQsImlhdCI6MTY2NjQzNjIxM30.EpaSpXP2EriwHugC_51tvpaLA9I5JgBBFdLWjxtkNY8:users{}
-        redisCache.setCacheObject(getUserToken(token), JSON.toJSONString(users), userExpireTime, TimeUnit.MINUTES);
+        String userTokenKey = getUserKey(token);
+        String userIdKey = getUserKey(userId.toString());
+        redisCache.setCacheObject(userIdKey, token, userExpireTime, TimeUnit.MINUTES);
+        redisCache.setCacheObject(userTokenKey, JSON.toJSONString(users), userExpireTime, TimeUnit.MINUTES);
         return token;
     }
 
     public String createToken(Manager manager) {
-        String token = jwtUtils.createToken(manager.getManagerId());
-        redisCache.setCacheObject(getManagerToken((token)), JSON.toJSONString(manager), managerExpireTime, TimeUnit.MINUTES);
+        Long managerId = manager.getManagerId();
+        String token = jwtUtils.createToken(managerId);
+        String managerTokenKey = getManagerKey(token);
+        String managerIdKey = getManagerKey(managerId.toString());
+        redisCache.setCacheObject(managerIdKey, token, managerExpireTime, TimeUnit.MINUTES);
+        redisCache.setCacheObject(managerTokenKey, JSON.toJSONString(manager), managerExpireTime, TimeUnit.MINUTES);
         return token;
     }
 
     /**
-     * 删除用户缓存
-     *
+     * 通过token删除redis缓存: token和user对象
+     * 1. 通过token拿到user对象, 并从中获取userId
+     * 2. 通过token删除token-user缓存
+     * 3. 通过userId删除userId-token缓存
      * @param token
      */
-    public void removeUserToken(String token) {
-        redisCache.deleteObject(getUserToken(token));
+    public boolean removeUserToken(String token) {
+        String userTokenKey = getUserKey(token);
+        String userIdKey = getUserKey(getUserCache(token).getUserId().toString());
+        return redisCache.deleteObject(userTokenKey) && redisCache.deleteObject(userIdKey);
     }
 
-    public void removeManagerToken(String token) {
-        redisCache.deleteObject(getManagerToken(token));
+    /**
+     * 通过userId删除redis缓存: token和user对象
+     * 1. 通过userId拿到token
+     * 2. 通过token删除token-user缓存
+     * 3. 通过userId删除userId-token缓存
+     * @param userId
+     */
+    public boolean removeUserToken(Long userId) {
+        String userTokenKey = getUserKey(getUserTokenCache(userId));
+        String userIdKey = getUserKey(userId.toString());
+        return redisCache.deleteObject(userTokenKey) && redisCache.deleteObject(userIdKey);
+    }
+
+    /**
+     * 通过token删除redis缓存: token和manager对象
+     * 1. 通过token拿到manager对象, 并从中获取managerId
+     * 2. 通过token删除token-manager缓存
+     * 3. 通过managerId删除managerId-token缓存
+     * @param token
+     */
+    public boolean removeManagerToken(String token) {
+        String managerTokenKey = getManagerKey(token);
+        String managerIdKey = getManagerKey(getManagerCache(managerTokenKey).getManagerId().toString());
+        return redisCache.deleteObject(managerTokenKey) && redisCache.deleteObject(managerIdKey);
+    }
+
+    /**
+     * 通过managerId删除redis缓存: token和manager对象
+     * 1. 通过managerId拿到token
+     * 2. 通过token删除token-manager缓存
+     * 3. 通过managerId删除managerId-token缓存
+     * @param managerId
+     */
+    public boolean removeManagerToken(Long managerId) {
+        String managerTokenKey = getManagerKey(getManagerTokenCache(managerId));
+        String managerIdKey = getManagerKey(managerId.toString());
+        return redisCache.deleteObject(managerTokenKey) && redisCache.deleteObject(managerIdKey);
     }
 
     public<T> T getCache(String key) {
@@ -108,34 +155,42 @@ public class TokenService {
      * @return
      */
     public Users getUserCache(String token) {
-        String userVoJson = redisCache.getCacheObject(getUserToken(token));
+        String userVoJson = redisCache.getCacheObject(getUserKey(token));
         Users users = JSON.parseObject(userVoJson, Users.class);
         return users;
     }
 
+    public String getUserTokenCache(Long userId) {
+        return redisCache.getCacheObject(getUserKey(userId.toString()));
+    }
+
     public Manager getManagerCache(String token) {
-        String managerVoJson = redisCache.getCacheObject(getManagerToken(token));
+        String managerVoJson = redisCache.getCacheObject(getManagerKey(token));
         Manager manager = JSON.parseObject(managerVoJson, Manager.class);
         return manager;
     }
 
+    public String getManagerTokenCache(Long managerId) {
+        return redisCache.getCacheObject(getManagerKey(managerId.toString()));
+    }
+
     public void updateCache(String token, Users users) {
-        redisCache.setCacheObject(getUserToken(token), users);
+        redisCache.setCacheObject(getUserKey(token), users);
     }
 
     public void updateCache(String token, Manager manager) {
-        redisCache.setCacheObject(getManagerToken(token), manager);
+        redisCache.setCacheObject(getManagerKey(token), manager);
     }
 
-    private String getUserToken(String s) {
-        return getToken(USER_TAG, s);
+    private String getUserKey(String s) {
+        return getKey(USER_TAG, s);
     }
 
-    private String getManagerToken(String s) {
-        return getToken(MANAGER_TAG, s);
+    private String getManagerKey(String s) {
+        return getKey(MANAGER_TAG, s);
     }
 
-    private String getToken(String pre, String s) {
+    private String getKey(String pre, String s) {
         return pre + s;
     }
 

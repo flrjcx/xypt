@@ -49,7 +49,11 @@ public class ManageUserServiceImpl implements ManageUserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteUser(long userId, String token) {
-        return manageUserMapper.deleteUser(userId);
+        boolean flag = manageUserMapper.deleteUser(userId);
+        if (flag) {
+            tokenService.removeUserToken(userId);
+        }
+        return flag;
     }
 
     @Override
