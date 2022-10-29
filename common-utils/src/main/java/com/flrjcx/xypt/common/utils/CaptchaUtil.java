@@ -61,7 +61,8 @@ public class CaptchaUtil {
 
         //生成token
         String uuid = UUID.fastUUID().toString();
-        System.out.println(uuid+": "+text);
+        System.out.println("\"uuid\": \"" + uuid + "\", \n" +
+                "    \"verifyCode\": \"" + text + "\"");
         createToken(uuid, text);
         VerifyCodeDto verifyCodeDto = new VerifyCodeDto();
         verifyCodeDto.setImg(specCaptcha.toBase64(""));

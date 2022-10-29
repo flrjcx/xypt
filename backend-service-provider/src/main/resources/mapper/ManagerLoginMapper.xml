@@ -16,7 +16,7 @@
         nick_name,
         nick_pic,
         manager_account,
-        manager_password,
+        manager_password
     </sql>
 
     <sql id="allUserInfo">
@@ -42,11 +42,10 @@
 
     <select id="findManagerByAccount" resultType="com.flrjcx.xypt.common.model.param.common.Manager">
         select
-            <include refid="allManagerInfo"></include>
+            <include refid="allManagerInfo"/>
         from
             manager
         where
-            manger_account = #{account}
-        limit 1
+            manager_account = #{account}
     </select>
 </mapper>

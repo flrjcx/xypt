@@ -8,7 +8,7 @@
         nick_name,
         nick_pic,
         manager_account,
-        manager_password,
+        manager_password
     </sql>
 
     <sql id="allUserInfo">
@@ -29,7 +29,8 @@
         school,
         create_time,
         update_time,
-        status
+        status,
+        privacy_setting
     </sql>
 
     <sql id="manageUserInfo">
@@ -89,13 +90,14 @@
             <if test="createTime != null"> create_time = #{createTime}, </if>
             <if test="updateTime != null"> update_time = #{updateTime}, </if>
             <if test="status != null"> status = #{status}, </if>
+            <if test="privacySetting != null"> privacy_setting = #{privacySetting} </if>
         </trim>
         where user_id = #{userId}
     </update>
 
     <update id="deleteUser">
         update users
-        set status = 0
+        set status = 2
         where user_id = #{userId}
     </update>
 </mapper>
