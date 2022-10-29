@@ -26,7 +26,6 @@ public class WebMVCConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        System.out.println("sss");
         registry.addInterceptor(apiInterceptor)
                 .addPathPatterns(
                         "/**"
