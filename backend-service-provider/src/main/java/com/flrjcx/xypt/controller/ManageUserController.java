@@ -83,8 +83,8 @@ public class ManageUserController {
 
     @Validation
     @ApiOperation(value = "删除用户")
-    @DeleteMapping("/deleteUser/{userId}")
-    public ResponseData deleteUser(@PathVariable("userId") long userId, @RequestHeader("Authorization") String token) {
+    @DeleteMapping("/deleteUser")
+    public ResponseData deleteUser(@RequestParam("userId") long userId, @RequestHeader("Authorization") String token) {
         try {
             if(manageUserService.deleteUser(userId, token)) {
                 return ResponseData.buildSuccess();
