@@ -20,6 +20,7 @@
         <module>common-interface</module>
         <module>jobs</module>
         <module>backend-log</module>
+        <module>email-service</module>
     </modules>
 
     <properties>

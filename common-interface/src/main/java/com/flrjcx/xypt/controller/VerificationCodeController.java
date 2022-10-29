@@ -6,6 +6,7 @@ import com.flrjcx.xypt.common.model.dto.VerifyCodeDto;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.service.VerificationCodeService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -23,6 +24,7 @@ public class VerificationCodeController {
     @Resource
     private VerificationCodeService verificationCodeService;
 
+    @ApiOperation(value = "生成验证码")
     @GetMapping
     public ResponseData createVerificationCode() {
         VerifyCodeDto verificationCode = verificationCodeService.createVerificationCode();

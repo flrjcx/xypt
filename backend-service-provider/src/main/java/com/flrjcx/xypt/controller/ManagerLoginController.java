@@ -46,7 +46,7 @@ public class ManagerLoginController {
         return ResponseData.buildSuccess();
     }
 
-    @ApiOperation(value = "管理员登录功能")
+    @ApiOperation(value = "管理员登录")
     @PostMapping
     public ResponseData login(@RequestBody LoginParam loginParam) {
         try {
