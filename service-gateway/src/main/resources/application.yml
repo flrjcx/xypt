@@ -4,7 +4,7 @@ server:
     context-path: /xypt
 spring:
   profiles:
-    active: dev
+    active: prod
   application:
     name: campus-gateway-provider
   cloud:
@@ -31,3 +31,7 @@ spring:
           uri: lb://campus-email-service
           predicates:
             - Path=/xypt/api/email/**
+        - id: campus-log-service
+          uri: lb://campus-log-service
+          predicates:
+            - Path=/xypt/api/log/**

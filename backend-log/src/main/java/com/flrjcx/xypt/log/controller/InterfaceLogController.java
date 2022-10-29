@@ -66,9 +66,4 @@ public class InterfaceLogController {
 
         return ipAddress;
     }
-    @GetMapping("/interfaceLog2")
-    @Validation
-    public void testT(){
-        log.info("nihaoa");
-    }
 }

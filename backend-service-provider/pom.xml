@@ -67,6 +67,7 @@
             <version>1.4</version>
         </dependency>
     </dependencies>
+
     <build>
         <!--        指定打包后的名字-->
         <finalName>${project.artifactId}</finalName>
