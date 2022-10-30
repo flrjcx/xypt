@@ -56,11 +56,11 @@ public class EmailSendUtils {
     /**
      * 发送固定内容
      * @param address:收件地址
-     * @param validateAddress:验证地址
+     * @param code:验证码
      * @param name:用户名
      * @return
      */
-    public ResponseData sendFixedMail(String address,String validateAddress,String name) {
+    public ResponseData sendFixedMail(String address,String code,String name) {
         String subject = "校园达论注册";
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper;
@@ -117,30 +117,30 @@ public class EmailSendUtils {
                             "    \n" +
                             "                                                                <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\">\n" +
                             "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">\n" +
-                            "                                                                        欢迎注册校园达论，全国大学领先社区。。\n" +
+                            "                                                                        欢迎注册校园达论，全国大学领先社区。\n" +
                             "                                                                    </span>\n" +
                             "                                                                </p>\n" +
                             "                                                                <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\">\n" +
-                            "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">完成注册，<b>请点击下方链接验证邮箱。<b/>\n" +
+                            "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">输入验证码完成注册，<b>您的验证码为："+code+"<b/>\n" +
                             "                                                                        <span style=\"font-weight: bold;\">非本人操作请忽略。</span>\n" +
                             "                                                                    </span>\n" +
                             "                                                                </p>\n" +
-                            "                                                                <p class=\"cTMail-content\"\n" +
-                            "                                                                   style=\"font-size: 14px; color: rgb(51, 51, 51); line-height: 24px; margin: 6px 0px 0px; word-wrap: break-word; word-break: break-all;\">\n" +
-                            "                                                                     <a href=\""+validateAddress+"\" title=\"\"\n" +
-                            "                                                                           style=\"color: rgb(0, 164, 255); text-decoration: none; word-break: break-all; overflow-wrap: normal; font-size: 14px;\">\n" +
-                            "                                                                            "+validateAddress+"" +
-                            "                                                                        </a>\n" +
-                            "                                                                </p>\n" +
-                            "    \n" +
-                            "                                                                <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 3px 0px 0px; overflow-wrap: break-word; word-break: break-all;\">\n" +
-                            "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">\n" +
-                            "                                                                        <br>\n" +
-                            "                                                                        无法正常激活？请将链接复制到浏览器手动激活\n" +
-                            "                                                                        <br>\n" +
-                            "                                                                       \n" +
-                            "                                                                    </span>\n" +
-                            "                                                                </p>\n" +
+//                            "                                                                <p class=\"cTMail-content\"\n" +
+//                            "                                                                   style=\"font-size: 14px; color: rgb(51, 51, 51); line-height: 24px; margin: 6px 0px 0px; word-wrap: break-word; word-break: break-all;\">\n" +
+//                            "                                                                     <a href=\""+code+"\" title=\"\"\n" +
+//                            "                                                                           style=\"color: rgb(0, 164, 255); text-decoration: none; word-break: break-all; overflow-wrap: normal; font-size: 14px;\">\n" +
+//                            "                                                                            "+code+"" +
+//                            "                                                                        </a>\n" +
+//                            "                                                                </p>\n" +
+//                            "    \n" +
+//                            "                                                                <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 3px 0px 0px; overflow-wrap: break-word; word-break: break-all;\">\n" +
+//                            "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">\n" +
+//                            "                                                                        <br>\n" +
+//                            "                                                                        无法正常激活？请将链接复制到浏览器手动激活\n" +
+//                            "                                                                        <br>\n" +
+//                            "                                                                       \n" +
+//                            "                                                                    </span>\n" +
+//                            "                                                                </p>\n" +
                             "                                                                <dl style=\"font-size: 14px; color: rgb(51, 51, 51); line-height: 18px;\">\n" +
                             "                                                                    <dd style=\"margin: 0px 0px 6px; padding: 0px; font-size: 12px; line-height: 22px;\">\n" +
                             "                                                                        <p id=\"cTMail-sender\" style=\"font-size: 14px; line-height: 26px; word-wrap: break-word; word-break: break-all; margin-top: 32px;\">\n" +
