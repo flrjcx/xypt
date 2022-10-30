@@ -3,8 +3,10 @@ package com.flrjcx.xypt.service.impl;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.focus.Attent;
 import com.flrjcx.xypt.common.model.param.focus.UserPartList;
+import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.mapper.FocusMapper;
 import com.flrjcx.xypt.service.FocusService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ import java.util.List;
  * @version: $
  */
 @Service
+@Slf4j
 public class FocusServiceImpl implements FocusService {
 
     @Resource
@@ -27,51 +30,33 @@ public class FocusServiceImpl implements FocusService {
     /**
      * 粉丝关注
      *
-     * @param ids
+     * @param idolId
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean focus(long[] ids) {
-        //粉丝即关注者 focus_num++
-        //Users fansInfo = focusMapper.getById(fansId);
-        List<Users> list = focusMapper.queryByArray(ids);
-        Users fans = new Users();
-        Users idol = new Users();
-        //fansId和idolId是按前端传参的顺序,没有变化
-        fans.setUserId(ids[0]);
-        idol.setUserId(ids[1]);
-        //为了减少调用getById的次数,经测试,查询结果不是按照id数组顺序
-        //而是先查询id号小的,例如:64与919,919与64查询结果相等
-        if (list.get(0).getUserId().equals(ids[0])) {
-            fans.setFocusNum(list.get(0).getFocusNum() + 1);
-            idol.setFansNum(list.get(1).getFansNum() + 1);
-        } else {
-            fans.setFocusNum(list.get(1).getFocusNum() + 1);
-            idol.setFansNum(list.get(0).getFansNum() + 1);
-        }
-        /*
-        ArrayList<Users> users = new ArrayList<>();
-        users.add(fans);
-        users.add(idol);
-        //减少调用updateById次数
-        //过于异想天开,动态批量更新,也许鱼和熊掌不可兼得
-        int i = focusMapper.updateByList(users);*/
-
-        int count = focusMapper.updateFocus(fans);
-        int count1 = focusMapper.updateFocus(idol);
-
+    public boolean focus(long idolId) {
+        Users user = UserThreadLocal.get();
         Attent attent = new Attent();
         //fansId
-        attent.setUserId(ids[0]);
+        attent.setUserId(user.getUserId());
         //idolId
-        attent.setAttentUserId(ids[1]);
-        //表中会更新时间
-        //attent.setCreateTime(new Date());
-        int count2 = focusMapper.addAttent(attent);
-        if (count > 0 && count1 > 0 && count2 > 0) {
-            return true;
-        }
-        return false;
+        attent.setAttentUserId(idolId);
+        int i = focusMapper.addAttent(attent);
+        process(idolId, user.getUserId());
+        return true;
+    }
+
+    private void process(long idolId, long fansId) {
+        int fansNum = focusMapper.fansNum(idolId);
+        int idolNum = focusMapper.focusNum(fansId);
+        Users fans = new Users();
+        fans.setUserId(fansId);
+        fans.setFocusNum(idolNum);
+        Users idol = new Users();
+        idol.setUserId(idolId);
+        idol.setFansNum(fansNum);
+        int i1 = focusMapper.updateFocus(fans);
+        int i2 = focusMapper.updateFocus(idol);
     }
 
     /**
@@ -96,5 +81,26 @@ public class FocusServiceImpl implements FocusService {
     public List<UserPartList> fansList(Long id) {
         List<Long> fansIdList = focusMapper.fansIdList(id);
         return focusMapper.getUserPartList(fansIdList);
+    }
+
+    /**
+     * 粉丝取关,粉转路
+     *
+     * @param idolId
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean cancel(long idolId) {
+        Users user = UserThreadLocal.get();
+        Attent attent = new Attent();
+        //fansId
+        attent.setUserId(user.getUserId());
+        //idolId
+        attent.setAttentUserId(idolId);
+
+        int i = focusMapper.deleteAttent(attent);
+        process(idolId, user.getUserId());
+        return true;
     }
 }

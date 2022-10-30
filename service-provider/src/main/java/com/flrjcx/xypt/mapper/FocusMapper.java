@@ -18,6 +18,20 @@ import java.util.List;
 public interface FocusMapper {
 
     /**
+     *  根据偶像id查询其粉丝数
+     * @param idolId
+     * @return
+     */
+    int fansNum(Long idolId);
+
+    /**
+     * 查询用户的关注(偶像)数
+     * @param fansId
+     * @return
+     */
+    int focusNum(Long fansId);
+
+    /**
      * 查询粉丝与偶像的信息
      *
      * @param ids
@@ -61,7 +75,7 @@ public interface FocusMapper {
 
     /**
      * 获取用户关注的用户id
-     *
+     * 即偶像们的idList
      * @param id
      * @return
      */
@@ -84,4 +98,10 @@ public interface FocusMapper {
      */
     List<Long> fansIdList(@Param("id") Long id);
 
+    /**
+     * 用户取关,根据用户和粉丝id删除对应数据
+     * @param attent
+     * @return
+     */
+    int deleteAttent(@Param("attent")Attent attent);
 }

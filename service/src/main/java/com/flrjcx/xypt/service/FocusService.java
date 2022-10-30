@@ -16,13 +16,12 @@ public interface FocusService {
     /**
      * 粉丝关注
      *
-     * @param ids ids[0] fansId
-     *            ids[1] idolId
+     * @param idolId 偶像id
      */
-    boolean focus(long[] ids);
+    boolean focus(long idolId);
 
     /**
-     * 查询用户的关注列表
+     * 查询用户(粉丝)的关注列表
      *
      * @param id
      * @return
@@ -30,10 +29,17 @@ public interface FocusService {
     List<UserPartList> focusList(Long id);
 
     /**
-     * 查询用户的粉丝列表
+     * 查询用户(偶像)的粉丝列表
      *
      * @param id
      * @return
      */
     List<UserPartList> fansList(Long id);
+
+    /**
+     *  粉丝取关,粉转路
+     * @param idolId
+     * @return
+     */
+    boolean cancel(long idolId);
 }

@@ -25,6 +25,12 @@
         update_time,
         status
     </sql>
+    <delete id="deleteAttent">
+        delete
+        from attent
+        where user_id = #{attent.userId}
+          and attent_user_id =#{attent.attentUserId}
+    </delete>
 
     <select id="queryByArray" resultType="com.flrjcx.xypt.common.model.param.common.Users">
         select
@@ -49,7 +55,9 @@
         users where user_id = #{userId}
     </select>
     <select id="idolIdList" resultType="java.lang.Long">
-        select attent_user_id from attent where user_id = #{id}
+        select attent_user_id
+        from attent
+        where user_id = #{id}
     </select>
     <select id="focusList" resultType="com.flrjcx.xypt.common.model.param.focus.UserPartList">
         select nick_name as nickName,nick_pic as nickPic,content,fans_num as fansNum
@@ -60,7 +68,9 @@
         </foreach>
     </select>
     <select id="fansIdList" resultType="java.lang.Long">
-        select user_id from attent where attent_user_id = #{id}
+        select user_id
+        from attent
+        where attent_user_id = #{id}
     </select>
     <select id="getUserPartList" resultType="com.flrjcx.xypt.common.model.param.focus.UserPartList">
         select nick_name as nickName,nick_pic as nickPic,content,fans_num as fansNum
@@ -70,6 +80,7 @@
             #{idNo}
         </foreach>
     </select>
+
 
     <update id="updateFocus">
         update users
@@ -162,4 +173,16 @@
             where user_id = #{item.userId}
         </foreach>
     </update>
+    <select id="fansNum" resultType="java.lang.Integer">
+        select distinct coun(1)
+        from atten
+        where attent_user_id = #{idolId};
+    </select>
+
+    <select id="focusNum" resultType="java.lang.Integer">
+        select distinct coun(1)
+        from atten
+        where user_id = #{fansId};
+    </select>
+
 </mapper>

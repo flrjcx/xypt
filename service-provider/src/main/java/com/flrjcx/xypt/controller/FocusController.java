@@ -1,7 +1,6 @@
 package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
-import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.param.common.Users;
@@ -11,11 +10,8 @@ import com.flrjcx.xypt.service.FocusService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 
@@ -36,18 +32,28 @@ public class FocusController {
 
     @ApiOperation("用户关注")
     @PostMapping("/clickFocus")
-//    @UserValidation
-    //@RequestParam(value="goodsId",defaultValue=“0”)
-    // 需要有默认值required = true(默认)
-    public ResponseData focus(@RequestBody long[] ids) {
+    public ResponseData focus(long idolId) {
         try {
-            boolean focus = focusService.focus(ids);
+            boolean focus = focusService.focus(idolId);
             return ResponseData.buildResponse();
         } catch (Exception e) {
             log.error("/focus error {}", e);
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
         }
     }
+
+    @ApiOperation("用户关注")
+    @PostMapping("/cancelFocus")
+    public ResponseData cancel(long idolId) {
+        try {
+            boolean focus = focusService.cancel(idolId);
+            return ResponseData.buildResponse();
+        } catch (Exception e) {
+            log.error("/user cancel focus error {}", e);
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
+    }
+
 
     @ApiOperation("关注列表")
     @GetMapping("/focusList")
