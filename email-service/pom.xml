@@ -27,17 +27,6 @@
             <artifactId>common-utils</artifactId>
             <groupId>com.flrjcx.xypt</groupId>
             <version>1.0.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.kafka</groupId>
-                    <artifactId>spring-kafka</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <artifactId>service</artifactId>
-            <groupId>com.flrjcx.xypt</groupId>
-            <version>1.0.0</version>
         </dependency>
 
         <!--        nacos-->
