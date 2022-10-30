@@ -1,10 +1,9 @@
 package com.flrjcx.xypt.common.handler;
 
 import com.alibaba.fastjson.JSONObject;
-import com.flrjcx.xypt.common.model.result.InterfaceLogResult;
+import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
 import com.flrjcx.xypt.common.utils.KafkaProducerUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
