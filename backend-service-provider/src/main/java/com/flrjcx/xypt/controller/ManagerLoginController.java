@@ -49,6 +49,7 @@ public class ManagerLoginController {
     @ApiOperation(value = "管理员登录")
     @PostMapping
     public ResponseData login(@RequestBody LoginParam loginParam) {
+        log.info("");
         try {
             if (Objects.isNull(loginParam.getUser())) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_NAME_REQUIRED);

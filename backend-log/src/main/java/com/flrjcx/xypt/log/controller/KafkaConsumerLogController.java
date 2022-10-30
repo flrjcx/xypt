@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Flrjcx
  */
-@Api(tags = "关注模块")
+@Api(tags = "日志模块")
 @ApiRestController("/api/log")
 @Log4j2
 public class KafkaConsumerLogController {

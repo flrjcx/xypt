@@ -7,12 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
+import com.fasterxml.jackson.databind.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -27,27 +22,6 @@ import java.util.Map;
  */
 @Slf4j
 public class JsonUtils {
-
-    @SuppressWarnings("unchecked")
-    public static <U> U json2object(String json, TypeToken<U> typeToken) {
-        GsonBuilder builder = new GsonBuilder();
-        // Register an adapter to manage the date types as long values
-        builder.registerTypeAdapter(Date.class,
-                (JsonDeserializer<Date>) (json1, typeOfT, context) -> new Date(json1.getAsJsonPrimitive().getAsLong()));
-        Gson gson = builder.create();
-        return (U) gson.fromJson(json, typeToken.getType());
-    }
-
-    public static <U> U json2object_gson(String json, Class<U> clazz) {
-        // Gson gson = new Gson();
-        GsonBuilder builder = new GsonBuilder();
-        // Register an adapter to manage the date types as long values
-        builder.registerTypeAdapter(Date.class,
-                (JsonDeserializer<Date>) (json1, typeOfT, context) -> new Date(json1.getAsJsonPrimitive().getAsLong()));
-        Gson gson = builder.create();
-        return gson.fromJson(json, clazz);
-    }
-
     @SuppressWarnings("unchecked")
     @Deprecated
     public static <U> U json2object(String json, TypeReference<U> typeToken) {
@@ -58,18 +32,6 @@ public class JsonUtils {
             log.error(e.getMessage(), e);
         }
         return null;
-    }
-
-
-    /**
-     * java对象转为json对象
-     */
-    public static String object2json(Object obj) {
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Date.class,
-                (JsonSerializer<Date>) (src, typeOfT, context) -> new JsonPrimitive(src.getTime()));
-        Gson gson = builder.create();
-        return gson.toJson(obj);
     }
 
     public static String object2jackJson(Object arg0) {

@@ -12,7 +12,7 @@ import java.util.Properties;
  * @author Flrjcx
  */
 @Configuration
-public class KafkaConsumerConfig {
+public class KafkaConfig {
     @Bean
     public KafkaConsumer<String, String> kafkaConsumer() {
         //      1. 创建kafka消费者配置信息
