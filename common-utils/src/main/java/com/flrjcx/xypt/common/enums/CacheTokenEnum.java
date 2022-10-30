@@ -10,8 +10,7 @@ import java.util.concurrent.TimeUnit;
 public enum CacheTokenEnum {
 
     // 邮箱缓存
-    CACHE_EMAIL("CACHE_EMAIL:", 30, TimeUnit.MINUTES)
-    ;
+    CACHE_EMAIL("CACHE_EMAIL:", 30, TimeUnit.MINUTES);
 
     private String key;
     private Long cacheTime;

@@ -1,6 +1,7 @@
 package com.flrjcx.xypt.mapper;
 
 import com.flrjcx.xypt.common.model.param.common.Users;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface ManageUserMapper {
     long updateUser(Users user);
 
     boolean deleteUser(long userId);
+
+    List<Users> getUserListByRegisterTime(@Param("begin") String begin, @Param("end") String end);
 }

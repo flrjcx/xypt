@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Slf4j
 @SpringBootApplication
 @EnableTransactionManagement
-@ComponentScan(basePackages = { "com.flrjcx.xypt.log.*" })
+@ComponentScan(basePackages = { "com.flrjcx.xypt.*" })
 @MapperScan(basePackages = "com.flrjcx.xypt.log.mapper")
 @EnableDiscoveryClient
 public class LogServiceMain5002 implements CommandLineRunner {

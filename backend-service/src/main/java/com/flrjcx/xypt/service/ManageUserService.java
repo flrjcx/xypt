@@ -24,5 +24,7 @@ public interface ManageUserService {
     boolean deleteUser(long userId, String token);
 
     Users getUserInfo(long userId);
+
+    List<Users> getUserListByRegisterTime(String begin, String end);
 }
 
