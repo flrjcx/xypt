@@ -111,6 +111,7 @@ public class ManageUserController {
     }
 
     @OpenPage
+    @Validation
     @ApiOperation(value = "根据账号或昵称模糊查询列表")
     @GetMapping("/findByNickNameOrAccount")
     public ResponseData findByNickNameOrAccount(String account) {
