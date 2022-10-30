@@ -27,4 +27,6 @@ public interface ManageUserMapper {
     boolean deleteUser(long userId);
 
     List<Users> getUserListByRegisterTime(@Param("begin") String begin, @Param("end") String end);
+
+    List<Users> findByNickNameOrAccount(String account);
 }

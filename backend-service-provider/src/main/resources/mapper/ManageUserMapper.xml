@@ -118,4 +118,16 @@
         set status = 2
         where user_id = #{userId}
     </update>
+
+    <select id="findByNickNameOrAccount" resultType="com.flrjcx.xypt.common.model.param.common.Users">
+        select
+        <include refid="manageUserInfo"></include>
+        from users
+        <where>
+            <if test="nickName != null">
+                nick_name like concat('%',#{account},'%')
+                or account like concat('%',#{account},'%')
+            </if>
+        </where>
+    </select>
 </mapper>

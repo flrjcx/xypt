@@ -65,4 +65,9 @@ public class ManageUserServiceImpl implements ManageUserService {
     public List<Users> getUserListByRegisterTime(String begin, String end) {
         return manageUserMapper.getUserListByRegisterTime(begin, end);
     }
+
+    @Override
+    public List<Users> findByNickNameOrAccount(String account) {
+        return manageUserMapper.findByNickNameOrAccount(account);
+    }
 }

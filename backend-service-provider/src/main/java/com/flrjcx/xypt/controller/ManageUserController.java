@@ -109,4 +109,17 @@ public class ManageUserController {
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_DELETE);
         }
     }
+
+    @OpenPage
+    @ApiOperation(value = "根据账号或昵称模糊查询列表")
+    @GetMapping("/findByNickNameOrAccount")
+    public ResponseData findByNickNameOrAccount(String account) {
+        try {
+            return ResponseData.buildPageResponse(manageUserService.findByNickNameOrAccount(account));
+        } catch (Exception e) {
+            log.error("/findByNickNameOrAccount error " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_QUERY_LIST);
+        }
+    }
+
 }

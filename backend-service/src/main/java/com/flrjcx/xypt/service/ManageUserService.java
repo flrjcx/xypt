@@ -26,5 +26,7 @@ public interface ManageUserService {
     Users getUserInfo(long userId);
 
     List<Users> getUserListByRegisterTime(String begin, String end);
+
+    List<Users> findByNickNameOrAccount(String account);
 }
 
