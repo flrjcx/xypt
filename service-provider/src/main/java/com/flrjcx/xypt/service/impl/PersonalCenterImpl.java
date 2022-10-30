@@ -33,4 +33,12 @@ public class PersonalCenterImpl implements PersonalCenterService {
     public Integer RealRegisterUserCount(Long realRegisterUserId) {
         return personalCenterMapper.countByUserId(realRegisterUserId);
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)//添加事务
+    public void updateUserFace(String picPath, Long userId) {
+
+        personalCenterMapper.changeHeadPortrait(picPath,userId);
+
+    }
 }

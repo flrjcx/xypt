@@ -10,12 +10,14 @@ import com.flrjcx.xypt.common.model.param.personal_center.RealNameParam;
 public interface PersonalCenterMapper {
     /**
      * 用户实名注册
+     *
      * @param realNameParam 用户实名参数
      */
     void realUser(RealNameParam realNameParam);
 
     /**
      * 获取用户粉丝数量
+     *
      * @param userId 当前用户id
      * @return 粉丝数量
      */
@@ -23,8 +25,17 @@ public interface PersonalCenterMapper {
 
     /**
      * 根据id查询用户记录数
+     *
      * @param realRegisterUserId 实名注册用户id
      * @return 数据库中的用户记录数
      */
     Integer countByUserId(Long realRegisterUserId);
+
+    /**
+     * 更换用户头像
+     *
+     * @param picPath 新头像地址
+     * @param userId  当前用户id
+     */
+    void changeHeadPortrait(String picPath, Long userId);
 }

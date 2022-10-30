@@ -28,4 +28,14 @@ public interface PersonalCenterService {
      * @return 用户记录数
      */
     Integer RealRegisterUserCount(Long realRegisterUserId);
+
+    /**
+     * 根据用户id 修改用户头像
+     * @param picPath   头像访问路径
+     * @param userId    当前用户id
+     */
+    void updateUserFace(String picPath, Long userId);
+
+
+
 }

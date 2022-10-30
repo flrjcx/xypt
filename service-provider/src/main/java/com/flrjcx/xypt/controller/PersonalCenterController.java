@@ -16,6 +16,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +40,7 @@ public class PersonalCenterController {
     @Validation
     @ApiOperation(value = "用户实名注册")
     @PostMapping("/realRegister")
-    public ResponseData userRealName(@RequestBody RealNameParam realNameParam){
+    public ResponseData userRealName(@RequestBody RealNameParam realNameParam) {
         //获取userId
         Users currentUser = UserThreadLocal.get();
         realNameParam.setRealRegisterUserId(currentUser.getUserId());
@@ -48,7 +49,7 @@ public class PersonalCenterController {
         try {
             //校验是否重复实名
             Integer count = personalCenterService.RealRegisterUserCount(realNameParam.getRealRegisterUserId());
-            if (count >= 1){
+            if (count >= 1) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_REAL_REGISTERED);
             }
             //校验realName是否为空
@@ -85,7 +86,7 @@ public class PersonalCenterController {
     @Validation
     @ApiOperation(value = "获取用户粉丝数量")
     @GetMapping("/userFansNum")
-    public ResponseData userFansNum(){
+    public ResponseData userFansNum() {
         Users currentUser = UserThreadLocal.get();
         try {
             Integer fansNum = personalCenterService.getUserFansNum(currentUser.getUserId());
@@ -95,5 +96,24 @@ public class PersonalCenterController {
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
         }
     }
+
+    @Validation //用户登录认证
+    @ApiOperation(value = "跟换用户头像")
+    @PostMapping("/changeFace")
+    public ResponseData changeUserFace(String picPath, Long userId) {
+
+        //入参效验
+        if (StringUtils.isEmpty(picPath)) {
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERR_CODE_FACE__NULL_ERROR);
+        }
+        if (StringUtils.isEmpty(String.valueOf(userId))) {
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_50202);
+        }
+
+        personalCenterService.updateUserFace(picPath, userId);
+
+        return ResponseData.buildResponse();
+    }
+
 
 }

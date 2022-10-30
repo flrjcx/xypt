@@ -136,9 +136,10 @@ public enum ResultCodeEnum implements IResultCode {
     ERR_CODE_FILE_SIZE_FAILED(508001,"文件大小最大为2M"),
     ERR_CODE_FILE_FORMATTER_FAILED(508002,"文件格式不支持"),
     ERR_CODE_FILE_NULL_ERROR(508003,"文件不能为空"),
-    ERR_CODE_FILE_NAME_NULL_ERROR(508003,"文件名不能为空"),
+    ERR_CODE_FILE_NAME_NULL_ERROR(508004,"文件名不能为空"),
+    ERR_CODE_FACE__NULL_ERROR(508005,"用户头像不能为空"),
+    ERR_CODE_QINIU_ERR(508006,"七牛云异常"),
 
-    ERR_CODE_QINIU_ERR(508004,"七牛云异常"),
 
     ERROR_CODE_50111(50111, "根据权限查询用户失败 "),
     ERROR_CODE_50000(50000, "微服务调用异常 "),
