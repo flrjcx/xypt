@@ -110,6 +110,12 @@ public class ManageUserController {
         }
     }
 
+    /**
+     * 根据账号或昵称模糊查询列表
+     *
+     * @param account 账号或昵称
+     * @return 用户列表
+     */
     @OpenPage
     @Validation
     @ApiOperation(value = "根据账号或昵称模糊查询列表")

@@ -27,6 +27,12 @@ public interface ManageUserService {
 
     List<Users> getUserListByRegisterTime(String begin, String end);
 
+    /**
+     * 根据账号或昵称模糊查询列表
+     *
+     * @param account 账号或昵称
+     * @return 用户列表
+     */
     List<Users> findByNickNameOrAccount(String account);
 }
 

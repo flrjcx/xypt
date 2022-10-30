@@ -66,6 +66,12 @@ public class ManageUserServiceImpl implements ManageUserService {
         return manageUserMapper.getUserListByRegisterTime(begin, end);
     }
 
+    /**
+     * 根据账号或昵称模糊查询列表
+     *
+     * @param account 账号或昵称
+     * @return 用户列表
+     */
     @Override
     public List<Users> findByNickNameOrAccount(String account) {
         return manageUserMapper.findByNickNameOrAccount(account);
