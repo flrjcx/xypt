@@ -15,12 +15,6 @@
         <artifactId>common-utils</artifactId>
         <groupId>com.flrjcx.xypt</groupId>
         <version>1.0.0</version>
-        <exclusions>
-            <exclusion>
-                <groupId>*</groupId>
-                <artifactId>*</artifactId>
-            </exclusion>
-        </exclusions>
     </dependency>
     <!--        nacos-->
     <dependency>

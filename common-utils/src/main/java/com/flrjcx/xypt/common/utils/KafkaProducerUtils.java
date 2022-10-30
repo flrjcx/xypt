@@ -1,23 +1,14 @@
 package com.flrjcx.xypt.common.utils;
 
-import com.alibaba.fastjson.JSONObject;
+import com.flrjcx.xypt.common.config.KafkaProducerConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import javax.annotation.Resource;
-import java.util.Properties;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * kafka生产者
@@ -26,41 +17,30 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Component
-public class KafkaConProUtils {
-//    @Resource
-//    private KafkaConfig kafkaConfig;
+public class KafkaProducerUtils {
 
-    public void kafkaProducer(String topic){
-//        1. 创建连接kafka的配置文件
-        Properties props = new Properties();
-        props.put("bootstrap.servers", "1.117.162.124:9092");
-        props.put("acks", "all");
-        props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-
-//        2. 创建生产者
-        KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(props);
-
-//        3. 发送数据到指定的topic,异步发送
-        asyncSendMsg(kafkaProducer);
-
-//        4. 关闭
-        kafkaProducer.close();
-    }
-
-    //    带回调函数异步方式
-    public void asyncSendMsg(KafkaProducer<String, String> kafkaProducer){
-            kafkaProducer.send(new ProducerRecord<String, String>("topic", "key" , "value"), new Callback() {
+    @Resource
+    private KafkaProducerConfig kafkaConfig;
+    /**
+     * 异步发送消息
+     *
+     * @param topic:指定主题
+     * @param key:key
+     * @param value:发送内容(先转成json字符串在发送)
+     */
+    public void asyncSendMsg(String topic,String key,String value){
+        KafkaProducer<String, String> kafkaProducer = kafkaConfig.kafka();
+        kafkaProducer.send(new ProducerRecord<String, String>(topic, key , value), new Callback() {
                 @Override
                 public void onCompletion(RecordMetadata recordMetadata, Exception e) {
                     if (e != null) {
-                        System.out.println("发送消息出现异常");
+                        log.error("Kafka发送消息出现异常topic:"+topic+"key:"+key);
                         e.printStackTrace();
                     } else {
                         String topic = recordMetadata.topic();
                         int partition = recordMetadata.partition();
                         long offset = recordMetadata.offset();
-                        System.out.println("消息发送到 kafka 中" + topic + "的主题,第" + partition + "分区," +
+                        log.info("消息发送到 kafka 中" + topic + "的主题,第" + partition + "分区," +
                                 "第" + offset + "条数据");
                     }
                 }

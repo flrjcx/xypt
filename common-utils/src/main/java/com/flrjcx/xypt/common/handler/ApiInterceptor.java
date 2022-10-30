@@ -1,10 +1,14 @@
 package com.flrjcx.xypt.common.handler;
 
+import com.alibaba.fastjson.JSONObject;
+import com.flrjcx.xypt.common.model.result.InterfaceLogResult;
+import com.flrjcx.xypt.common.utils.KafkaProducerUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.InetAddress;
@@ -18,6 +22,9 @@ import java.net.UnknownHostException;
 @Component
 @Slf4j
 public class ApiInterceptor implements HandlerInterceptor {
+    public static final String LOG = "LOG";
+    @Resource
+    private KafkaProducerUtils kafkaUtils;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String ipAddress = null;
@@ -53,10 +60,12 @@ public class ApiInterceptor implements HandlerInterceptor {
         } catch (Exception e) {
             ipAddress="";
         }
-        // ipAddress = this.getRequest().getRemoteAddr();
-
-        log.info(ipAddress);
-//        return ipAddress;
+        InterfaceLogResult logResult = new InterfaceLogResult();
+        logResult.setIp(ipAddress);
+        logResult.setPort(request.getServerPort());
+        logResult.setUri(request.getRequestURI());
+        String logJsonStr = JSONObject.toJSONString(logResult);
+        kafkaUtils.asyncSendMsg(LOG,ipAddress,logJsonStr);
         return true;
     }
 
