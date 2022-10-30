@@ -14,7 +14,7 @@ import java.util.Properties;
 @Configuration
 public class KafkaProducerConfig {
     @Bean
-    public KafkaProducer<String, String> kafka(){
+    public KafkaProducer<String, String> kafkaProducer(){
         Properties props = new Properties();
         props.put("bootstrap.servers", "1.117.162.124:9092");
         props.put("acks", "all");

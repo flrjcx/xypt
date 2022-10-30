@@ -29,7 +29,7 @@ public class KafkaProducerUtils {
      * @param value:发送内容(先转成json字符串在发送)
      */
     public void asyncSendMsg(String topic,String key,String value){
-        KafkaProducer<String, String> kafkaProducer = kafkaConfig.kafka();
+        KafkaProducer<String, String> kafkaProducer = kafkaConfig.kafkaProducer();
         kafkaProducer.send(new ProducerRecord<String, String>(topic, key , value), new Callback() {
                 @Override
                 public void onCompletion(RecordMetadata recordMetadata, Exception e) {
