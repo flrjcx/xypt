@@ -127,7 +127,7 @@ public class TokenService {
      */
     public boolean removeManagerToken(String token) {
         String managerTokenKey = getManagerKey(token);
-        String managerIdKey = getManagerKey(getManagerCache(managerTokenKey).getManagerId().toString());
+        String managerIdKey = getManagerKey(getManagerCache(token).getManagerId().toString());
         return redisCache.deleteObject(managerTokenKey) && redisCache.deleteObject(managerIdKey);
     }
 
@@ -149,9 +149,8 @@ public class TokenService {
     }
 
     /**
-     * 获取用户缓存
-     *
-     * @param token
+     * 通过token获取User对象
+     * @param token 传入的token不需要取key
      * @return
      */
     public Users getUserCache(String token) {
@@ -160,16 +159,31 @@ public class TokenService {
         return users;
     }
 
+    /**
+     * 通过userId获取token
+     * @param userId 传入的id不需要取key
+     * @return
+     */
     public String getUserTokenCache(Long userId) {
         return redisCache.getCacheObject(getUserKey(userId.toString()));
     }
 
+    /**
+     * 通过token获取Manager对象
+     * @param token 传入的token不需要取key
+     * @return
+     */
     public Manager getManagerCache(String token) {
         String managerVoJson = redisCache.getCacheObject(getManagerKey(token));
         Manager manager = JSON.parseObject(managerVoJson, Manager.class);
         return manager;
     }
 
+    /**
+     * 通过managerId获取token
+     * @param managerId 传入的id不需要取key
+     * @return
+     */
     public String getManagerTokenCache(Long managerId) {
         return redisCache.getCacheObject(getManagerKey(managerId.toString()));
     }

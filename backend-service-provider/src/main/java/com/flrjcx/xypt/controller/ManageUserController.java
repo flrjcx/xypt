@@ -96,10 +96,10 @@ public class ManageUserController {
 
     @Validation
     @ApiOperation(value = "删除用户")
-    @DeleteMapping("/deleteUser")
-    public ResponseData deleteUser(@RequestParam("userId") long userId, @RequestHeader("Authorization") String token) {
+    @PostMapping("/deleteUser")
+    public ResponseData deleteUser(@RequestParam("userId") long userId) {
         try {
-            if(manageUserService.deleteUser(userId, token)) {
+            if(manageUserService.deleteUser(userId)) {
                 return ResponseData.buildSuccess();
             } else {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_DELETE);

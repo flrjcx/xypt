@@ -21,7 +21,7 @@ public interface ManageUserService {
 
     long updateUser(Users user, String token);
 
-    boolean deleteUser(long userId, String token);
+    boolean deleteUser(long userId);
 
     Users getUserInfo(long userId);
 
