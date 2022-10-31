@@ -11,7 +11,6 @@ import com.flrjcx.xypt.common.model.param.email.EmailSendParam;
 import com.flrjcx.xypt.common.model.param.register.AddUserParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.*;
-import com.flrjcx.xypt.config.EmailConfig;
 import com.flrjcx.xypt.mapper.RegisterMapper;
 import com.flrjcx.xypt.service.RegisterService;
 import org.springframework.stereotype.Service;

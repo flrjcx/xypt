@@ -5,13 +5,15 @@ spring:
       batch-size: 16384
       buffer-memory: 3554432
       acks: 1
-#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
       enable-auto-commit: false
       auto-offset-reset: earliest
-#      key-deserializer: org.apache.kafka.common.serialization.StringSerializer
-#      value-deserializer: org.apache.kafka.common.serialization.StringSerializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: default-group
+
     listener:
       ack-mode: manual_immediate
       missing-topics-fatal: false
