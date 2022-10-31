@@ -49,7 +49,7 @@ public class CaptchaUtil {
         //生成文字验证码
         SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 4);
         specCaptcha.setCharType(Captcha.TYPE_DEFAULT);
-        specCaptcha.setFont(Captcha.FONT_8);
+        specCaptcha.setFont(Captcha.FONT_1);
         String text = specCaptcha.text().toLowerCase();
 
         //生成token
