@@ -1,7 +1,9 @@
 package com.flrjcx.xypt.service.impl;
 
+import com.flrjcx.xypt.common.enums.KafkaTopicEnum;
 import com.flrjcx.xypt.common.model.domain.safetycenter.UserPrivacy;
 import com.flrjcx.xypt.common.model.param.common.Users;
+import com.flrjcx.xypt.common.model.param.email.ModifyPasswordEmailSendParam;
 import com.flrjcx.xypt.common.utils.*;
 import com.flrjcx.xypt.mapper.SafetyCenterMapper;
 import com.flrjcx.xypt.service.SafetyCenterService;
@@ -26,8 +28,7 @@ public class SafetyCenterImpl implements SafetyCenterService {
     private static final String CACHE_PREFIX = "xypt:SafetyCenter";
 
     private static final String MAIL_PREFIX = "xypt:SafetyCenter:resetPasswordMail";
-    @Resource
-    private EmailSendUtils emailSendUtils;
+
     @Resource
     private RedisCache redisCache;
     @Resource
@@ -36,6 +37,8 @@ public class SafetyCenterImpl implements SafetyCenterService {
     @Resource
     private TokenService tokenService;
 
+    @Resource
+    private KafkaUtils kafkaUtils;
 
     /**
      * 向toMail发送重置密码邮件
@@ -49,7 +52,10 @@ public class SafetyCenterImpl implements SafetyCenterService {
         String mailPrefix = MAIL_PREFIX + ':' + userId;
         try {
             redisCache.setCacheObject(mailPrefix, code.toString(), 5, TimeUnit.MINUTES);
-            emailSendUtils.sendMail(toMail, "重置你的密码", "你的验证码为:", code);
+            ModifyPasswordEmailSendParam param = new ModifyPasswordEmailSendParam();
+            param.setCode(code.toString());
+            param.setAddress(toMail);
+            kafkaUtils.sendMessage(KafkaTopicEnum.TOPIC_EMAIL_SEND_MODIFY_PASSWORD, JsonUtils.fastJsonToString(param));
             log.info("向用户ID{}发送重置密码验证码邮件成功,邮箱为{},验证码为{}", userId, toMail, code);
         } catch (Exception e) {
             redisCache.deleteObject(mailPrefix);
