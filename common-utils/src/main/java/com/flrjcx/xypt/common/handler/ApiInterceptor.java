@@ -2,7 +2,11 @@ package com.flrjcx.xypt.common.handler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
+import com.flrjcx.xypt.common.utils.KafkaUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -20,6 +24,8 @@ import java.net.UnknownHostException;
 @Component
 @Slf4j
 public class ApiInterceptor implements HandlerInterceptor {
+    @Resource
+    private KafkaUtils kafkaUtils;
     public static final String LOG = "LOG";
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -61,9 +67,10 @@ public class ApiInterceptor implements HandlerInterceptor {
         logResult.setPort(request.getServerPort());
         logResult.setUri(request.getRequestURI());
         String logJsonStr = JSONObject.toJSONString(logResult);
-//        kafkaUtils.asyncSendMsg(LOG,ipAddress,logJsonStr);
+        kafkaUtils.sendMessage(LOG,ipAddress,logJsonStr);
         return true;
     }
+
 
 
 }

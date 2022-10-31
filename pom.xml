@@ -23,6 +23,7 @@
         <module>jobs</module>
         <module>backend-log</module>
         <module>email-service</module>
+        <module>kafka-consumer-log</module>
     </modules>
 
     <properties>

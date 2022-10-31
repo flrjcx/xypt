@@ -1,4 +1,4 @@
-package com.flrjcx.xypt.config;
+package com.flrjcx.xypt.kafka;
 
 import feign.Logger;
 import org.springframework.context.annotation.Bean;
@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
  * @author Flrjcx
  */
 @Configuration
-public class FeignClientConfiguration {
+public class FeignConfig {
     @Bean
-    public Logger.Level feignLogLevel(){
+    public Logger.Level getLogger(){
         return Logger.Level.FULL;
     }
 }

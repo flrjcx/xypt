@@ -8,7 +8,7 @@ import com.flrjcx.xypt.common.model.param.register.AddUserParam;
 import com.flrjcx.xypt.common.utils.EncryptUtils;
 import com.flrjcx.xypt.common.utils.SnowflakeIdWorker;
 import com.flrjcx.xypt.common.utils.TokenService;
-import com.flrjcx.xypt.config.EmailConfig;
+import com.flrjcx.xypt.kafka.EmailConfig;
 import com.flrjcx.xypt.mapper.RegisterMapper;
 import com.flrjcx.xypt.service.RegisterService;
 import org.springframework.stereotype.Service;

@@ -78,7 +78,7 @@ public class LoginController {
             LoginDto login = loginService.login(loginParam);
             if (!ObjectUtils.isEmpty(login)) {
                 return ResponseData.buildResponse(login);
-            }else {
+            } else {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.USER_LOGIN_PWD_ERROR_CODE);
             }
         } catch (Exception e) {
@@ -86,15 +86,17 @@ public class LoginController {
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
         }
     }
-@Autowired
-KafkaUtils kafkaUtils;
+
+    @Autowired
+    private KafkaUtils kafkaUtils;
     @Autowired
     EmailSendUtils emailSendUtils;
+
     @OpenPage
     @ApiOperation(value = "查询用户列表")
     @GetMapping("/userList")
     public ResponseData userList() {
-        kafkaUtils.sendMessage("test-topic", "testkey" + Math.random(), "test001"+ Math.random());
+        kafkaUtils.sendMessage("test-topic", "testkey" + Math.random(), "test001" + Math.random());
         emailSendUtils.sendFixedMail("2978604202@qq.com", "155588", "1235");
         try {
             return ResponseData.buildPageResponse(loginService.getUserList());

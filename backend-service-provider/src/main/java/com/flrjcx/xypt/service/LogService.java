@@ -1,4 +1,4 @@
-package com.flrjcx.xypt.log.service;
+package com.flrjcx.xypt.service;
 
 
 import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Flrjcx
  */
-public interface KafkaConsumerLogService {
+public interface LogService {
     /**
      * 获取Api访问日志列表
      *
