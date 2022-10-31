@@ -7,18 +7,18 @@
 
     <insert id="addUser">
         INSERT INTO users
-                    (nick_name,
-                     password,
-                     sex,
-                     email,
+                    (user_id,
                      account,
-                     user_id)
-        VALUES     ( #{nickName},
-                     #{password},
-                     #{sex},
-                     #{email},
+                     nick_name,
+                     password,
+                     email,
+                     status)
+        VALUES     ( #{userId},
                      #{account},
-                     #{userId})
+                     #{nickName},
+                     #{password},
+                     #{email},
+                     #{status})
     </insert>
     <update id="setStatusOk">
         update

@@ -45,6 +45,7 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_CODE_SEX_REQUIRED(100026, "性别必填"),
     ERROR_USER_IS_EXIST(100027, "用户已被注册"),
     ERROR_EMAIL_IS_EXIST(100028, "邮箱已被注册"),
+    ERROR_CODE_EMAIL_VERIFICATION_ERROR_CODE(100029, "邮箱验证码错误"),
 
     /**
      * 接口转发服务编码

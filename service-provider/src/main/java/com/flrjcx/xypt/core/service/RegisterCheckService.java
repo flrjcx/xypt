@@ -1,14 +1,19 @@
 package com.flrjcx.xypt.core.service;
 
+import com.flrjcx.xypt.common.enums.CacheTokenEnum;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.model.param.email.EmailSendParam;
 import com.flrjcx.xypt.common.model.param.register.AddUserParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
+import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.mapper.RegisterMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.Objects;
+
 
 /**
  * @author malaka
@@ -21,6 +26,8 @@ public class RegisterCheckService {
     @Resource
     private RegisterMapper registerMapper;
 
+    @Resource
+    private TokenService tokenService;
 
     /**
      * 用户名正则
@@ -39,6 +46,10 @@ public class RegisterCheckService {
         if (responseData != null) {
             return responseData;
         }
+        responseData = checkToken(addUserParam);
+        if (responseData != null) {
+            return responseData;
+        }
         responseData = checkReg(addUserParam);
         if (responseData != null) {
             return responseData;
@@ -46,6 +57,18 @@ public class RegisterCheckService {
         responseData = checkDb(addUserParam);
 
         return responseData;
+    }
+
+    private ResponseData checkToken(AddUserParam addUserParam) {
+        addUserParam.setEmail("");
+        String key = CacheTokenEnum.CACHE_EMAIL.getKey() + addUserParam.getToken();
+        EmailSendParam emailSendParam = tokenService.getCache(key);
+        tokenService.removeToken(key);
+        if (ObjectUtils.isEmpty(emailSendParam) || !emailSendParam.getCode().equals(addUserParam.getCode())) {
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_EMAIL_VERIFICATION_ERROR_CODE);
+        }
+        addUserParam.setEmail(emailSendParam.getAddress());
+        return null;
     }
 
     private ResponseData checkDb(AddUserParam addUserParam) {
@@ -59,16 +82,15 @@ public class RegisterCheckService {
     }
 
     private ResponseData checkReg(AddUserParam addUserParam) {
-        System.out.println(addUserParam.getAccount().matches(userReg));
         if (!addUserParam.getAccount().matches(userReg)) {
             return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_NAME_ERROR_CODE);
         }
         if (!addUserParam.getPassword().matches(pwdReg)) {
             return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_PASSWORD_ERROR_CODE);
         }
-        if (!addUserParam.getEmail().matches(emailReg)) {
-            return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_PASSWORD_ERROR_CODE);
-        }
+//        if (!addUserParam.getEmail().matches(emailReg)) {
+//            return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_PASSWORD_ERROR_CODE);
+//        }
         return null;
     }
 
@@ -82,19 +104,14 @@ public class RegisterCheckService {
         if (StringUtils.isEmpty(addUserParam.getPassword())) {
             return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_PASSWORD_ERROR);
         }
-        if (StringUtils.isEmpty(addUserParam.getEmail())) {
-            return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_EMAIL_REQUIRED);
+        if (StringUtils.isEmpty(addUserParam.getToken())) {
+            return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_EMAIL_VERIFICATION_ERROR_CODE);
         }
-        if (StringUtils.isEmpty(addUserParam.getSex())
-            || checkSex(addUserParam)
-        ) {
-            return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_SEX_REQUIRED);
+        if (StringUtils.isEmpty(addUserParam.getCode())) {
+            return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_EMAIL_VERIFICATION_ERROR_CODE);
         }
         return null;
     }
 
-    private boolean checkSex(AddUserParam addUserParam) {
-         return !("0".equals(addUserParam.getSex()) || "1".equals(addUserParam.getSex()));
-    }
 
 }

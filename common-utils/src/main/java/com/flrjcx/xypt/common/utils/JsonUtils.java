@@ -251,8 +251,8 @@ public class JsonUtils {
 
 
 
-    public static void main(String[] args)  {
-        String json = "user_name";
-       System.out.println(StrUtil.toCamelCase(json));
-    }
+//    public static void main(String[] args)  {
+//        String json = "user_name";
+//       System.out.println(StrUtil.toCamelCase(json));
+//    }
 }

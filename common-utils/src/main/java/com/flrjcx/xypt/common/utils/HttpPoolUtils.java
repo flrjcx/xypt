@@ -265,8 +265,8 @@ public class HttpPoolUtils {
         return cb.build();
     }
 
-    public static void main(String[] args) {
-        //get("http://192.2.12.8:6120/pic?=d6=i705z8e48s99f-600105m5ep=t6i4i*d1=*ipd4=*5s7=85b7i0d95*4efb036b2-9173f57-1869*0-b9i282d5e01");
-        get("http://192.168.100.47:19901/sysinfo", null, null);
-    }
+//    public static void main(String[] args) {
+//        //get("http://192.2.12.8:6120/pic?=d6=i705z8e48s99f-600105m5ep=t6i4i*d1=*ipd4=*5s7=85b7i0d95*4efb036b2-9173f57-1869*0-b9i282d5e01");
+//        get("http://192.168.100.47:19901/sysinfo", null, null);
+//    }
 }

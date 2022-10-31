@@ -21,15 +21,19 @@ public class KafkaUtils {
     }
 
     @Autowired
-    private KafkaTemplate kafkaTemplate;
+    private KafkaTemplate<String, String> kafkaTemplate;
 
 
-    public void sendMessage(String topic, String key, Object value) {
+    public void sendMessage(String topic, String key, String value) {
         kafkaTemplate.send(topic, key, value);
     }
 
+    public void sendMessage(String topic, String value) {
+        kafkaTemplate.send(topic, value);
+    }
+
     @KafkaListener(topics = "test-topic", groupId = "g1")
-    public void listerG2(ConsumerRecord<String, String> record, Acknowledgment ack) {
+    public void test(ConsumerRecord<String, String> record, Acknowledgment ack) {
         String value = record.value();
         String key = record.key();
         System.out.println("value:" + value);
