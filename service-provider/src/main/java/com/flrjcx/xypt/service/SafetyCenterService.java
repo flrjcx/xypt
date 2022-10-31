@@ -67,4 +67,12 @@ public interface SafetyCenterService {
      * @return user 隐私处理的用户对象
      */
     List<Users> getPrivacyUsers(List<Users> users);
+
+    /**
+     * 返回用户隐私状态
+     *
+     * @param userId 用户id
+     * @return
+     */
+    UserPrivacy getUserPrivacy(Long userId);
 }

@@ -177,4 +177,19 @@ public class SafetyCenterImpl implements SafetyCenterService {
         return users.stream().map(this::getPrivacyUser).collect(Collectors.toList());
     }
 
+    /**
+     * 返回用户隐私状态
+     *
+     * @param userId 用户id
+     * @return
+     */
+    @Override
+    public UserPrivacy getUserPrivacy(Long userId) {
+        String privacySettingString = safetyCenterMapper.selectUserPrivacySetting(userId);
+        if (StringUtils.isEmpty(privacySettingString)) {
+            return new UserPrivacy();
+        }
+        return JsonUtils.parse(privacySettingString, UserPrivacy.class);
+    }
+
 }
