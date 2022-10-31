@@ -10,8 +10,9 @@ import java.util.*;
 //https://blog.csdn.net/weixin_44146379/article/details/109009257
 public class DateUtils {
     private static final String SDFTYPE = "yyyy-MM-dd HH:mm:ss";
+
     //    获取本月有多少天
-    public static Integer getDay(Date date){
+    public static Integer getDay(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -249,6 +250,7 @@ public class DateUtils {
         c.set(Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek() + 6);
         return c.getTime();
     }
+
     //获得上周一的日期
     public static Date geLastWeekMonday(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -284,7 +286,7 @@ public class DateUtils {
     }
 
     //获得今天日期
-    public static String getNowTime(){
+    public static String getNowTime() {
         Date date = new Date();
         long time = date.getTime();
         SimpleDateFormat sdf = new SimpleDateFormat(SDFTYPE);
@@ -293,56 +295,59 @@ public class DateUtils {
     }
 
     //获得本月一日的日期
-    public static Date getFirstDay4ThisMonth(){
+    public static Date getFirstDay4ThisMonth() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH,1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
         return calendar.getTime();
     }
-    public static String getMs(Date time){
+
+    public static String getMs(Date time) {
         String format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(time);
         return format;
     }
-//    Date转String
-    public void test4(){
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date=new Date();
+
+    //    Date转String
+    public void test4() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
         String format = sdf.format(date);
-        System.out.println("时间String："+format);
-    //输出：时间String：2020-10-12 19:12:36
+        System.out.println("时间String：" + format);
+        //输出：时间String：2020-10-12 19:12:36
     }
+
     //    String(long)转Date
-    public static String strToLongDate(String times){
+    public static String strToLongDate(String times) {
         long l = Long.parseLong(times);
         Date date = new Date(l);
         String format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
         return format;
     }
-//    String转Date（纯字符串）
-public void  strToDateFormat(){
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    String string = "2020-10-14 10:10:00";
-    Date date = null;
-    try{
-        date = sdf.parse(string);
-    }catch (Exception e){
-        e.printStackTrace();
-    }
-    System.out.println("Date:"+date);
-    //输出：Date:Wed Oct 14 10:10:00 CST 2020
 
-}
-//时间戳转date
-public void dateToStamp() {
-    long times = 1602731137125L;
-    Date date = new Date(times);
-    System.out.println("date格式："+date);
-    //输出：date格式：Thu Oct 15 11:05:37 CST 2020
-}
+    //    String转Date（纯字符串）
+    public void strToDateFormat() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String string = "2020-10-14 10:10:00";
+        Date date = null;
+        try {
+            date = sdf.parse(string);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Date:" + date);
+        //输出：Date:Wed Oct 14 10:10:00 CST 2020
+
+    }
+
+    //时间戳转date
+    public static Date dateToStamp(long times) {
+        Date date = new Date(times);
+        return date;
+    }
 
 
 
     //    获取当前时间的过去一小时时间
-    public static String pastOneHoursTime(){
+    public static String pastOneHoursTime() {
         Calendar calendar = Calendar.getInstance();
 
         /* HOUR_OF_DAY 指示一天中的小时 */
@@ -354,8 +359,9 @@ public void dateToStamp() {
 
         return beforeTimes;
     }
-//  时间戳转日期格式
-    public static String stampToStrDate(String currentTime,String timeFormat){
+
+    //  时间戳转日期格式
+    public static String stampToStrDate(String currentTime, String timeFormat) {
         SimpleDateFormat sdf = new SimpleDateFormat(timeFormat);
         // 获取当前系统时间戳
         //long l = System.currentTimeMillis();
@@ -364,21 +370,22 @@ public void dateToStamp() {
         return sdf.format(l);
         //输出：日期格式：2020-10-11 10:42:01
     }
-//日期格式转时间戳
-public static long strDateToStamp(String time,String timeFormat){
-    SimpleDateFormat sdf =  new SimpleDateFormat(timeFormat);
-    Date date = null;
-    try {
-        date = sdf.parse(time);
-    } catch (ParseException e) {
-        e.printStackTrace();
-    }
-    long currentTime = date.getTime();
-    return currentTime;
-}
 
-//    推迟时间
-    public void  delayTime(){
+    //日期格式转时间戳
+    public static long strDateToStamp(String time, String timeFormat) {
+        SimpleDateFormat sdf = new SimpleDateFormat(timeFormat);
+        Date date = null;
+        try {
+            date = sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long currentTime = date.getTime();
+        return currentTime;
+    }
+
+    //    推迟时间
+    public void delayTime() {
         //创建Calendar实例
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());   //设置当前时间
@@ -387,16 +394,18 @@ public static long strDateToStamp(String time,String timeFormat){
         //推迟一个月
         // cal.add(Calendar.MONTH, 1);
         //时间推迟一年
-        cal.add(Calendar.YEAR,1);
+        cal.add(Calendar.YEAR, 1);
         long time = cal.getTime().getTime();
         long time1 = System.currentTimeMillis();
 
-        System.out.println("当前时间戳："+time1+"；推迟一年的时间戳："+time);
+        System.out.println("当前时间戳：" + time1 + "；推迟一年的时间戳：" + time);
         //输出：当前时间戳：1602501173582；推迟一年的时间戳：1634037173582
 
     }
 
-    /** 比较传进来的日期与现在的日期 */
+    /**
+     * 比较传进来的日期与现在的日期
+     */
     public static boolean checkDate(String time) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {

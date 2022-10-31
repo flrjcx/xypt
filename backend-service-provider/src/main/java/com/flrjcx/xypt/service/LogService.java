@@ -14,7 +14,9 @@ public interface LogService {
     /**
      * 获取Api访问日志列表
      *
+     * @param beforeTime
+     * @param afterTime
      * @return
      */
-    List<InterfaceLogResult> getApiLogList();
+    List<InterfaceLogResult> getApiLogList(Long beforeTime,Long afterTime);
 }

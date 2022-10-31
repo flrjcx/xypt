@@ -22,8 +22,6 @@
         <module>common-utils</module>
         <module>common-interface</module>
         <module>jobs</module>
-        <module>email-service</module>
-        <module>kafka-consumer-log</module>
     </modules>
 
     <properties>

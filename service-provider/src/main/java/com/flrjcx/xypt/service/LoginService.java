@@ -12,12 +12,6 @@ import java.util.List;
  * @author Flrjcx
  */
 public interface LoginService {
-    /**
-     * 获取全部用户
-     *
-     * @return
-     */
-    List<Users> getUserList();
 
     LoginDto login(LoginParam loginParam);
 

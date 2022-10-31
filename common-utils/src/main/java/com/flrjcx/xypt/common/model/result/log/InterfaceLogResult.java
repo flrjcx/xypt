@@ -1,9 +1,11 @@
 package com.flrjcx.xypt.common.model.result.log;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 接口访问日志参数
@@ -13,6 +15,8 @@ import java.io.Serializable;
 @Data
 public class InterfaceLogResult implements Serializable {
     private static final long serialVersionUID = -1186565379246250355L;
+    @ApiModelProperty(value = "日志id", name = "id")
+    private Integer id;
     @ApiModelProperty(value = "客户端访问ip", name = "ip")
     private String ip;
     @ApiModelProperty(value = "api访问路径", name = "uri")
@@ -30,5 +34,6 @@ public class InterfaceLogResult implements Serializable {
     @ApiModelProperty(value = "区", name = "district")
     private String district;
     @ApiModelProperty(value = "访问时间戳", name = "timestamp")
-    private Long timestamp;
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
+    private Date timestamp;
 }

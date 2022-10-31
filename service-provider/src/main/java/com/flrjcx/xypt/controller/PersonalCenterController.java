@@ -11,7 +11,6 @@ import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.CheckAllUsersUtils;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
-import com.flrjcx.xypt.common.utils.VerifyNameUtils;
 import com.flrjcx.xypt.service.PersonalCenterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -62,10 +61,10 @@ public class PersonalCenterController {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_ID_CARD_IS_EMPTY);
             }
             //校验realName是否包含非法字符
-            String msg = VerifyNameUtils.verifyIllegalStr(realName);
-            if (!msg.equals(MessageConstants.VERIFY_NAME_RESULT_MSG)) {
-                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_REAL_NAME_CONTAINS_ILLEGAL_CHARACTERS);
-            }
+//            String msg = VerifyNameUtils.verifyIllegalStr(realName);
+//            if (!msg.equals(MessageConstants.VERIFY_NAME_RESULT_MSG)) {
+//                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_REAL_NAME_CONTAINS_ILLEGAL_CHARACTERS);
+//            }
             //校验realName是否是中文且为2-10个字符
             boolean checkRealName = CheckAllUsersUtils.checkRealName(realName);
             if (!checkRealName) {

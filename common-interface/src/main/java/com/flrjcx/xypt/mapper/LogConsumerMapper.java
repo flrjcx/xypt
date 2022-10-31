@@ -2,6 +2,7 @@ package com.flrjcx.xypt.mapper;
 
 
 import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -9,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
  *
  * @author Flrjcx
  */
-public interface KafkaConsumerMapper {
+public interface LogConsumerMapper {
     /**
      * 将kafka数据写入数据库(apiLog)
      *

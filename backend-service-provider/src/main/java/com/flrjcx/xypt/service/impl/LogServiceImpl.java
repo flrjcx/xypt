@@ -1,6 +1,7 @@
 package com.flrjcx.xypt.service.impl;
 
 import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
+import com.flrjcx.xypt.common.utils.DateUtils;
 import com.flrjcx.xypt.mapper.LogMapper;
 import com.flrjcx.xypt.service.LogService;
 import org.springframework.stereotype.Service;
@@ -17,15 +18,18 @@ import java.util.List;
 public class LogServiceImpl implements LogService {
 
     @Resource
-    private LogMapper LogMapper;
+    private LogMapper logMapper;
+
     /**
      * 获取Api访问日志列表
      *
+     * @param beforeTime
+     * @param afterTime
      * @return
      */
     @Override
-    public List<InterfaceLogResult> getApiLogList() {
-//        Mapper.getApiLogList();
-        return null;
+    public List<InterfaceLogResult> getApiLogList(Long beforeTime,Long afterTime) {
+
+        return logMapper.getApiLogList(DateUtils.dateToStamp(beforeTime),DateUtils.dateToStamp(afterTime));
     }
 }

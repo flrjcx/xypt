@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -25,6 +26,7 @@ public class ModifyPasswordEmailConsumer {
     private EmailSendUtils emailSendUtils;
 
     @KafkaListener(topics = KafkaTopicEnum.TOPIC_EMAIL_SEND_MODIFY_PASSWORD)
+    @Async
     public void sendMail(ConsumerRecord<String, String> record, Acknowledgment ack) {
         String value = record.value();
         ModifyPasswordEmailSendParam param = JSON.parseObject(value, ModifyPasswordEmailSendParam.class);

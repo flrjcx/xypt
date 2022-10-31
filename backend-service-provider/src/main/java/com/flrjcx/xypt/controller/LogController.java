@@ -1,15 +1,16 @@
 package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
+import com.flrjcx.xypt.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
-import com.flrjcx.xypt.common.utils.HttpPoolUtils;
 import com.flrjcx.xypt.service.LogService;
 import io.swagger.annotations.Api;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * 日志服务
@@ -29,7 +30,13 @@ public class LogController {
      * @return
      */
     @GetMapping("/apiLog")
-    public List<InterfaceLogResult> getApiLogList() {
-        return LogService.getApiLogList();
+    public ResponseData getApiLogList(@RequestParam Long beforeTime,@RequestParam Long afterTime) {
+        try {
+            return ResponseData.buildPageResponse(LogService.getApiLogList(beforeTime,afterTime));
+        }catch (Exception e){
+            log.error("/apiLog error " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
     }
+
 }

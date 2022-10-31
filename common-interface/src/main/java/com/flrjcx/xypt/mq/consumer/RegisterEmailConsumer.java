@@ -10,6 +10,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,6 +26,7 @@ public class RegisterEmailConsumer {
     private EmailSendUtils emailSendUtils;
 
     @KafkaListener(topics = KafkaTopicEnum.TOPIC_EMAIL_SEND_REGISTER)
+    @Async
     public void sendMail(ConsumerRecord<String, String> record, Acknowledgment ack) {
         String value = record.value();
         EmailSendParam param = JSON.parseObject(value, EmailSendParam.class);

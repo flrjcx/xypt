@@ -31,11 +31,6 @@ public class LoginServiceImpl implements LoginService {
     private TokenService tokenService;
 
     @Override
-    public List<Users> getUserList() {
-        return loginMapper.testUserList();
-    }
-
-    @Override
     public LoginDto login(LoginParam loginParam) {
         AbstractLoginCheck check = loginCheckFactory.getBean(loginParam.getLoginType());
         Users users = check.check(loginParam);
