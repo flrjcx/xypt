@@ -1,8 +1,9 @@
-package com.flrjcx.xypt.log.controller;
+package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
-import com.flrjcx.xypt.log.service.KafkaConsumerLogService;
+import com.flrjcx.xypt.common.utils.HttpPoolUtils;
+import com.flrjcx.xypt.service.LogService;
 import io.swagger.annotations.Api;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,16 +12,16 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * Log日志
+ * 日志服务
  *
  * @author Flrjcx
  */
 @Api(tags = "日志模块")
-@ApiRestController("/api/log")
+@ApiRestController("/api/backend")
 @Log4j2
-public class KafkaConsumerLogController {
+public class LogController {
     @Resource
-    private KafkaConsumerLogService kafkaConsumerLogService;
+    private LogService LogService;
 
     /**
      * 获取Api访问日志列表
@@ -29,6 +30,6 @@ public class KafkaConsumerLogController {
      */
     @GetMapping("/apiLog")
     public List<InterfaceLogResult> getApiLogList() {
-       return kafkaConsumerLogService.getApiLogList();
+        return LogService.getApiLogList();
     }
 }

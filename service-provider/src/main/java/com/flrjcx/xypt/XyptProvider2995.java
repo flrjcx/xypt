@@ -1,6 +1,6 @@
 package com.flrjcx.xypt;
 
-import com.flrjcx.xypt.config.FeignClientConfiguration;
+import com.flrjcx.xypt.kafka.FeignClientConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;

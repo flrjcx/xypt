@@ -1,4 +1,4 @@
-package com.flrjcx.xypt.config;
+package com.flrjcx.xypt.kafka;
 
 import com.flrjcx.xypt.common.utils.IPUtils;
 import lombok.Data;
@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "email.config")
+@ConfigurationProperties(prefix = "email.kafka")
 public class EmailConfig {
 
     private String visitKey;

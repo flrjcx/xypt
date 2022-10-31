@@ -19,8 +19,16 @@ public class InterfaceLogResult implements Serializable {
     private String uri;
     @ApiModelProperty(value = "访问端口", name = "port")
     private int port;
-    @ApiModelProperty(value = "ip归属地", name = "local")
-    private String local;
+    @ApiModelProperty(value = "运营商", name = "isp")
+    private String isp;
+    @ApiModelProperty(value = "区域", name = "area")
+    private String area;
+    @ApiModelProperty(value = "地区", name = "region")
+    private String region;
+    @ApiModelProperty(value = "城市", name = "city")
+    private String city;
+    @ApiModelProperty(value = "区", name = "district")
+    private String district;
     @ApiModelProperty(value = "访问时间戳", name = "timestamp")
     private Long timestamp;
 }

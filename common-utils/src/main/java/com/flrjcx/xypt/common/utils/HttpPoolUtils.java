@@ -43,6 +43,8 @@ public class HttpPoolUtils {
     private static Logger log = LoggerFactory.getLogger(HttpUtils.class);
     private static PoolingHttpClientConnectionManager connMgr;
     private static RequestConfig requestConfig;
+    public static final String HOST = "https://api01.aliyun.venuscn.com/ip";
+    public static final String APP_CODE = "85f02a14a06d4f749065a74b4f59d29d";
 
     static {
         // 设置连接池
@@ -265,8 +267,12 @@ public class HttpPoolUtils {
         return cb.build();
     }
 
-//    public static void main(String[] args) {
-//        //get("http://192.2.12.8:6120/pic?=d6=i705z8e48s99f-600105m5ep=t6i4i*d1=*ipd4=*5s7=85b7i0d95*4efb036b2-9173f57-1869*0-b9i282d5e01");
-//        get("http://192.168.100.47:19901/sysinfo", null, null);
-//    }
+    public static String ipLocal(String ip) {
+        Map<String, String> headers = new HashMap<>();
+        //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
+        headers.put("Authorization", "APPCODE " + APP_CODE);
+        Map<String, Object> querys = new HashMap<>();
+        querys.put("ip", ip);
+        return HttpPoolUtils.get(HOST, querys, headers);
+    }
 }

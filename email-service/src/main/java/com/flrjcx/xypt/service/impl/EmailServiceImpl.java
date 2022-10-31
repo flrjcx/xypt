@@ -6,7 +6,7 @@ import com.flrjcx.xypt.common.model.param.email.EmailSendParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.EmailSendUtils;
 import com.flrjcx.xypt.common.utils.TokenService;
-import com.flrjcx.xypt.config.EmailConfig;
+import com.flrjcx.xypt.kafka.EmailConfig;
 import com.flrjcx.xypt.mapper.EmailRegisterMapper;
 import com.flrjcx.xypt.service.EmailService;
 import org.springframework.stereotype.Service;

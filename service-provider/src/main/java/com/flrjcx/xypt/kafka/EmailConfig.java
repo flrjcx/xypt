@@ -1,4 +1,4 @@
-package com.flrjcx.xypt.config;
+package com.flrjcx.xypt.kafka;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "email.config")
+@ConfigurationProperties(prefix = "email.kafka")
 public class EmailConfig {
 
     private String visitKey;
