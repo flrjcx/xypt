@@ -9,13 +9,12 @@ import com.flrjcx.xypt.common.model.dto.LoginDto;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
-import com.flrjcx.xypt.common.utils.CaptchaUtil;
-import com.flrjcx.xypt.common.utils.TokenService;
-import com.flrjcx.xypt.common.utils.UserThreadLocal;
+import com.flrjcx.xypt.common.utils.*;
 import com.flrjcx.xypt.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -87,11 +86,16 @@ public class LoginController {
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
         }
     }
-
+@Autowired
+KafkaUtils kafkaUtils;
+    @Autowired
+    EmailSendUtils emailSendUtils;
     @OpenPage
     @ApiOperation(value = "查询用户列表")
     @GetMapping("/userList")
     public ResponseData userList() {
+        kafkaUtils.sendMessage("test-topic", "testkey" + Math.random(), "test001"+ Math.random());
+        emailSendUtils.sendFixedMail("2978604202@qq.com", "155588", "1235");
         try {
             return ResponseData.buildPageResponse(loginService.getUserList());
         } catch (Exception e) {

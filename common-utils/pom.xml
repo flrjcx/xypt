@@ -12,6 +12,11 @@
     <artifactId>common-utils</artifactId>
 
     <dependencies>
+        <!--kafka    -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
         <!--分页 -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
