@@ -10,6 +10,18 @@
                 #{realName},
                 #{idCard});
     </insert>
+    <delete id="deletedAccount">
+        DELETE
+        FROM users
+        where user_id = #{userId};
+    </delete>
+
+    <delete id="deletedRealAccount">
+        DELETE
+        FROM real_register
+        where real_registe_user_id = #{userId};
+    </delete>
+
 
 
     <!--修改头像地址-->
@@ -32,5 +44,10 @@
         SELECT COUNT(*)
         FROM real_register
         WHERE real_registe_user_id = #{realRegisterUserId};
+    </select>
+    <select id="getUserById" resultType="com.flrjcx.xypt.common.model.param.common.Users">
+        SELECT *
+        FROM   users
+        WHERE  user_id = #{userId};
     </select>
 </mapper>

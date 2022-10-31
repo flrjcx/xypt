@@ -4,6 +4,7 @@ import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.constants.MessageConstants;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.model.dto.UserInfoDto;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.personal_center.RealNameParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
@@ -17,11 +18,11 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 个人中心
@@ -48,7 +49,7 @@ public class PersonalCenterController {
         String idCard = realNameParam.getIdCard();
         try {
             //校验是否重复实名
-            Integer count = personalCenterService.RealRegisterUserCount(realNameParam.getRealRegisterUserId());
+            Integer count = personalCenterService.realRegisterUserCount(realNameParam.getRealRegisterUserId());
             if (count >= 1) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_REAL_REGISTERED);
             }
@@ -90,7 +91,9 @@ public class PersonalCenterController {
         Users currentUser = UserThreadLocal.get();
         try {
             Integer fansNum = personalCenterService.getUserFansNum(currentUser.getUserId());
-            return ResponseData.buildOnlyResponse("fansNum", fansNum);
+            Map<String, Integer> resultMap = new HashMap<>(1);
+            resultMap.put("fansNum", fansNum);
+            return ResponseData.buildOnlyResponse(resultMap, "fansNum", fansNum);
         } catch (Exception e) {
             log.error("/userFansNum error, " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
@@ -116,4 +119,64 @@ public class PersonalCenterController {
     }
 
 
+    @ApiOperation(value = "用户详情")
+    @GetMapping("/userInfo/{userId}")
+    public ResponseData userInfo(@PathVariable Long userId){
+        try {
+            if (ObjectUtils.isEmpty(userId)){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_50202);
+            }
+            UserInfoDto userInfo = personalCenterService.getUserInfo(userId);
+            if (ObjectUtils.isEmpty(userInfo)){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.FAIL);
+            }
+            return ResponseData.buildResponse(userInfo);
+        } catch (Exception e) {
+            log.error("/userInfo error, " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
+    }
+
+    @Validation
+    @ApiOperation(value = "发送注销账户验证码邮件")
+    @GetMapping("/accountDeleteMail")
+    public ResponseData accountDeleteSendMail(){
+        Users users = UserThreadLocal.get();
+        Long userId = users.getUserId();
+        String email = users.getEmail();
+        try {
+            if (ObjectUtils.isEmpty(email)){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_EMAIL_REQUIRED);
+            }
+            boolean result = personalCenterService.sendAccountDeleteMail(userId, email);
+            if (!result){
+                //邮件发送异常
+                return ResponseData.buildErrorResponse(ResultCodeEnum.FAIL);
+            }
+            return ResponseData.buildResponse();
+        } catch (Exception e) {
+            log.error("/accountDeleteSendMail error, " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
+    }
+
+    @Validation
+    @ApiOperation(value = "账户注销")
+    @DeleteMapping("/accountDeleted/{validateCode}")
+    public ResponseData accountDeleted(@PathVariable String validateCode){
+        Users currentUser = UserThreadLocal.get();
+        try {
+            if (ObjectUtils.isEmpty(validateCode)){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_VERIFICATION_REQUIRED);
+            }
+            boolean result = personalCenterService.deletedAccount(currentUser.getUserId(), validateCode);
+            if (!result){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.FAIL);
+            }
+            return ResponseData.buildResponse();
+        } catch (Exception e) {
+            log.error("/accountDeleted error, " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
+    }
 }

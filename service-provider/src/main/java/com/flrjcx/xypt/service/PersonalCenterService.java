@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.service;
 
+import com.flrjcx.xypt.common.model.dto.UserInfoDto;
 import com.flrjcx.xypt.common.model.param.personal_center.RealNameParam;
 
 /**
@@ -27,7 +28,7 @@ public interface PersonalCenterService {
      * @param realRegisterUserId 用户id
      * @return 用户记录数
      */
-    Integer RealRegisterUserCount(Long realRegisterUserId);
+    Integer realRegisterUserCount(Long realRegisterUserId);
 
     /**
      * 根据用户id 修改用户头像
@@ -37,5 +38,26 @@ public interface PersonalCenterService {
     void updateUserFace(String picPath, Long userId);
 
 
+    /**
+     * 用户详情接口
+     * @param userId 当前用户id
+     * @return
+     */
+    UserInfoDto getUserInfo(Long userId);
 
+    /**
+     * 账户注销邮箱验证码发送接口
+     * @param userId 当前用户id
+     * @param email 该用户邮箱账号
+     * @return
+     */
+    boolean sendAccountDeleteMail(Long userId, String email);
+
+    /**
+     * 账户注销
+     * @param userId 当前用户id
+     * @param validateCode 用户输入验证码
+     * @return
+     */
+    boolean deletedAccount(Long userId, String validateCode);
 }
