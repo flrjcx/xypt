@@ -32,14 +32,5 @@ public class KafkaUtils {
         kafkaTemplate.send(topic, value);
     }
 
-    @KafkaListener(topics = "test-topic", groupId = "g1")
-    public void test(ConsumerRecord<String, String> record, Acknowledgment ack) {
-        String value = record.value();
-        String key = record.key();
-        System.out.println("value:" + value);
-        System.out.println("key:" + key);
-        System.out.println("record:" + record);
-        ack.acknowledge();
-    }
 
 }
