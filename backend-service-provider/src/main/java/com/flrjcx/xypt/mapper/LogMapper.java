@@ -14,12 +14,16 @@ import java.util.List;
  */
 public interface LogMapper {
     /**
-     * 获取访问日志列表
+     *获取Api访问日志列表
      *
      * @param beforeTime
      * @param afterTime
+     * @param ip
+     * @param uri
+     * @param city
      * @return
      */
     @OpenPage
-    List<InterfaceLogResult> getApiLogList(@Param("beforeTime") Date beforeTime, @Param("afterTime") Date afterTime);
+    List<InterfaceLogResult> getApiLogList(@Param("beforeTime") Date beforeTime, @Param("afterTime") Date afterTime
+                                            ,@Param("ip") String ip,@Param("uri")String uri,@Param("city")String city);
 }

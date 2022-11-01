@@ -16,6 +16,16 @@
         <result property="timestamp" column="access_time" jdbcType="TIMESTAMP"/>
     </resultMap>
     <select id="getApiLogList" resultMap="accessLog">
-        SELECT * FROM api_access_log WHERE access_time &lt; #{afterTime} and access_time &gt; #{beforeTime} ORDER BY access_log_id DESC
+        SELECT * FROM api_access_log WHERE access_time &lt; #{afterTime} and access_time &gt; #{beforeTime}
+        <if test="ip != null">
+            AND access_log_user_ip like '%' #{ip} '%'
+        </if>
+        <if test="city != null">
+            AND access_log_city like '%' #{city} '%'
+        </if>
+        <if test="uri != null">
+            AND access_log_uri like '%' #{uri} '%'
+        </if>
+        ORDER BY access_log_id DESC
     </select>
 </mapper>

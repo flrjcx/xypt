@@ -1,6 +1,7 @@
 package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
+import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
@@ -30,11 +31,23 @@ public class LogController {
      * @return
      */
     @GetMapping("/apiLog")
-    public ResponseData getApiLogList(@RequestParam Long beforeTime,@RequestParam Long afterTime) {
+    @Validation
+    public ResponseData getApiLogList(@RequestParam Long beforeTime,@RequestParam Long afterTime,
+                                      String ip,String uri,String city) {
         try {
-            return ResponseData.buildPageResponse(LogService.getApiLogList(beforeTime,afterTime));
+            return ResponseData.buildPageResponse(LogService.getApiLogList(beforeTime,afterTime,ip,uri,city));
         }catch (Exception e){
             log.error("/apiLog error " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
+    }
+    @GetMapping("/detailsIp")
+    @Validation
+    public ResponseData detailsIp(@RequestParam String ip) {
+        try {
+            return ResponseData.buildResponse(LogService.detailsIp(ip));
+        }catch (Exception e){
+            log.error("/detailsIp error " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
         }
     }
