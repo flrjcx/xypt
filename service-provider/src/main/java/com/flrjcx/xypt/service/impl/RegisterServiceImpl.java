@@ -5,6 +5,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.flrjcx.xypt.client.EmailSendClient;
 import com.flrjcx.xypt.common.enums.CacheTokenEnum;
 import com.flrjcx.xypt.common.enums.KafkaTopicEnum;
+import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.dto.LoginDto;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.email.EmailSendParam;
@@ -51,8 +52,9 @@ public class RegisterServiceImpl implements RegisterService {
         user.setStatus("1");
         System.out.println(JSON.toJSONString(user));
         registerMapper.addUser(user);
+        String token = tokenService.createToken(user);
 
-        return ResponseData.buildResponse();
+        return ResponseData.buildResponse(new LoginDto(token));
     }
 
     /**
@@ -63,6 +65,10 @@ public class RegisterServiceImpl implements RegisterService {
      */
     @Override
     public LoginDto sendMail(EmailSendParam param) {
+        // 检查数据库有无当前邮箱
+        if (registerMapper.selectUserByEmail(param.getAddress()) != null) {
+            return null;
+        }
         Integer code = ValidateCodeUtils.generateValidateCode(6);
         param.setCode(String.valueOf(code));
         // 创建验证token

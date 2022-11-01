@@ -81,6 +81,8 @@ public class RegisterCheckService {
         return null;
     }
 
+
+
     private ResponseData checkReg(AddUserParam addUserParam) {
         if (!addUserParam.getAccount().matches(userReg)) {
             return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_NAME_ERROR_CODE);

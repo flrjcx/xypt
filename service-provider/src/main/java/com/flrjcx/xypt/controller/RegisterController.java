@@ -2,6 +2,7 @@ package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.model.dto.LoginDto;
 import com.flrjcx.xypt.common.model.param.email.EmailSendParam;
 import com.flrjcx.xypt.common.model.param.register.AddUserParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
@@ -42,9 +43,8 @@ public class RegisterController {
             if (!Objects.isNull(responseData)) {
                 return responseData;
             }
-            registerService.addUser(param);
 
-            return ResponseData.buildResponse();
+            return registerService.addUser(param);
         } catch (Exception e) {
             log.error("/addUser error " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
@@ -58,7 +58,11 @@ public class RegisterController {
             if (!param.getAddress().matches(RegisterCheckService.emailReg)) {
                 return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_PASSWORD_ERROR_CODE);
             }
-            return ResponseData.buildResponse(registerService.sendMail(param));
+            LoginDto loginDto = registerService.sendMail(param);
+            if (Objects.isNull(loginDto)) {
+                return ResponseData.buildResponse(ResultCodeEnum.ERROR_EMAIL_IS_EXIST);
+            }
+            return ResponseData.buildResponse(loginDto);
         } catch (Exception e) {
             log.error("/send register email error " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
