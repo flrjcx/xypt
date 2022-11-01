@@ -41,6 +41,13 @@ public class LogController {
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
         }
     }
+
+    /**
+     * 查询ip详情
+     *
+     * @param ip
+     * @return
+     */
     @GetMapping("/detailsIp")
     @Validation
     public ResponseData detailsIp(@RequestParam String ip) {
