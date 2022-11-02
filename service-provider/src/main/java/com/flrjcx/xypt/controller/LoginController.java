@@ -7,6 +7,7 @@ import com.flrjcx.xypt.common.enums.LoginTypeEnum;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.dto.LoginDto;
 import com.flrjcx.xypt.common.model.param.common.Users;
+import com.flrjcx.xypt.common.model.param.email.ForgetPasswordParam;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.*;
@@ -16,10 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Objects;
@@ -83,6 +81,59 @@ public class LoginController {
             }
         } catch (Exception e) {
             log.error("/login error " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
+    }
+
+    @ApiOperation("发送忘记密码邮件")
+    @PostMapping("/forgetPassword/sendMail")
+    public ResponseData forgetPasswordSendMail(@RequestBody ForgetPasswordParam forgetPasswordParam){
+        try {
+            if (ObjectUtils.isEmpty(forgetPasswordParam)){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_DELETE_FORM_UPDATE_EMPTY);
+            }
+            String email = forgetPasswordParam.getEmailAddress();
+            if (ObjectUtils.isEmpty(email)){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_EMAIL_REQUIRED);
+            }
+            //验证邮箱是否存在
+            Users user = loginService.checkEmailIsExist(email);
+            if (ObjectUtils.isEmpty(user)){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_EMAIL_ERROR);
+            }
+            //发送邮箱验证码
+            boolean result = loginService.sendForgetPasswordMail(email, user.getUserId());
+            if (!result){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.FAIL);
+            }
+            return ResponseData.buildResponse();
+        } catch (Exception e) {
+            log.error("/forgetPassword/sendMail error " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
+    }
+
+    @ApiOperation("忘记密码")
+    @PutMapping("/forgetPassword")
+    public ResponseData forgetPassword(@RequestBody ForgetPasswordParam forgetPasswordParam){
+        try {
+            if (ObjectUtils.isEmpty(forgetPasswordParam)){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_DELETE_FORM_UPDATE_EMPTY);
+            }
+            if (ObjectUtils.isEmpty(forgetPasswordParam.getNewPassword())){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_PASSWORD_ERROR);
+            }
+            if (ObjectUtils.isEmpty(forgetPasswordParam.getVerifyCode())){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_VERIFICATION_REQUIRED);
+            }
+            //重置密码
+            boolean result = loginService.forgetPassword(forgetPasswordParam.getNewPassword(), forgetPasswordParam.getVerifyCode());
+            if (!result){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_FORGET_PASSWORD_FAIL);
+            }
+            return ResponseData.buildResponse();
+        } catch (Exception e) {
+            log.error("/forgetPassword error " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
         }
     }

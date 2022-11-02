@@ -46,6 +46,8 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_USER_IS_EXIST(100027, "用户已被注册"),
     ERROR_EMAIL_IS_EXIST(100028, "邮箱已被注册"),
     ERROR_CODE_EMAIL_VERIFICATION_ERROR_CODE(100029, "邮箱验证码错误"),
+    ERROR_CODE_EMAIL_ERROR(100030, "邮箱不存在"),
+    ERROR_CODE_FORGET_PASSWORD_FAIL(100031, "忘记密码失败"),
 
     /**
      * 接口转发服务编码
