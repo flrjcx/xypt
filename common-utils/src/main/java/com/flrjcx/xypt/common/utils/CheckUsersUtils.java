@@ -23,7 +23,7 @@ public class CheckUsersUtils {
      * 正则表达式
      */
     private static final String REGEX_PHONE = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$";
-    private static final String REGEX_EMAIL =  "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
+    private static final String REGEX_EMAIL =  "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
     private static final String REGEX_NICK_NAME = "^[a-zA-Z0-9_-]{4,16}$";
     private static final String REGEX_REAL_NAME = "^[\\u4E00-\\u9FA5]{2,6}$";
     private static final String REGEX_ACCOUNT = "^[a-zA-Z0-9_-]{4,16}$";
