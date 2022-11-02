@@ -69,9 +69,8 @@ public class PersonalCenterImpl implements PersonalCenterService {
     public boolean sendAccountDeleteMail(Long userId, String email) {
         Integer validateCode = ValidateCodeUtils.generateValidateCode(6);
         String mailPrefix = MAIL_PREFIX + ":" + userId;
-        boolean flag = true;
         //邮件标题
-        String subject = "账户注销操作验证码";
+        String subject = "校园达论账户注销";
         //邮件内容
         String body = "您正在进行注销此账户操作，验证码有效期五分钟，请确认无误后填入：";
         try {
@@ -80,25 +79,30 @@ public class PersonalCenterImpl implements PersonalCenterService {
             emailSendUtils.sendMail(email, subject, body, validateCode);
             log.info("向用户ID{}发送账户注销验证码邮件成功，邮箱为{}，验证码为{}", userId, email, validateCode);
         } catch (Exception exception) {
-            flag = false;
             //清楚缓存中的验证码
             redisCache.deleteObject(mailPrefix);
             log.info("向用户ID{}发送账户注销验证码邮件失败，邮箱为{}，验证码为{}", userId, email, validateCode);
+            return false;
         }
-        return flag;
+        return true;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean deletedAccount(Long userId, String validateCode) {
         String validateCode_cache = redisCache.getCacheObject(MAIL_PREFIX + ":" + userId).toString();
-        if (validateCode_cache.equals(validateCode)){
-            int count = personalCenterMapper.deletedAccount(userId);
-            int result = personalCenterMapper.deletedRealAccount(userId);
-            if (count == 1 && result == 1){
-                return true;
+        try {
+            if (validateCode_cache.equals(validateCode)){
+                personalCenterMapper.deletedRealAccount(userId);
+                int count = personalCenterMapper.deletedAccount(userId);
+                if (count == 1){
+                    return true;
+                }
             }
+            return false;
+        } catch (Exception e) {
+            log.info("用户{}注销账户失败", userId);
+            return false;
         }
-        return false;
     }
 }

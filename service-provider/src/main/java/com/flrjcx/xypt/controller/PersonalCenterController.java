@@ -92,7 +92,7 @@ public class PersonalCenterController {
             Integer fansNum = personalCenterService.getUserFansNum(currentUser.getUserId());
             Map<String, Integer> resultMap = new HashMap<>(1);
             resultMap.put("fansNum", fansNum);
-            return ResponseData.buildOnlyResponse(resultMap, "fansNum", fansNum);
+            return ResponseData.buildResponse(resultMap);
         } catch (Exception e) {
             log.error("/userFansNum error, " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
