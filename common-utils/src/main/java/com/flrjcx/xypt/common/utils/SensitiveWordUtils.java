@@ -40,4 +40,13 @@ public class SensitiveWordUtils {
         }
         return text;
     }
+
+    /**
+     * 检查是否包含敏感词
+     * @param text 要检查的文本
+     * @return 包含敏感词返回true
+     */
+    public static boolean sensitiveWordCheck(String text) {
+        return SensitiveUtil.containsSensitive(text);
+    }
 }
