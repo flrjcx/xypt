@@ -24,4 +24,18 @@ public interface RegisterService {
      * @return
      */
     LoginDto sendMail(EmailSendParam param);
+
+    /**
+     * 查找数据库中是否有相同的邮箱
+     * @param email
+     * @return
+     */
+    boolean findSameEmail(String email);
+
+    /**
+     * 查找数据库中是否有相同的账户
+     * @param account
+     * @return
+     */
+    boolean findSameAccount(String account);
 }

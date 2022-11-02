@@ -77,4 +77,26 @@ public class RegisterServiceImpl implements RegisterService {
         kafkaUtils.sendMessage(KafkaTopicEnum.TOPIC_EMAIL_SEND_REGISTER, JSON.toJSONString(param));
         return new LoginDto(token);
     }
+
+    /**
+     * 查找数据库中是否有相同的邮箱
+     *
+     * @param email
+     * @return
+     */
+    @Override
+    public boolean findSameEmail(String email) {
+        return registerMapper.findSameEmail(email);
+    }
+
+    /**
+     * 查找数据库中是否有相同的账户
+     *
+     * @param account
+     * @return
+     */
+    @Override
+    public boolean findSameAccount(String account) {
+        return registerMapper.findSameAccount(account);
+    }
 }

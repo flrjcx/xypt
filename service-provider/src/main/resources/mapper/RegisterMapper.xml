@@ -49,4 +49,17 @@
         limit
             1
     </select>
+    <select id="findSameEmail" resultType="java.lang.Boolean">
+        select
+            count(email)
+        from users
+        where email=#{email}
+    </select>
+
+    <select id="findSameAccount" resultType="java.lang.Boolean">
+        select
+            count(account)
+        from users
+        where account=#{account}
+    </select>
 </mapper>
