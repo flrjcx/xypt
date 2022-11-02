@@ -14,16 +14,20 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CheckAllUsersUtils {
+public class CheckUsersUtils {
     /**
      * 身份证号码中的出生日期的格式
      */
     private final static String BIRTH_DATE_FORMAT = "yyyyMMdd";
     /**
-     * 手机号正则表达式
+     * 正则表达式
      */
     private static final String REGEX_PHONE = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$";
-    private static final String REGEX_EMAIL =  "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$" ;
+    private static final String REGEX_EMAIL =  "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
+    private static final String REGEX_NICK_NAME = "^[a-zA-Z0-9_-]{4,16}$";
+    private static final String REGEX_REAL_NAME = "^[\\u4E00-\\u9FA5]{2,6}$";
+    private static final String REGEX_ACCOUNT = "^[a-zA-Z0-9_-]{4,16}$";
+    private static final String REGEX_PWD = "^[a-zA-Z0-9_-]{4,16}$";
     /** 手机号长度 */
     private static int PHONE_LENGTH = 11;
     /**身份证的最小出生日期,1900年1月1日*/
@@ -59,7 +63,7 @@ public class CheckAllUsersUtils {
         if (null != cardNumber) {
             cardNumber = cardNumber.trim();
             if (OLD_CARD_NUMBER_LENGTH == cardNumber.length()) {
-                cardNumber = contertToNewCardNumber(cardNumber);
+                cardNumber = convertToNewCardNumber(cardNumber);
             }
             return validate(cardNumber);
         }
@@ -136,7 +140,7 @@ public class CheckAllUsersUtils {
      * @param oldCardNumber
      * @return oldCardNumber
      */
-    private static String contertToNewCardNumber(String oldCardNumber) {
+    private static String convertToNewCardNumber(String oldCardNumber) {
         StringBuilder buf = new StringBuilder(NEW_CARD_NUMBER_LENGTH);
         buf.append(oldCardNumber.substring(0, 6));
         buf.append("19");
@@ -167,35 +171,52 @@ public class CheckAllUsersUtils {
      * @since 2022-08-09 23:28
      */
     public static Boolean regexPhone(String phone) {
-        Boolean b;
-        if (phone.length() != PHONE_LENGTH) {
-            b = false;
-        } else {
-//                编译正则表达式
-            Pattern p = Pattern.compile(REGEX_PHONE);
-//                对手机号进行匹配
-            Matcher m = p.matcher(phone);
-            boolean isMatch = m.matches();
-            if (isMatch) {
-                b = true;
-            } else {
-                b = false;
-            }
-        }
-        return b;
+        return Pattern.compile(REGEX_PHONE).matcher(phone).matches();
     }
 
     /**
+     * 校验用户昵称
+     * 规则:
+     *      1.特殊字符只允许'_'和'-'
+     *      2.长度2-10位
+     * @param nickName
+     * @return
+     */
+    public static Boolean regexNickName(String nickName) {
+        return Pattern.compile(REGEX_NICK_NAME).matcher(nickName).matches();
+    }
+
+    /**
+     * 校验用户帐号
+     * 规则:
+     *      1.特殊字符只允许'_'和'-'
+     *      2.长度2-10位
+     * @param account
+     * @return
+     */
+    public static Boolean regexAccount(String account) {
+        return Pattern.compile(REGEX_ACCOUNT).matcher(account).matches();
+    }
+
+    /**
+     * 校验用户密码
+     * 规则:
+     *      1.特殊字符只允许'_'和'-'
+     *      2.长度2-10位
+     * @param password
+     * @return
+     */
+    public static Boolean regexPassword(String password) {
+        return Pattern.compile(REGEX_PWD).matcher(password).matches();
+    }
+
+    /**
+     * 查询字段限制长度length
      * @param value
      * @return
      */
-     /**查询字段限制长度length*/
     public static boolean txtLength(int fieldTypeId, String value,int fieldValueLength) {
-        if (value.length() > fieldValueLength) {
-            return false;
-        }
-
-        return true;
+        return value.length() <= fieldValueLength;
     }
 
     public static boolean checkDate(String time) {
@@ -209,18 +230,8 @@ public class CheckAllUsersUtils {
         return true;
     }
 
-    public static boolean verifyEmail(String email) {
-        boolean b = false;
-        Pattern p = Pattern.compile(REGEX_EMAIL);
-//                对手机号进行匹配
-        Matcher m = p.matcher(email);
-        boolean isMatch = m.matches();
-        if (isMatch) {
-            b = true;
-        } else {
-            b = false;
-        }
-        return b;
+    public static boolean regexEmail(String email) {
+        return Pattern.compile(REGEX_EMAIL).matcher(email).matches();
     }
 
     /**
@@ -228,14 +239,8 @@ public class CheckAllUsersUtils {
      * @param realName 真实姓名
      * @return
      */
-    public static boolean checkRealName(String realName){
-        String regx = "^[\\u4E00-\\u9FA5]{2,10}$";
-        Pattern pattern = Pattern.compile(regx);
-        Matcher matcher = pattern.matcher(realName);
-        if (matcher.find()){
-            return true;
-        }
-        return false;
+    public static boolean regexRealName(String realName){
+        return Pattern.compile(REGEX_REAL_NAME).matcher(realName).matches();
     }
 
 }

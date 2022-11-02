@@ -2,13 +2,12 @@ package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.Validation;
-import com.flrjcx.xypt.common.constants.MessageConstants;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.dto.UserInfoDto;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.personal_center.RealNameParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
-import com.flrjcx.xypt.common.utils.CheckAllUsersUtils;
+import com.flrjcx.xypt.common.utils.CheckUsersUtils;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.service.PersonalCenterService;
@@ -60,18 +59,13 @@ public class PersonalCenterController {
             if (ObjectUtils.isEmpty(idCard)) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_ID_CARD_IS_EMPTY);
             }
-            //校验realName是否包含非法字符
-//            String msg = VerifyNameUtils.verifyIllegalStr(realName);
-//            if (!msg.equals(MessageConstants.VERIFY_NAME_RESULT_MSG)) {
-//                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_REAL_NAME_CONTAINS_ILLEGAL_CHARACTERS);
-//            }
-            //校验realName是否是中文且为2-10个字符
-            boolean checkRealName = CheckAllUsersUtils.checkRealName(realName);
+            //校验realName是否是中文且为2-6个字符
+            boolean checkRealName = CheckUsersUtils.regexRealName(realName);
             if (!checkRealName) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_REAL_NAME_INCONFORMITY);
             }
             //校验身份证
-            boolean checkIdCard = CheckAllUsersUtils.checkIdCard(idCard);
+            boolean checkIdCard = CheckUsersUtils.checkIdCard(idCard);
             if (!checkIdCard) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_ID_CARD_INCONFORMITY);
             }
@@ -134,6 +128,26 @@ public class PersonalCenterController {
             log.error("/userInfo error, " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
         }
+    }
+
+    /**
+     * 修改用户信息
+     * 用户仅可修改昵称(新的昵称需要校验,校验通用方法),头像,描述,性别,生日,手机,邮箱,所在地址,学校
+     *
+     * @param user
+     * @return
+     */
+    @Validation
+    @ApiOperation(value = "修改用户信息")
+    @PostMapping("/updateUserInfo")
+    public ResponseData updateUserInfo(@RequestBody Users user) {
+        try {
+
+        } catch (Exception e) {
+            log.error("/updateUserInfo error" + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_UPDATE);
+        }
+        return null;
     }
 
     @Validation

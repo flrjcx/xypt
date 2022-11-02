@@ -5,6 +5,7 @@ import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.param.email.EmailSendParam;
 import com.flrjcx.xypt.common.model.param.register.AddUserParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
+import com.flrjcx.xypt.common.utils.CheckUsersUtils;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.mapper.RegisterMapper;
 import org.springframework.stereotype.Component;
@@ -29,19 +30,9 @@ public class RegisterCheckService {
     @Resource
     private TokenService tokenService;
 
-    /**
-     * 用户名正则
-      */
-    public static String userReg = "^[a-zA-Z0-9_-]{4,16}$";
-    /**
-     * 密码正则
-     */
-    public static String pwdReg = "^[a-zA-Z0-9_-]{4,16}$";
+    //public static String emailReg = "^[A-Za-z0-9\\u4e00-\\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
 
-
-    public static String emailReg = "^[A-Za-z0-9\\u4e00-\\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
-
-    public ResponseData check(AddUserParam addUserParam) {
+    public ResponseData checkParam(AddUserParam addUserParam) {
         ResponseData responseData = checkEmpty(addUserParam);
         if (responseData != null) {
             return responseData;
@@ -84,10 +75,10 @@ public class RegisterCheckService {
 
 
     private ResponseData checkReg(AddUserParam addUserParam) {
-        if (!addUserParam.getAccount().matches(userReg)) {
+        if (CheckUsersUtils.regexAccount(addUserParam.getAccount())) {
             return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_NAME_ERROR_CODE);
         }
-        if (!addUserParam.getPassword().matches(pwdReg)) {
+        if (CheckUsersUtils.regexPassword(addUserParam.getPassword())) {
             return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_PASSWORD_ERROR_CODE);
         }
 //        if (!addUserParam.getEmail().matches(emailReg)) {
