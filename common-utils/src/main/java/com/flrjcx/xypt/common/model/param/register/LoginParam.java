@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Data
 public class LoginParam implements Serializable {
 
-    private static final long serialVersionUID = 114514L;
+    private static final long serialVersionUID = -833137292223017257L;
     @ApiModelProperty(value = "登录用户", name = "user")
     private String user;
     @ApiModelProperty(value = "登录密码", name = "userPassword")

@@ -29,7 +29,7 @@ import java.util.List;
  */
 
 @Api(tags = "评论")
-@ApiRestController("api/client/comment")
+@ApiRestController("/comment")
 @Log4j2
 public class CommentController {
 

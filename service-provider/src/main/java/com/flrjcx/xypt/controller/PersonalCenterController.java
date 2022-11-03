@@ -29,7 +29,7 @@ import java.util.Map;
  * @author Flrjcx
  */
 @Api(tags = "个人中心")
-@ApiRestController("/api/client/personalCenter")
+@ApiRestController("/personalCenter")
 @Log4j2
 public class PersonalCenterController {
     @Resource

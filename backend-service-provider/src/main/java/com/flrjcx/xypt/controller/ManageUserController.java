@@ -22,7 +22,7 @@ import javax.annotation.Resource;
  * @Desc:
  */
 @Api(tags = "管理用户模块")
-@ApiRestController("/api/backend/manageUser")
+@ApiRestController("/manageUser")
 @Log4j2
 public class ManageUserController {
     @Resource

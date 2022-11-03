@@ -28,7 +28,7 @@ import java.util.Objects;
  * @author Flrjcx
  */
 @Api(tags = "登录模块")
-@ApiRestController("/api/client/login")
+@ApiRestController("/login")
 @Log4j2
 public class LoginController {
 

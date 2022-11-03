@@ -94,7 +94,7 @@ public class EmailSendUtils {
                             "                                            <td style=\"max-width:600px;\">\n" +
                             "                                                <div id=\"cTMail-logo\" style=\"width:92px; height:30px;\">\n" +
                             "                                                    <a href=\"\">\n" +
-                            "                                                        <img border=\"0\" src=\"http://qnjs.flrjcx.cn/images/zili-house-logo.jpg\"\n" +
+                            "                                                        <img border=\"0\" src=\"https://oss.flrjcx.cn/common/emailLogoTest.jpeg\"\n" +
                             "                                                             style=\"width:46px; height:5px; display:block\">\n" +
                             "                                                    </a>\n" +
                             "                                                </div>\n" +
@@ -111,13 +111,13 @@ public class EmailSendUtils {
                             "                                                                </h1>\n" +
                             "    \n" +
                             "                                                                <p id=\"cTMail-userName\" style=\"font-size:14px;color:#333; line-height:24px; margin:0;\">\n" +
-                            "                                                                    您好，感谢您在校园达伦注册账户！\n" +
+                            "                                                                    您好，感谢您在校园达论注册账户！\n" +
                             "                                                                </p>\n" +
                             "    \n" +
 
                             "                                                                <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\">\n" +
-                            "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">输入验证码完成注册，<br/>您的验证码为：<b>"+code+"</b>\n" +
-                            "                                                                        <br/><span >如非本人操作请忽略。</span>\n" +
+                            "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">输入验证码完成注册，<br/>您的本次验证码为：<b>"+code+"</b>\n" +
+                            "                                                                        <br/><span >验证码30分钟过期,如非本人操作请忽略。</span>\n" +
                             "                                                                    </span>\n" +
                             "                                                                </p>\n" +
 //                            "                                                                <p class=\"cTMail-content\"\n" +
@@ -167,7 +167,7 @@ public class EmailSendUtils {
                             "                                                                </p>\n" +
                             "                                                                <p id=\"cTMail-rights\" style=\"max-width: 100%; margin:auto;font-size:12px;color:#999;text-align:center;line-height:22px;\">\n" +
                             "                                                                    \n" +
-                            "                                                                    关注服务号，掌握TA的动态\n" +
+                            "                                                                    关注服务号，掌握最新校园动态\n" +
                             "                                                                    <br>\n" +
                             "                                                                   <p>CopyRight @ 2021-2022 </p>\n" +
                             "                                                                </p>\n" +

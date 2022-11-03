@@ -25,7 +25,7 @@ import java.util.Objects;
  * @author Flrjcx
  */
 @Api(tags = "注册模块")
-@ApiRestController("/api/client/register")
+@ApiRestController("/register")
 @Slf4j
 public class RegisterController {
 

@@ -19,7 +19,7 @@ import javax.annotation.Resource;
  * @author Flrjcx
  */
 @Api(tags = "日志模块")
-@ApiRestController("/api/backend")
+@ApiRestController
 @Log4j2
 public class LogController {
     @Resource

@@ -1,0 +1,34 @@
+package com.flrjcx.xypt.service.impl;
+
+import com.flrjcx.xypt.common.utils.DateUtils;
+import com.flrjcx.xypt.mapper.DataPlatFormMapper;
+import com.flrjcx.xypt.service.DataPlatFormService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+
+/**
+ * 数据平台
+ *
+ * @author Flrjcx
+ */
+@Service
+public class DataPlatFormServiceImpl implements DataPlatFormService {
+
+    @Resource
+    private DataPlatFormMapper dataPlatFormMapper;
+
+
+    /**
+     * 获取平台总交易额度
+     *
+     * @param beforeTime:开始时间
+     * @param afterTime:结束时间
+     * @return
+     */
+    @Override
+    public BigDecimal totalTransaction(Long beforeTime, Long afterTime) {
+        return dataPlatFormMapper.totalTransaction(DateUtils.dateToStamp(beforeTime), DateUtils.dateToStamp(afterTime));
+    }
+}

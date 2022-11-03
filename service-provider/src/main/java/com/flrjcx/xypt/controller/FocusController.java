@@ -23,7 +23,7 @@ import javax.annotation.Resource;
  * @version: $
  */
 @Api(tags = "关注模块")
-@ApiRestController("/api/client/focus")
+@ApiRestController("/focus")
 @Log4j2
 public class FocusController {
 

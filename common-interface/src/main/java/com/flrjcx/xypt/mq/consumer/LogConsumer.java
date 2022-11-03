@@ -7,6 +7,7 @@ import com.flrjcx.xypt.common.utils.DateUtils;
 import com.flrjcx.xypt.common.utils.HttpPoolUtils;
 import com.flrjcx.xypt.mapper.LogConsumerMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -38,11 +39,21 @@ public class LogConsumer {
 //        将查询结果反序列化
         IpLocalResult ipLocalResultObject = JSON.parseObject(ipLocalResultJson, IpLocalResult.class);
 
+        if (ObjectUtils.isNotEmpty(ipLocalResultObject.getData().getIsp())){
         logResult.setIsp(ipLocalResultObject.getData().getIsp());
-        logResult.setArea(ipLocalResultObject.getData().getArea());
-        logResult.setRegion(ipLocalResultObject.getData().getRegion());
-        logResult.setCity(ipLocalResultObject.getData().getCity());
-        logResult.setDistrict(ipLocalResultObject.getData().getDistrict());
+        }
+        if (ObjectUtils.isNotEmpty(ipLocalResultObject.getData().getArea())){
+            logResult.setArea(ipLocalResultObject.getData().getArea());
+        }
+        if (ObjectUtils.isNotEmpty(ipLocalResultObject.getData().getRegion())){
+            logResult.setRegion(ipLocalResultObject.getData().getRegion());
+        }
+        if (ObjectUtils.isNotEmpty(ipLocalResultObject.getData().getCity())){
+            logResult.setCity(ipLocalResultObject.getData().getCity());
+        }
+        if (ObjectUtils.isNotEmpty(ipLocalResultObject.getData().getDistrict())){
+            logResult.setDistrict(ipLocalResultObject.getData().getDistrict());
+        }
 
         logConsumerMapper.insertApiMsg(logResult);
         ack.acknowledge();

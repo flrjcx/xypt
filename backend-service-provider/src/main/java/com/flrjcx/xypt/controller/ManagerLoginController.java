@@ -25,7 +25,7 @@ import java.util.Objects;
  * @author aftermath
  */
 @Api(tags = "管理员登录模块")
-@ApiRestController("/api/backend/login")
+@ApiRestController
 @Log4j2
 public class ManagerLoginController {
     @Resource
@@ -47,7 +47,7 @@ public class ManagerLoginController {
     }
 
     @ApiOperation(value = "管理员登录")
-    @PostMapping
+    @PostMapping("/login")
     public ResponseData login(@RequestBody LoginParam loginParam) {
         log.info("");
         try {

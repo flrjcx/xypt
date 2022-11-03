@@ -26,7 +26,7 @@ import javax.annotation.Resource;
  * @Create by 2022/10/20 15:36
  */
 @Api(tags = "安全中心")
-@ApiRestController("/api/client/safetyCenter")
+@ApiRestController("/safetyCenter")
 @Log4j2
 public class SafetyCenterController {
     @Resource
