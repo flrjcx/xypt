@@ -57,10 +57,9 @@ public class EmailSendUtils {
      * 发送固定内容
      * @param address:收件地址
      * @param code:验证码
-     * @param name:用户名
      * @return
      */
-    public ResponseData sendFixedMail(String address,String code,String name) {
+    public ResponseData sendFixedMail(String address,String code) {
         String subject = "校园达论注册";
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper;
@@ -112,17 +111,13 @@ public class EmailSendUtils {
                             "                                                                </h1>\n" +
                             "    \n" +
                             "                                                                <p id=\"cTMail-userName\" style=\"font-size:14px;color:#333; line-height:24px; margin:0;\">\n" +
-                            "                                                                    尊敬的用户"+name+"，您好！\n" +
+                            "                                                                    您好，感谢您在校园达伦注册账户！\n" +
                             "                                                                </p>\n" +
                             "    \n" +
+
                             "                                                                <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\">\n" +
-                            "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">\n" +
-                            "                                                                        欢迎注册校园达论，全国大学领先社区。\n" +
-                            "                                                                    </span>\n" +
-                            "                                                                </p>\n" +
-                            "                                                                <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\">\n" +
-                            "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">输入验证码完成注册，<b>您的验证码为："+code+"<b/>\n" +
-                            "                                                                        <span style=\"font-weight: bold;\">非本人操作请忽略。</span>\n" +
+                            "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">输入验证码完成注册，<br/>您的验证码为：<b>"+code+"</b>\n" +
+                            "                                                                        <br/><span >如非本人操作请忽略。</span>\n" +
                             "                                                                    </span>\n" +
                             "                                                                </p>\n" +
 //                            "                                                                <p class=\"cTMail-content\"\n" +

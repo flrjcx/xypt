@@ -1,7 +1,7 @@
 server:
   port: 3000
   servlet:
-    context-path: /xypt
+    context-path: /dev
 spring:
   profiles:
     active: prod

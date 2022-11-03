@@ -37,4 +37,12 @@ public interface LoginMapper {
      * @return 用户
      */
     Users findUserByAccount(String account);
+
+    /**
+     * 根据userId修改密码
+     * @param userId
+     * @param md5AndBCryptPassword
+     * @return
+     */
+    int updateUserPasswordById(Long userId, String md5AndBCryptPassword);
 }

@@ -2,16 +2,11 @@ package com.flrjcx.xypt.common.utils;
 
 import cn.hutool.core.lang.UUID;
 import com.flrjcx.xypt.common.model.dto.VerifyCodeDto;
-import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sun.misc.BASE64Encoder;
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -22,8 +17,6 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class CaptchaUtil {
-    @Autowired
-    private DefaultKaptcha producer;
 
     @Autowired
     private RedisCache redisCache;
@@ -56,7 +49,7 @@ public class CaptchaUtil {
         //生成文字验证码
         SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 4);
         specCaptcha.setCharType(Captcha.TYPE_DEFAULT);
-        specCaptcha.setFont(Captcha.FONT_8);
+        specCaptcha.setFont(Captcha.FONT_1);
         String text = specCaptcha.text().toLowerCase();
 
         //生成token
@@ -69,39 +62,6 @@ public class CaptchaUtil {
         verifyCodeDto.setUuid(uuid);
         return verifyCodeDto;
     }
-
-    // 备份
-//    /**
-//     * 生成 VerifyCodeDto对象
-//     * @return 返回验证码对象
-//     * @throws IOException 流异常
-//     */
-//    public VerifyCodeDto catchaImgCreator() throws IOException {
-//        //生成文字验证码
-//        String text = producer.createText();
-//        System.out.println(text);
-//
-//        //生成token
-//        String uuid = UUID.fastUUID().toString();
-//        createToken(uuid, text);
-//        VerifyCodeDto verifyCodeDto = new VerifyCodeDto();
-//        verifyCodeDto.setImg(createBase64Code(text));
-//        verifyCodeDto.setUuid(uuid);
-//        return verifyCodeDto;
-//    }
-
-    private String createBase64Code(String text) throws IOException {
-        //生成文字对应的图片验证码
-        BufferedImage image = producer.createImage(text);
-        //将图片写出
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ImageIO.write(image, "jpg", outputStream);
-        //对写出的字节数组进行Base64编码 ==> 用于传递8比特字节码
-        BASE64Encoder encoder = new BASE64Encoder();
-        return encoder.encode(outputStream.toByteArray());
-    }
-
-
 
     /**
      * 创建token

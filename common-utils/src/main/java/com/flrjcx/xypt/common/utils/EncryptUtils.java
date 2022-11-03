@@ -48,9 +48,9 @@ public class EncryptUtils {
         return BCrypt.checkpw(plaintext, hashed);
     }
 
-    public static void main(String[] args) {
-        System.out.println(md5("xiaochai"));
-        System.out.println(md5AndBCrypt("123456"));
-    }
+//    public static void main(String[] args) {
+//        System.out.println(md5("xiaochai"));
+//        System.out.println(md5AndBCrypt("123456"));
+//    }
 
 }

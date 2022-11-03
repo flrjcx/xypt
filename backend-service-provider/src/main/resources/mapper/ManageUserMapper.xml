@@ -94,7 +94,7 @@
             <if test="nickName != null"> nick_name = #{nickName}, </if>
             <if test="nickPic != null"> nick_pic = #{nickPic}, </if>
             <if test="content != null"> content = #{content}, </if>
-            <if test="sex != null"> sex = #{nickName}, </if>
+            <if test="sex != null"> sex = #{sex}, </if>
             <if test="birthday != null"> birthday = #{birthday}, </if>
             <if test="phone != null"> phone = #{phone}, </if>
             <if test="email != null"> email = #{email}, </if>

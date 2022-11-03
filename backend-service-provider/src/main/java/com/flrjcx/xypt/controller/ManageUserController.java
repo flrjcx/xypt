@@ -11,6 +11,7 @@ import com.flrjcx.xypt.service.ManageUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -84,6 +85,7 @@ public class ManageUserController {
 
     @Validation
     @ApiOperation(value = "修改用户")
+    @Transactional(rollbackFor = Exception.class)
     @PostMapping("/updateUser")
     public ResponseData updateUser(@RequestBody Users user, @RequestHeader("Authorization") String token) {
         try {
@@ -96,10 +98,11 @@ public class ManageUserController {
 
     @Validation
     @ApiOperation(value = "删除用户")
-    @DeleteMapping("/deleteUser")
-    public ResponseData deleteUser(@RequestParam("userId") long userId, @RequestHeader("Authorization") String token) {
+    @Transactional(rollbackFor = Exception.class)
+    @PostMapping("/deleteUser")
+    public ResponseData deleteUser(@RequestParam("userId") long userId) {
         try {
-            if(manageUserService.deleteUser(userId, token)) {
+            if(manageUserService.deleteUser(userId)) {
                 return ResponseData.buildSuccess();
             } else {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_DELETE);

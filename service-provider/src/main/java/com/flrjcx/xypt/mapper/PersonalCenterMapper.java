@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.mapper;
 
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.personal_center.RealNameParam;
 
 /**
@@ -38,4 +39,33 @@ public interface PersonalCenterMapper {
      * @param userId  当前用户id
      */
     void changeHeadPortrait(String picPath, Long userId);
+
+    /**
+     * 根据id查询用户详情
+     * @param userId 当前用户id
+     * @return
+     */
+    Users getUserById(Long userId);
+
+    /**
+     * 删除当前用户
+     * @param userId 当前用户id
+     * @return
+     */
+    Integer deletedAccount(Long userId);
+
+    /**
+     * 删除当前用户实名记录
+     * @param userId 用户id
+     * @return
+     */
+    Integer deletedRealAccount(Long userId);
+
+    /**
+     * 更新用户信息
+     *
+     * @param user 新的用户信息 userId必填
+     * @return
+     */
+    long updateUserInfo(Users user);
 }

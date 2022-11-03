@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient("campus-email-service")
 public interface EmailSendClient {
 
-
-
     /**
      * 注册邮箱验证
      * @param token

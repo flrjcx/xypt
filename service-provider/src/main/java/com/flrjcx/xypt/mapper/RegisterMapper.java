@@ -29,4 +29,19 @@ public interface RegisterMapper {
      */
     Users selectUserByEmail(String email);
 
+    /**
+     * 查找数据库中是否有相同的邮箱
+     *
+     * @param email 邮箱
+     * @return
+     */
+    boolean findSameEmail(String email);
+
+    /**
+     * 查找数据库中是否有相同的账户
+     *
+     * @param account 账户
+     * @return
+     */
+    boolean findSameAccount(String account);
 }

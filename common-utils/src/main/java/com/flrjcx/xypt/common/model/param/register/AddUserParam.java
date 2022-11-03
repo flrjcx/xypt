@@ -13,16 +13,14 @@ import java.io.Serializable;
 @Data
 public class AddUserParam implements Serializable {
     private static final long serialVersionUID = 2551934374245952646L;
-    @ApiModelProperty(value = "昵称", name = "nickName")
-    private String nickName;
     @ApiModelProperty(value = "密码", name = "password")
     private String password;
-    @ApiModelProperty(value = "性别", name = "sex")
-    private String sex;
     @ApiModelProperty(value = "邮箱", name = "email")
     private String email;
     @ApiModelProperty(value = "账号", name = "account")
     private String account;
-    @ApiModelProperty(value = "用户id", name = "userId")
-    private Long userId;
+    @ApiModelProperty(value = "验证token", name = "token")
+    private String token;
+    @ApiModelProperty(value = "验证码", name = "code")
+    private String code;
 }

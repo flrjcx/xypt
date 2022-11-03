@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flrjcx.xypt.mapper.LogConsumerMapper">
+
+    <insert id="insertApiMsg">
+        INSERT INTO api_access_log
+        (access_log_user_ip,
+        access_log_uri,
+        access_log_port,
+        <if test="logResult.isp != null and logResult.isp != ''">
+            access_log_isp,
+        </if>
+        <if test="logResult.area != null and logResult.area != ''">
+            access_log_area,
+        </if>
+
+        <if test="logResult.region != null and logResult.region != ''">
+            access_log_region,
+        </if>
+        <if test="logResult.city != null and logResult.city != ''">
+            access_log_city,
+        </if>
+        <if test="logResult.district != null and logResult.district != ''">
+            access_log_district,
+        </if>
+        access_time)
+        VALUES ( #{logResult.ip},
+        #{logResult.uri},
+        #{logResult.port},
+        <if test="logResult.isp != null and logResult.isp != ''">
+            #{logResult.isp},
+        </if>
+        <if test="logResult.area != null and logResult.area != ''">
+            #{logResult.area},
+        </if>
+        <if test="logResult.region != null and logResult.region != ''">
+            #{logResult.region},
+        </if>
+        <if test="logResult.city != null and logResult.city != ''">
+            #{logResult.city},
+        </if>
+        <if test="logResult.district != null and logResult.district != ''">
+            #{logResult.district},
+        </if>
+        #{logResult.timestamp})
+    </insert>
+</mapper>

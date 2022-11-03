@@ -89,4 +89,17 @@ public class SafetyCenterController {
         return ResponseData.buildResponse(setPrivacy);
     }
 
+//    @GetMapping("/getPrivacy")
+//    @ApiOperation("查询隐私")
+//    @Validation
+//    public ResponseData setPrivacy() {
+//        Users user = UserThreadLocal.get();
+//        Long userId = user.getUserId();
+//        UserPrivacy getPrivacy = safetyCenterService.getPrivacy(userId);
+//        if (ObjectUtil.isNull(getPrivacy)) {
+//            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_DETAIL, "获取隐私设置失败");
+//        }
+//        return ResponseData.buildResponse(getPrivacy);
+//    }
+
 }

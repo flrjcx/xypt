@@ -39,7 +39,6 @@ public class ManageUserServiceImpl implements ManageUserService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public long updateUser(Users user, String token) {
         long rows = manageUserMapper.updateUser(user);
         tokenService.updateCache(token, user);
@@ -47,8 +46,7 @@ public class ManageUserServiceImpl implements ManageUserService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean deleteUser(long userId, String token) {
+    public boolean deleteUser(long userId) {
         boolean flag = manageUserMapper.deleteUser(userId);
         if (flag) {
             tokenService.removeUserToken(userId);
