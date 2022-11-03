@@ -189,11 +189,11 @@ public class TokenService {
     }
 
     public void updateCache(String token, Users users) {
-        redisCache.setCacheObject(getUserKey(token), users);
+        redisCache.setCacheObject(getUserKey(token), JSON.toJSONString(users));
     }
 
     public void updateCache(String token, Manager manager) {
-        redisCache.setCacheObject(getManagerKey(token), manager);
+        redisCache.setCacheObject(getManagerKey(token), JSON.toJSONString(manager));
     }
 
     private String getUserKey(String s) {
