@@ -60,4 +60,12 @@ public interface PersonalCenterMapper {
      * @return
      */
     Integer deletedRealAccount(Long userId);
+
+    /**
+     * 更新用户信息
+     *
+     * @param user 新的用户信息 userId必填
+     * @return
+     */
+    long updateUserInfo(Users user);
 }

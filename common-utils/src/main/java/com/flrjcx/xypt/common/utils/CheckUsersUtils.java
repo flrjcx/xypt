@@ -18,7 +18,7 @@ public class CheckUsersUtils {
     /**
      * 身份证号码中的出生日期的格式
      */
-    private final static String BIRTH_DATE_FORMAT = "yyyyMMdd";
+    private final static String BIRTH_DATE_FORMAT = "yyyy-MM-dd";
     /**
      * 正则表达式
      */
@@ -28,6 +28,19 @@ public class CheckUsersUtils {
     private static final String REGEX_REAL_NAME = "^[\\u4E00-\\u9FA5]{2,6}$";
     private static final String REGEX_ACCOUNT = "^[a-zA-Z0-9_-]{4,16}$";
     private static final String REGEX_PWD = "^[a-zA-Z0-9_-]{4,16}$";
+    /**
+     * 日期正则表达式的匹配格式为 yyyy-mm-dd
+     * 匹配规则（按以下序号为顺序）：
+     *
+     *     1.匹配除了2月份之外的1-30日
+     *
+     *     2.若1无法匹配，则匹配1，3，5，7，8，10，12月份的31日
+     *
+     *     3.若2无法匹配，则匹配2月份的1-28日
+     *
+     *     4.若以上都无法匹配，那只可能剩下一天，那就是闰年2月份的最后一天2月29日
+     */
+    private static final String REGEX_DATE = "((((19|20)\\d{2})-(0?(1|[3-9])|1[012])-(0?[1-9]|[12]\\d|30))|(((19|20)\\d{2})-(0?[13578]|1[02])-31)|(((19|20)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-8]))|((((19|20)([13579][26]|[2468][048]|0[48]))|(2000))-0?2-29))$";
     /** 手机号长度 */
     private static int PHONE_LENGTH = 11;
     /**身份证的最小出生日期,1900年1月1日*/
@@ -208,6 +221,17 @@ public class CheckUsersUtils {
      */
     public static Boolean regexPassword(String password) {
         return Pattern.compile(REGEX_PWD).matcher(password).matches();
+    }
+
+    /**
+     * 校验日期格式
+     * yyyy-mm-dd
+     * 详细规则请查看REGEX_DATE的注释
+     * @param date 日期 yyyy-mm-dd格式
+     * @return
+     */
+    public static Boolean regexDate(String date) {
+        return Pattern.compile(REGEX_DATE).matcher(date).matches();
     }
 
     /**

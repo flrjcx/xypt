@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -132,22 +133,39 @@ public class PersonalCenterController {
 
     /**
      * 修改用户信息
-     * 用户仅可修改昵称(新的昵称需要校验,校验通用方法),头像,描述,性别,生日,手机,邮箱,所在地址,学校
+     * 用户仅可修改昵称,头像,描述,性别,生日,手机,邮箱,所在地址,学校
+     * 新的昵称, 邮箱, 手机号需要校验,校验通用方法
      *
-     * @param user
+     * @param user 新用户信息, userId不能为空
      * @return
      */
     @Validation
+    @Transactional(rollbackFor = Exception.class)
     @ApiOperation(value = "修改用户信息")
     @PostMapping("/updateUserInfo")
-    public ResponseData updateUserInfo(@RequestBody Users user) {
+    public ResponseData updateUserInfo(@RequestBody Users user, @RequestHeader("Authorization") String token) {
         try {
-
+            if (ObjectUtils.isEmpty(user.getUserId())) {
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_EMPTY_ID);
+            }
+            String nickName = user.getNickName();
+            if (!ObjectUtils.isEmpty(nickName) && !CheckUsersUtils.regexNickName(nickName)) {
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_NICKNAME_ERROR_CODE);
+            }
+            String email = user.getEmail();
+            if (!ObjectUtils.isEmpty(email) && !CheckUsersUtils.regexEmail(email)) {
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_EMAIL_ERROR_CODE);
+            }
+            String phone = user.getPhone();
+            if(!ObjectUtils.isEmpty(phone) && !CheckUsersUtils.regexPhone(phone)) {
+                return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_INVALID_PHONE);
+            }
+            long rows = personalCenterService.updateUserInfo(user, token);
+            return ResponseData.buildResponse(rows);
         } catch (Exception e) {
             log.error("/updateUserInfo error" + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_UPDATE);
         }
-        return null;
     }
 
     @Validation

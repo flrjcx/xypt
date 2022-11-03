@@ -1,6 +1,7 @@
 package com.flrjcx.xypt.service;
 
 import com.flrjcx.xypt.common.model.dto.UserInfoDto;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.personal_center.RealNameParam;
 
 /**
@@ -60,4 +61,12 @@ public interface PersonalCenterService {
      * @return
      */
     boolean deletedAccount(Long userId, String validateCode);
+
+    /**
+     * 更新用户信息
+     * @param user 新的用户信息
+     * @param token
+     * @return
+     */
+    long updateUserInfo(Users user, String token);
 }

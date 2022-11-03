@@ -5,6 +5,7 @@ import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.personal_center.RealNameParam;
 import com.flrjcx.xypt.common.utils.EmailSendUtils;
 import com.flrjcx.xypt.common.utils.RedisCache;
+import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.common.utils.ValidateCodeUtils;
 import com.flrjcx.xypt.mapper.PersonalCenterMapper;
 import com.flrjcx.xypt.service.PersonalCenterService;
@@ -32,6 +33,8 @@ public class PersonalCenterImpl implements PersonalCenterService {
     private EmailSendUtils emailSendUtils;
     @Resource
     private RedisCache redisCache;
+    @Resource
+    private TokenService tokenService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -104,5 +107,21 @@ public class PersonalCenterImpl implements PersonalCenterService {
             log.info("用户{}注销账户失败", userId);
             return false;
         }
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param user 新的用户信息 userId必填
+     * @param token
+     * @return
+     */
+    @Override
+    public long updateUserInfo(Users user, String token) {
+        long rows = personalCenterMapper.updateUserInfo(user);
+        if (rows>0) {
+            tokenService.updateCache(token, user);
+        }
+        return rows;
     }
 }

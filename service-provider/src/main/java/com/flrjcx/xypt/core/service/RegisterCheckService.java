@@ -76,7 +76,7 @@ public class RegisterCheckService {
 
     private ResponseData checkReg(AddUserParam addUserParam) {
         if (CheckUsersUtils.regexAccount(addUserParam.getAccount())) {
-            return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_NAME_ERROR_CODE);
+            return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_NICKNAME_ERROR_CODE);
         }
         if (CheckUsersUtils.regexPassword(addUserParam.getPassword())) {
             return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_PASSWORD_ERROR_CODE);
