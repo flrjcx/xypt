@@ -32,7 +32,7 @@ public class MyWalletController {
      * @return
      */
     @GetMapping("/recharge")
-//    @Validation
+    @Validation
     public ResponseData recharge(@RequestParam BigDecimal money,@RequestParam Long userId){
         myWalletService.recharge(money,userId);
         return ResponseData.buildResponse(ResultCodeEnum.SUCCESS_RECHARGE.getMessage()+money);
