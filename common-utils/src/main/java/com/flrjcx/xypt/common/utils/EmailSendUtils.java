@@ -116,8 +116,8 @@ public class EmailSendUtils {
                             "    \n" +
 
                             "                                                                <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\">\n" +
-                            "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">输入验证码完成注册，<br/>您的本次验证码为：<b>"+code+"</b>\n" +
-                            "                                                                        <br/><span >验证码30分钟过期,如非本人操作请忽略。</span>\n" +
+                            "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">输入验证码完成注册<br/>您的本次验证码为:<b>"+code+"</b>\n" +
+                            "                                                                        <br/><span >验证码30分钟过期,如非本人操作请忽略！</span>\n" +
                             "                                                                    </span>\n" +
                             "                                                                </p>\n" +
 //                            "                                                                <p class=\"cTMail-content\"\n" +
@@ -169,7 +169,7 @@ public class EmailSendUtils {
                             "                                                                    \n" +
                             "                                                                    关注服务号，掌握最新校园动态\n" +
                             "                                                                    <br>\n" +
-                            "                                                                   <p>CopyRight @ 2021-2022 </p>\n" +
+                            "                                                                   <p id=\"cTMail-rights2\" style=\"max-width: 100%; margin:auto;font-size:12px;color:#999;text-align:center;line-height:22px;\">CopyRight @ 2021-2022 </p>\n" +
                             "                                                                </p>\n" +
                             "                                                            </td>\n" +
                             "                                                            <td style=\"width:3.2%;max-width:30px;\"></td>\n" +

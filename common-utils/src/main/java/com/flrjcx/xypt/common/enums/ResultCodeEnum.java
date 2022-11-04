@@ -255,7 +255,11 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_CODE_ID_CARD_INCONFORMITY(800008, "身份证号不符合"),
     ERROR_CODE_REAL_REGISTERED(800009, "已实名，无需重复"),
 
-    ERROR_EMAIL_SEND_KEY_WRONG(900001, "密钥错误");
+    ERROR_EMAIL_SEND_KEY_WRONG(900001, "密钥错误"),
+    SUCCESS_RECHARGE(900001, "成功充值金额:"),
+
+
+    END(900001, "仅用于结尾,无任何作用请勿删除!");
 
 
     private Integer code;

@@ -1,6 +1,7 @@
 package com.flrjcx.xypt.mq.consumer;
 
 import com.alibaba.fastjson.JSON;
+import com.flrjcx.xypt.common.enums.KafkaTopicEnum;
 import com.flrjcx.xypt.common.model.result.ip.IpLocalResult;
 import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
 import com.flrjcx.xypt.common.utils.DateUtils;
@@ -27,7 +28,7 @@ public class LogConsumer {
     @Resource
     private LogConsumerMapper logConsumerMapper;
 
-    @KafkaListener(topics = "LOG", groupId = "LOG")
+    @KafkaListener(topics = KafkaTopicEnum.TOPIC_LOG_SEND_MESSAGE)
     @Async
     public void consumerLogMsg(ConsumerRecord<String, String> record, Acknowledgment ack) throws InterruptedException {
 //        取出kafka消息,反序列化

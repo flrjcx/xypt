@@ -1,7 +1,7 @@
 package com.flrjcx.xypt.common.utils;
 
 /**
- * @author yi'xiao'yi
+ * @author
  * @title CheckIdCardUtils
  * @description 信息校验工具
  * @date 2022/3/30 11:16

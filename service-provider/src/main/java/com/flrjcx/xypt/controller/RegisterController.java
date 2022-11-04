@@ -89,7 +89,7 @@ public class RegisterController {
     @PostMapping("/send")
     public ResponseData sendMail(@RequestBody EmailSendParam param) {
         try {
-            if (CheckUsersUtils.regexEmail(param.getAddress())) {
+            if (!CheckUsersUtils.regexEmail(param.getAddress())) {
                 return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_EMAIL_ERROR_CODE);
             }
             LoginDto loginDto = registerService.sendMail(param);

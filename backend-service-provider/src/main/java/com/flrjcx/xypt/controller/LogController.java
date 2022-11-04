@@ -5,6 +5,7 @@ import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
+import com.flrjcx.xypt.common.utils.EmailSendUtils;
 import com.flrjcx.xypt.service.LogService;
 import io.swagger.annotations.Api;
 import lombok.extern.log4j.Log4j2;
@@ -24,6 +25,9 @@ import javax.annotation.Resource;
 public class LogController {
     @Resource
     private LogService LogService;
+
+    @Resource
+    private EmailSendUtils emailSendUtils;
 
     /**
      * 获取Api访问日志列表
