@@ -1,6 +1,7 @@
 package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
+import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.service.DataPlatFormService;
@@ -18,7 +19,7 @@ import java.math.BigDecimal;
  * @author Flrjcx
  */
 @Api(tags = "数据平台")
-@ApiRestController
+@ApiRestController("/dataPlatForm")
 @Log4j2
 public class DataPlatformController {
     @Resource
@@ -32,6 +33,7 @@ public class DataPlatformController {
      * @return
      */
     @GetMapping("/totalTransaction")
+    @Validation
     public ResponseData totalTransaction(@RequestParam Long beforeTime, @RequestParam Long afterTime){
         return ResponseData.buildResponse(ResultCodeEnum.SUCCESS.getMessage(),dataPlatFormService.totalTransaction(beforeTime,afterTime));
     }

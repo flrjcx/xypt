@@ -25,7 +25,7 @@ import java.util.Objects;
  * @author aftermath
  */
 @Api(tags = "管理员登录模块")
-@ApiRestController
+@ApiRestController("/index")
 @Log4j2
 public class ManagerLoginController {
     @Resource
