@@ -3,7 +3,9 @@ package com.flrjcx.xypt.controller;
 import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.result.ResponseData;
+import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.service.MyWalletService;
 import io.swagger.annotations.Api;
 import lombok.extern.log4j.Log4j2;
@@ -33,8 +35,9 @@ public class MyWalletController {
      */
     @GetMapping("/recharge")
     @Validation
-    public ResponseData recharge(@RequestParam BigDecimal money,@RequestParam Long userId){
-        myWalletService.recharge(money,userId);
+    public ResponseData recharge(@RequestParam BigDecimal money){
+        Users users = UserThreadLocal.get();
+        myWalletService.recharge(money,users.getUserId());
         return ResponseData.buildResponse(ResultCodeEnum.SUCCESS_RECHARGE.getMessage()+money);
     }
 }
