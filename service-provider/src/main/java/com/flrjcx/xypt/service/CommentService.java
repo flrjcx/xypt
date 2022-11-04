@@ -28,7 +28,7 @@ public interface CommentService {
      * @return
      */
     ResponseData < Comment > post(long bbsId, long userId, long parentId, int level,
-                                  String context, int commentFloor, long commentParentId);
+                                  String context, int commentFloor);
 
     Boolean delete(@RequestParam("id") Long commentId);
 

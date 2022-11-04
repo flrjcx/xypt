@@ -28,7 +28,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResponseData < Comment > post(long bbsId, long userId,long parentId,
-                                         int level, String context, int commentFloor, long commentParentId) {
+                                         int level, String context, int commentFloor) {
         ResponseData<Comment> response = new ResponseData <>();
 
         if (bbsId == 0 || userId == 0 || StringUtils.isEmpty(context) || level == 0) {

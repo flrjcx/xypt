@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flrjcx.xypt.mapper.BbsMapper">
+
+    <sql id="allBbsInfo">
+        bbs_id,
+        bbs_user_id,
+        bbs_title,
+        bbs_context_md,
+        bbs_context,
+        bbs_views,
+        bbs_collect,
+        bbs_praise,
+        bbs_no,
+        bbs_type,
+        bbs_create_time,
+        bbs_update_time,
+        bbs_delete
+    </sql>
+
+    <update id="updatePraise">
+        update bbs
+        set bbs_praise=bbs_praise+1
+        where bbs_id=#{bbsId}
+    </update>
+
+    <update id="cancelPraise">
+        update bbs
+        set bbs_praise=bbs_praise-1
+        where bbs_id=#{bbsId}
+    </update>
+
+    <update id="updateNo">
+        update bbs
+        set bbs_no=bbs_no+1
+        where bbs_id=#{bbsId}
+    </update>
+
+    <update id="cancelNo">
+        update bbs
+        set bbs_no=bbs_no-1
+        where bbs_id=#{bbsId}
+    </update>
+</mapper>

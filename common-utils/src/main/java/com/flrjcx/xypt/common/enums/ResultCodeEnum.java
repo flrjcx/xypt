@@ -201,6 +201,11 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_CODE_COMMENT_QUERY_WORKFLOW(600004, "获取评论信息失败！"),
     ERROR_CODE_COMMENT_UPDATE_WORKFLOW(600005, "修改评论信息失败！"),
 
+    ERROR_CODE_PRAISE_ERROR(60006, "点赞失败"),
+    ERROR_CODE_CANCEL_PRAISE_ERROR(60007, "取消点赞失败"),
+    ERROR_CODE_NO_ERROR(60008, "点踩失败"),
+    ERROR_CODE_CANCEL_NO_ERROR(60009, "取消点踩失败"),
+
 
     ERROR_FORM_TABLE_EXIST(61000, "表单名称已经存在！"),
 

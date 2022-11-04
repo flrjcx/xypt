@@ -69,7 +69,7 @@
         select
         a.*,
         u.nick_name,
-        u.nick_pic,
+        u.nick_pic
         from comment a
         left join
         users u
@@ -78,7 +78,7 @@
         where
         a.comment_bbs_id = #{commentBbsId}
         order by
-        a.create_time
+        a.comment_create_time
         desc
     </select>
 

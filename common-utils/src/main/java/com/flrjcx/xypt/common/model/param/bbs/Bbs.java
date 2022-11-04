@@ -1,0 +1,41 @@
+package com.flrjcx.xypt.common.model.param.bbs;
+
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * @author : aftermath
+ * @date : 2022-11-04 10:12:47
+ */
+@Data
+public class Bbs implements Serializable {
+    private static final long serialVersionUID = -4052493239475027301L;
+
+    @ApiModelProperty(value = "主键id", name = "bbsId")
+    private Long bbsId;
+    @ApiModelProperty(value = "发帖用户id", name = "bbsUserId")
+    private Long bbsUserId;
+    @ApiModelProperty(value = "标题", name = "bbsTitle")
+    private String bbsTitle;
+    @ApiModelProperty(value = "内容markdown格式", name = "bbsContextMd")
+    private String bbsContextMd;
+    @ApiModelProperty(value = "内容", name = "bbsContext")
+    private String bbsContext;
+    @ApiModelProperty(value = "浏览量", name = "bbsViews")
+    private Integer bbsViews;
+    @ApiModelProperty(value = "收藏数量", name = "bbsCollect")
+    private Integer bbsCollect;
+    @ApiModelProperty(value = "赞数量", name = "bbsPraise")
+    private Integer bbsPraise;
+    @ApiModelProperty(value = "踩数量", name = "bbsNo")
+    private Integer bbsNo;
+    @ApiModelProperty(value = "类型", name = "type")
+    private Integer type;
+    @ApiModelProperty(value = "更新时间", name = "bbsUpdateTime")
+    private Date bbsUpdateTime;
+    @ApiModelProperty(value = "创建时间", name = "bbsCreateTime")
+    private Date bbsCreateTime;
+}

@@ -5,9 +5,8 @@ import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.model.param.comment.Comment;
 import com.flrjcx.xypt.common.model.result.ResponseData;
-import com.flrjcx.xypt.common.utils.CaptchaUtil;
+import com.flrjcx.xypt.common.utils.SensitiveWordUtils;
 import com.flrjcx.xypt.common.utils.TokenService;
-import com.flrjcx.xypt.mapper.CommentMapper;
 import com.flrjcx.xypt.service.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,7 +43,7 @@ public class CommentController {
     public Comment save(@RequestBody Comment comment) {
 
         commentService.post(comment.getCommentBbsId(), comment.getCommentUserId(), comment.getCommentParentId(),
-                comment.getLevel(), comment.getCommentContext(), comment.getCommentFloor(), comment.getCommentParentId());
+                comment.getLevel(), comment.getCommentContext(), comment.getCommentFloor());
 
         return comment;
     }

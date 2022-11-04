@@ -31,11 +31,11 @@ public class Comment implements Serializable {
     @ApiModelProperty(value = "评论时间", name = "commentCreateTime")
     private Date commentCreateTime;
     @ApiModelProperty(value = "评论等级", name = "level")
-    private int level;
+    private Integer level;
     @ApiModelProperty(value = "评论楼层", name = "commentFloor")
-    private int commentFloor;
+    private Integer commentFloor;
     @ApiModelProperty(value = "父评论id", name = "commentParentId")
-    private long commentParentId;
+    private Long commentParentId;
     @ApiModelProperty(value = "子评论", name = "children")
     private List <Comment> children;
 
