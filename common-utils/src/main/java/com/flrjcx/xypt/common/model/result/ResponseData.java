@@ -154,6 +154,12 @@ public class ResponseData<T> extends HashMap<String, Object> implements Serializ
         return data;
     }
 
+    @Override
+    public ResponseData put(String key, Object value) {
+        super.put(key, value);
+        return this;
+    }
+
     public boolean judgeSuccess() {
         return this.get(CODE_TAG) == ResultCodeEnum.SUCCESS.getCode();
     }
