@@ -201,11 +201,11 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_CODE_COMMENT_QUERY_WORKFLOW(600004, "获取评论信息失败！"),
     ERROR_CODE_COMMENT_UPDATE_WORKFLOW(600005, "修改评论信息失败！"),
 
-    ERROR_CODE_PRAISE_ERROR(60006, "点赞失败"),
-    ERROR_CODE_CANCEL_PRAISE_ERROR(60007, "取消点赞失败"),
-    ERROR_CODE_NO_ERROR(60008, "点踩失败"),
-    ERROR_CODE_CANCEL_NO_ERROR(60009, "取消点踩失败"),
-
+    ERROR_CODE_BBS_UPDATE_ERROR(60006, "修改论坛表信息失败(数据库原因 或 该帖子不存在)"),
+    ERROR_CODE_BBS_PRAISE_INSERT_ERROR(60007, "帖子点赞表增加信息失败(数据库原因)"),
+    ERROR_CODE_BBS_PRAISE_DELETE_ERROR(60008, "帖子点赞表删除信息失败(数据库原因 或 帖子id及用户id可能不存在)"),
+    ERROR_CODE_BBS_NO_INSERT_ERROR(60009, "帖子点踩表增加信息失败(数据库原因)"),
+    ERROR_CODE_BBS_NO_DELETE_ERROR(60010, "帖子点踩表删除信息失败(数据库原因 或 帖子id及用户id可能不存在)"),
 
     ERROR_FORM_TABLE_EXIST(61000, "表单名称已经存在！"),
 

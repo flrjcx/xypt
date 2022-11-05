@@ -4,6 +4,7 @@ import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.result.ResponseData;
+import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.service.BbsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,30 +32,27 @@ public class BbsController {
      * 用户点赞帖子接口
      *
      * 如果前端接收到错误信息, 不要更新点赞图标, 以免后续取消点赞出现bug
+     * 点/踩接口都加了事务, 有错误会直接回滚,
      * @return 统一响应
      */
     @Validation
     @ApiOperation("点赞")
     @PostMapping("/praise")
     @Transactional(rollbackFor = Exception.class)
-    public ResponseData praise(@RequestParam("bbsId") Long bbsId,
-                               @RequestParam("userId") Long userId) {
-        if (!bbsService.praise(bbsId, userId)) {
-            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_PRAISE_ERROR);
-        }
-        return ResponseData.buildSuccess();
+    public ResponseData praise(@RequestParam("bbsId") Long bbsId) {
+        Long userId = UserThreadLocal.get().getUserId();
+        ResultCodeEnum resultCodeEnum = bbsService.praise(bbsId, userId);
+        return ResponseData.buildResponse(resultCodeEnum);
     }
 
     @Validation
     @ApiOperation("取消点赞")
     @PostMapping("/cancelPraise")
     @Transactional(rollbackFor = Exception.class)
-    public ResponseData cancelPraise(@RequestParam("bbsId") Long bbsId,
-                                     @RequestParam("userId") Long userId) {
-        if (!bbsService.cancelPraise(bbsId, userId)) {
-            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_CANCEL_PRAISE_ERROR);
-        }
-        return ResponseData.buildSuccess();
+    public ResponseData cancelPraise(@RequestParam("bbsId") Long bbsId) {
+        Long userId = UserThreadLocal.get().getUserId();
+        ResultCodeEnum resultCodeEnum = bbsService.cancelPraise(bbsId, userId);
+        return ResponseData.buildResponse(resultCodeEnum);
     }
 
     /**
@@ -66,23 +64,19 @@ public class BbsController {
     @ApiOperation("点踩")
     @PostMapping("/no")
     @Transactional(rollbackFor = Exception.class)
-    public ResponseData no(@RequestParam("bbsId") Long bbsId,
-                           @RequestParam("userId") Long userId) {
-        if (!bbsService.no(bbsId, userId)) {
-            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_NO_ERROR);
-        }
-        return ResponseData.buildSuccess();
+    public ResponseData no(@RequestParam("bbsId") Long bbsId) {
+        Long userId = UserThreadLocal.get().getUserId();
+        ResultCodeEnum resultCodeEnum = bbsService.no(bbsId, userId);
+        return ResponseData.buildResponse(resultCodeEnum);
     }
 
     @Validation
     @ApiOperation("取消点踩")
     @PostMapping("/cancelNo")
     @Transactional(rollbackFor = Exception.class)
-    public ResponseData cancelNo(@RequestParam("bbsId") Long bbsId,
-                                 @RequestParam("userId") Long userId) {
-        if (!bbsService.cancelNo(bbsId, userId)) {
-            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_CANCEL_NO_ERROR);
-        }
-        return ResponseData.buildSuccess();
+    public ResponseData cancelNo(@RequestParam("bbsId") Long bbsId) {
+        Long userId = UserThreadLocal.get().getUserId();
+        ResultCodeEnum resultCodeEnum = bbsService.cancelNo(bbsId, userId);
+        return ResponseData.buildResponse(resultCodeEnum);
     }
 }
