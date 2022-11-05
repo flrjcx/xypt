@@ -7,6 +7,11 @@
     <select id="totalTransaction" resultType="java.math.BigDecimal">
         SELECT SUM(transaction_amount) AS transactionAmount FROM t_transaction
         WHERE
-        transaction_create_time &lt; #{afterTime} and transaction_create_time &gt; #{beforeTime}
+        transaction_create_time &lt; #{afterTime} and transaction_create_time &gt; #{beforeTime} and transaction_type = 0
+    </select>
+    <select id="totalDeposit" resultType="java.math.BigDecimal">
+        SELECT SUM(transaction_amount) AS transactionAmount FROM t_transaction
+        WHERE
+        transaction_create_time &lt; #{afterTime} and transaction_create_time &gt; #{beforeTime} and transaction_type = 1
     </select>
 </mapper>

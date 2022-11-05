@@ -19,4 +19,13 @@ public interface DataPlatFormMapper {
      * @return
      */
     BigDecimal totalTransaction(@Param("beforeTime") Date beforeTime,@Param("afterTime") Date afterTime);
+
+    /**
+     * 获取平台总支出额度(提现)
+     *
+     * @param beforeTime:开始时间
+     * @param afterTime:结束时间
+     * @return
+     */
+    BigDecimal totalDeposit(@Param("beforeTime") Date beforeTime,@Param("afterTime") Date afterTime);
 }

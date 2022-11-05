@@ -38,4 +38,17 @@ public class DataPlatformController {
         return ResponseData.buildResponse(ResultCodeEnum.SUCCESS.getMessage(),dataPlatFormService.totalTransaction(beforeTime,afterTime));
     }
 
+    /**
+     * 获取平台总交易额度
+     *
+     * @param beforeTime:开始时间
+     * @param afterTime:结束时间
+     * @return
+     */
+    @GetMapping("/totalDeposit")
+    @Validation
+    public ResponseData totalDeposit(@RequestParam Long beforeTime, @RequestParam Long afterTime){
+        return ResponseData.buildResponse(ResultCodeEnum.SUCCESS.getMessage(),dataPlatFormService.totalDeposit(beforeTime,afterTime));
+    }
+
 }

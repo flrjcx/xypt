@@ -8,11 +8,20 @@ import java.math.BigDecimal;
  * @author Flrjcx
  */
 public interface MyWalletService {
+
     /**
-     * 充值
+     * 充值/提现
      *
-     * @param money
-     * @param userId
+     * @param money:金额
+     * @param type:类型
+     * @return
      */
-    void recharge(BigDecimal money,Long userId);
+    int recharge(BigDecimal money,int type);
+
+    /**
+     * 获取用户S币
+     *
+     * @return
+     */
+    BigDecimal getBalance();
 }

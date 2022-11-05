@@ -256,7 +256,12 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_CODE_REAL_REGISTERED(800009, "已实名，无需重复"),
 
     ERROR_EMAIL_SEND_KEY_WRONG(900001, "密钥错误"),
-    SUCCESS_RECHARGE(900001, "成功充值金额:"),
+    SUCCESS_RECHARGE(900001, "成功充值S币:"),
+    SUCCESS_DEPOSIT(900001, "成功提现金额:"),
+    ERROR_DEPOSIT(900001, "提现金额大于当前S币!"),
+    ERROR_DEPOSIT_NULL(900001, "提现了个寂寞!"),
+    ERROR_RECHARGE_NULL(900001, "充值了个寂寞!"),
+    ERROR_RECHARGE_MAX(900001, "超出S币单次充值额度!"),
 
 
     END(900001, "仅用于结尾,无任何作用请勿删除!");

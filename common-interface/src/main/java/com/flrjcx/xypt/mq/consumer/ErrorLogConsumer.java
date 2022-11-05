@@ -32,6 +32,7 @@ public class ErrorLogConsumer {
     @Resource
     private ErrorLogConsumerMapper errorLogConsumerMapper;
 
+    @Async
     @KafkaListener(topics = KafkaTopicEnum.TOPIC_ERROR_LOG)
     public void sendMail(ConsumerRecord<String, String> record, Acknowledgment ack) {
         String value = record.value();

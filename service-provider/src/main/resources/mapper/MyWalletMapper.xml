@@ -7,4 +7,15 @@
     <update id="recharge">
         update users set balance = balance + #{money} where user_id = #{userId}
     </update>
+    <update id="deposit">
+        update users set balance = balance - #{money} where user_id = #{userId}
+    </update>
+    <select id="checkMoney" resultType="java.lang.Boolean">
+        select (CASE WHEN balance &lt; #{money} THEN 0 else 1 END) as bl from users where user_id = #{userId};
+    </select>
+    <select id="getBalance" resultType="java.math.BigDecimal">
+        select balance from users where user_id = #{userId}
+    </select>
+
+
 </mapper>

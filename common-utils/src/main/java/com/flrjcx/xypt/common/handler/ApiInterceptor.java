@@ -1,6 +1,7 @@
 package com.flrjcx.xypt.common.handler;
 
 import com.alibaba.fastjson.JSONObject;
+import com.flrjcx.xypt.common.enums.KafkaTopicEnum;
 import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
 import com.flrjcx.xypt.common.utils.HttpPoolUtils;
 import com.flrjcx.xypt.common.utils.KafkaUtils;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -27,7 +29,6 @@ import java.net.UnknownHostException;
 public class ApiInterceptor implements HandlerInterceptor {
     @Resource
     private KafkaUtils kafkaUtils;
-    public static final String LOG = "LOG";
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         InterfaceLogResult logResult = new InterfaceLogResult();
@@ -35,10 +36,13 @@ public class ApiInterceptor implements HandlerInterceptor {
         logResult.setPort(request.getServerPort());
         logResult.setUri(request.getRequestURI());
         String logJsonStr = JSONObject.toJSONString(logResult);
-        kafkaUtils.sendMessage(LOG,logJsonStr);
+        sendMessageAsync(KafkaTopicEnum.TOPIC_LOG_SEND_MESSAGE,logJsonStr);
         return true;
     }
 
-
+    @Async
+    public void sendMessageAsync(String topic, String s) {
+        kafkaUtils.sendMessage(topic, s);
+    }
 
 }
