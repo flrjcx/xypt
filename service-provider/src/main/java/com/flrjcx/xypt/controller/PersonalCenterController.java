@@ -3,6 +3,7 @@ package com.flrjcx.xypt.controller;
 import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.model.dto.MyInfoDto;
 import com.flrjcx.xypt.common.model.dto.UserInfoDto;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.personal_center.RealNameParam;
@@ -127,6 +128,26 @@ public class PersonalCenterController {
             return ResponseData.buildResponse(userInfo);
         } catch (Exception e) {
             log.error("/userInfo error, " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
+    }
+
+    @Validation
+    @ApiOperation(value = "个人信息详情")
+    @GetMapping("/myInfo")
+    public ResponseData myInfo(){
+        try {
+            Long userId = UserThreadLocal.get().getUserId();
+            if (ObjectUtils.isEmpty(userId)){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_50202);
+            }
+            MyInfoDto myInfo = personalCenterService.getMyInfo(userId);
+            if (ObjectUtils.isEmpty(myInfo)){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.FAIL);
+            }
+            return ResponseData.buildResponse(myInfo);
+        } catch (Exception e) {
+            log.error("/myInfo error, " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
         }
     }

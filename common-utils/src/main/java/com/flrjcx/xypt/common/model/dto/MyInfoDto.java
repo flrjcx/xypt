@@ -7,12 +7,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 客户端用户详情接口返回实体类
- * @author &nbsp
+ * @author : aftermath
+ * @date : 2022-11-05 21:08:51
  */
 @Data
-public class UserInfoDto implements Serializable {
-    private static final long serialVersionUID = -1114993511072823495L;
+public class MyInfoDto implements Serializable {
+    private static final long serialVersionUID = -5383949320336831473L;
     @ApiModelProperty(value = "昵称", name = "nickName")
     private String nickName;
     @ApiModelProperty(value = "头像", name = "nickPic")

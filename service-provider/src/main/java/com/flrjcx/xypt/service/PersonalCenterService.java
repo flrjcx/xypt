@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.service;
 
+import com.flrjcx.xypt.common.model.dto.MyInfoDto;
 import com.flrjcx.xypt.common.model.dto.UserInfoDto;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.personal_center.RealNameParam;
@@ -45,6 +46,13 @@ public interface PersonalCenterService {
      * @return
      */
     UserInfoDto getUserInfo(Long userId);
+
+    /**
+     * 个人详情接口
+     * @param userId 当前用户id
+     * @return
+     */
+    MyInfoDto getMyInfo(Long userId);
 
     /**
      * 账户注销邮箱验证码发送接口

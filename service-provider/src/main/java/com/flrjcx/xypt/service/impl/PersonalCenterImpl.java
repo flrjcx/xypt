@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.service.impl;
 
+import com.flrjcx.xypt.common.model.dto.MyInfoDto;
 import com.flrjcx.xypt.common.model.dto.UserInfoDto;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.personal_center.RealNameParam;
@@ -66,6 +67,20 @@ public class PersonalCenterImpl implements PersonalCenterService {
         UserInfoDto userInfo = new UserInfoDto();
         BeanUtils.copyProperties(user, userInfo);
         return userInfo;
+    }
+
+    /**
+     * 个人详情接口
+     *
+     * @param userId 当前用户id
+     * @return
+     */
+    @Override
+    public MyInfoDto getMyInfo(Long userId) {
+        Users user = personalCenterMapper.getUserById(userId);
+        MyInfoDto myInfo = new MyInfoDto();
+        BeanUtils.copyProperties(user,myInfo);
+        return myInfo;
     }
 
     @Override
