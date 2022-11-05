@@ -30,15 +30,8 @@ public class RegisterCheckService {
     @Resource
     private TokenService tokenService;
 
-    //public static String emailReg = "^[A-Za-z0-9\\u4e00-\\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
-    private static final String REGEX_EMAIL =  "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
-
     public ResponseData checkParam(AddUserParam addUserParam) {
         ResponseData responseData = checkEmpty(addUserParam);
-        if (responseData != null) {
-            return responseData;
-        }
-        responseData = checkToken(addUserParam);
         if (responseData != null) {
             return responseData;
         }
@@ -47,6 +40,10 @@ public class RegisterCheckService {
             return responseData;
         }
         responseData = checkDb(addUserParam);
+        if (responseData != null) {
+            return responseData;
+        }
+        responseData = checkToken(addUserParam);
 
         return responseData;
     }
@@ -55,6 +52,7 @@ public class RegisterCheckService {
         addUserParam.setEmail("");
         String key = CacheTokenEnum.CACHE_EMAIL.getKey() + addUserParam.getToken();
         EmailSendParam emailSendParam = tokenService.getCache(key);
+        tokenService.removeToken(key);
         if (ObjectUtils.isEmpty(emailSendParam) || !emailSendParam.getCode().equals(addUserParam.getCode())) {
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_EMAIL_VERIFICATION_ERROR_CODE);
         }
@@ -77,13 +75,13 @@ public class RegisterCheckService {
 
     private ResponseData checkReg(AddUserParam addUserParam) {
         if (!CheckUsersUtils.regexAccount(addUserParam.getAccount())) {
-            return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_NICKNAME_ERROR_CODE);
+            return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_ACCOUNT_ERROR_CODE);
         }
         if (!CheckUsersUtils.regexPassword(addUserParam.getPassword())) {
             return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_PASSWORD_ERROR_CODE);
         }
-        if (!addUserParam.getEmail().matches(REGEX_EMAIL)) {
-            return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_PASSWORD_ERROR_CODE);
+        if (!CheckUsersUtils.regexEmail(addUserParam.getEmail())) {
+            return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_EMAIL_ERROR_CODE);
         }
         return null;
     }

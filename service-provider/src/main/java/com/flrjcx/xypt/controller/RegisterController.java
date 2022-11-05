@@ -88,19 +88,14 @@ public class RegisterController {
     @ApiOperation(value = "发送注册邮箱")
     @PostMapping("/send")
     public ResponseData sendMail(@RequestBody EmailSendParam param) {
-        try {
-            if (!CheckUsersUtils.regexEmail(param.getAddress())) {
-                return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_EMAIL_ERROR_CODE);
-            }
-            LoginDto loginDto = registerService.sendMail(param);
-            if (Objects.isNull(loginDto)) {
-                return ResponseData.buildResponse(ResultCodeEnum.ERROR_EMAIL_IS_EXIST);
-            }
-            return ResponseData.buildResponse(loginDto);
-        } catch (Exception e) {
-            log.error("/send register email error " + e.getMessage());
-            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        if (!CheckUsersUtils.regexEmail(param.getAddress())) {
+            return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_EMAIL_ERROR_CODE);
         }
+        LoginDto loginDto = registerService.sendMail(param);
+        if (Objects.isNull(loginDto)) {
+            return ResponseData.buildResponse(ResultCodeEnum.ERROR_EMAIL_IS_EXIST);
+        }
+        return ResponseData.buildResponse(loginDto);
     }
 
 

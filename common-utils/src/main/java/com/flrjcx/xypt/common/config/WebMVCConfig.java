@@ -2,6 +2,8 @@ package com.flrjcx.xypt.common.config;
 
 import com.flrjcx.xypt.common.handler.ApiInterceptor;
 import com.flrjcx.xypt.common.handler.ValidationInterceptor;
+import com.flrjcx.xypt.common.handler.filter.XssFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -23,6 +25,14 @@ public class WebMVCConfig implements WebMvcConfigurer {
 
     @Resource
     private ApiInterceptor apiInterceptor;
+
+    @Bean
+    public FilterRegistrationBean filterRegist() {
+        FilterRegistrationBean frBean = new FilterRegistrationBean();
+        frBean.setFilter(new XssFilter());
+        frBean.addUrlPatterns("/*");
+        return frBean;
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

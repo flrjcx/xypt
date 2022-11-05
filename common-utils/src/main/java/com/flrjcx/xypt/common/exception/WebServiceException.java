@@ -27,4 +27,9 @@ public abstract class WebServiceException extends RuntimeException {
     public ResponseData getResponseData() {
         return responseData;
     }
+
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        return this;
+    }
 }

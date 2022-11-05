@@ -1,17 +1,37 @@
 package com.flrjcx.xypt.common.web.exception;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.flrjcx.xypt.common.enums.KafkaTopicEnum;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.exception.ValidationException;
 import com.flrjcx.xypt.common.exception.WebServiceException;
+import com.flrjcx.xypt.common.model.domain.log.ErrorLog;
+import com.flrjcx.xypt.common.model.dto.log.ErrorLogDto;
 import com.flrjcx.xypt.common.model.result.ResponseData;
+import com.flrjcx.xypt.common.utils.KafkaUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author malaka
  */
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
+
+    @Value("${spring.application.name}")
+    private String applicationName;
+
+    @Resource
+    private KafkaUtils kafkaUtils;
 
     /**
      * 用户验证未通过
@@ -33,15 +53,25 @@ public class GlobalExceptionHandler {
         return e.getResponseData();
     }
 
+
     /**
      * 未知异常
      * @param e
      * @return
      */
     @ExceptionHandler(Exception.class)
-    public ResponseData handlerException(Exception e) {
+    public ResponseData handlerException(Exception e, HttpServletRequest request) {
         e.printStackTrace();
+        ErrorLog errorLog = new ErrorLog(e, request);
+        errorLog.setErrorServiceHost(applicationName);
+        log.warn("error {} from{}", errorLog.getErrorName(),applicationName);
+        sendMessageAsync(KafkaTopicEnum.TOPIC_ERROR_LOG, JSONObject.toJSONString(errorLog));
         return ResponseData.buildErrorResponse(ResultCodeEnum.FAIL.getCode(), e.getMessage(), e);
+    }
+
+    @Async
+    public void sendMessageAsync(String topic, String s) {
+        kafkaUtils.sendMessage(topic, s);
     }
 
 }

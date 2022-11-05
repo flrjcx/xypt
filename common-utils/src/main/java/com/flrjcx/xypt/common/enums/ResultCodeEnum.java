@@ -50,7 +50,7 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_CODE_FORGET_PASSWORD_FAIL(100031, "忘记密码失败"),
     ERROR_CODE_EXIST_EMAIL(100032, "邮箱已存在"),
     ERROR_CODE_EMAIL_UNKNOWN_ERROR(100032, "关于邮箱的操作发生未知错误"),
-    ERROR_CODE_ACCOUNT_ERROR_CODE(100033, "账户格式错误"),
+    ERROR_CODE_ACCOUNT_ERROR_CODE(100033, "账号格式错误"),
     ERROR_CODE_EXIST_ACCOUNT(100034, "账户已存在"),
     ERROR_CODE_ACCOUNT_UNKNOWN_ERROR(100032, "关于账户的操作发生未知错误"),
 
