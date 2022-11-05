@@ -13,7 +13,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -75,10 +74,10 @@ public class SafetyCenterController {
         }
     }
 
-    @PostMapping("/setPrivacy/{privacy}")
+    @PostMapping("/setPrivacy")
     @ApiOperation("设置隐私")
     @Validation
-    public ResponseData setPrivacy(@PathVariable String privacy) {
+    public ResponseData setPrivacy(@RequestBody String privacy) {
         Users user = UserThreadLocal.get();
         Long userId = user.getUserId();
         boolean setPrivacy = safetyCenterService.setPrivacy(userId, privacy);
