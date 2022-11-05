@@ -114,8 +114,8 @@ public class PersonalCenterController {
 
 
     @ApiOperation(value = "用户详情")
-    @GetMapping("/userInfo/{userId}")
-    public ResponseData userInfo(@PathVariable Long userId){
+    @GetMapping("/userInfo")
+    public ResponseData userInfo(@RequestParam Long userId){
         try {
             if (ObjectUtils.isEmpty(userId)){
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_50202);

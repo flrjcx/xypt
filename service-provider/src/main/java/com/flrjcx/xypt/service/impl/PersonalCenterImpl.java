@@ -53,7 +53,7 @@ public class PersonalCenterImpl implements PersonalCenterService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)//添加事务
+    @Transactional(rollbackFor = Exception.class)
     public void updateUserFace(String picPath, Long userId) {
 
         personalCenterMapper.changeHeadPortrait(picPath,userId);
