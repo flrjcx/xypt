@@ -9,6 +9,11 @@ import com.flrjcx.xypt.common.model.domain.log.ErrorLog;
  */
 public interface ErrorLogConsumerMapper {
 
+    /**
+     * 错误日志记录
+     *
+     * @param errorLog
+     */
     void insertErrorLog(ErrorLog errorLog);
 
 }

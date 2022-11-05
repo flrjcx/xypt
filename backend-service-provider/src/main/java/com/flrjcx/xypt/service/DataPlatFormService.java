@@ -17,4 +17,13 @@ public interface DataPlatFormService {
      * @return
      */
     BigDecimal totalTransaction(Long beforeTime,Long afterTime);
+
+    /**
+     * 获取平台总支出额度(提现)
+     *
+     * @param beforeTime:开始时间
+     * @param afterTime:结束时间
+     * @return
+     */
+    BigDecimal totalDeposit(Long beforeTime,Long afterTime);
 }

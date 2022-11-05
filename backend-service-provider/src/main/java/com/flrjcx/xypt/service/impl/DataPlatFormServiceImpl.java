@@ -31,4 +31,16 @@ public class DataPlatFormServiceImpl implements DataPlatFormService {
     public BigDecimal totalTransaction(Long beforeTime, Long afterTime) {
         return dataPlatFormMapper.totalTransaction(DateUtils.dateToStamp(beforeTime), DateUtils.dateToStamp(afterTime));
     }
+
+    /**
+     * 获取平台总支出额度(提现)
+     *
+     * @param beforeTime:开始时间
+     * @param afterTime:结束时间
+     * @return
+     */
+    @Override
+    public BigDecimal totalDeposit(Long beforeTime, Long afterTime) {
+        return dataPlatFormMapper.totalDeposit(DateUtils.dateToStamp(beforeTime), DateUtils.dateToStamp(afterTime));
+    }
 }

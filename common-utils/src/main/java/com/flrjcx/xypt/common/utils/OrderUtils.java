@@ -43,6 +43,7 @@ public class OrderUtils {
         transactionParam.setTransactionId(orderNumber());
         transactionParam.setTransactionAmount(money);
         transactionParam.setTransactionUserId(userId);
+        transactionParam.setTransactionType(type);
         if (Objects.equals(ValidStatusEnum.InValidStatus.getCode(),type)){
             transactionParam.setTransactionContent(RECHARGE);
         }else {
