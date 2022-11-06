@@ -61,11 +61,19 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseData handlerException(Exception e, HttpServletRequest request) {
-        e.printStackTrace();
-        ErrorLog errorLog = new ErrorLog(e, request);
-        errorLog.setErrorServiceHost(applicationName);
-        log.warn("error {} from{}", errorLog.getErrorName(),applicationName);
-        sendMessageAsync(KafkaTopicEnum.TOPIC_ERROR_LOG, JSONObject.toJSONString(errorLog));
+        try{
+            ErrorLog errorLog = new ErrorLog(e, request);
+            errorLog.setErrorServiceHost(applicationName);
+            log.warn("error: {}, from: {}, uri: {}, message: {}",
+                    errorLog.getErrorName(),
+                    applicationName,
+                    errorLog.getErrorUri(),
+                    errorLog.getErrorMessage());
+            e.printStackTrace();
+            sendMessageAsync(KafkaTopicEnum.TOPIC_ERROR_LOG, JSONObject.toJSONString(errorLog));
+        }catch (Exception err) {
+            log.warn("error处理失败: {}", err.getMessage());
+        }
         return ResponseData.buildErrorResponse(ResultCodeEnum.FAIL.getCode(), e.getMessage(), e);
     }
 
