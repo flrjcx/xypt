@@ -72,17 +72,12 @@ public class RegisterController {
     @ApiOperation(value = "用户注册")
     @PostMapping("/addUser")
     public ResponseData userDetails(@RequestBody AddUserParam param) {
-        try {
-            ResponseData responseData = registerCheckService.checkParam(param);
-            if (!Objects.isNull(responseData)) {
-                return responseData;
-            }
-
-            return registerService.addUser(param);
-        } catch (Exception e) {
-            log.error("/addUser error " + e.getMessage());
-            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        ResponseData responseData = registerCheckService.checkParam(param);
+        if (!Objects.isNull(responseData)) {
+            return responseData;
         }
+
+        return registerService.addUser(param);
     }
 
     @ApiOperation(value = "发送注册邮箱")

@@ -31,6 +31,7 @@ public class RegisterCheckService {
     private TokenService tokenService;
 
     public ResponseData checkParam(AddUserParam addUserParam) {
+        String key = CacheTokenEnum.CACHE_EMAIL.getKey() + addUserParam.getToken();
         ResponseData responseData = checkEmpty(addUserParam);
         if (responseData != null) {
             return responseData;
@@ -39,25 +40,26 @@ public class RegisterCheckService {
         if (responseData != null) {
             return responseData;
         }
+        responseData = checkToken(addUserParam);
+        if (responseData != null) {
+            return responseData;
+        }
         responseData = checkDb(addUserParam);
         if (responseData != null) {
             return responseData;
         }
-        responseData = checkToken(addUserParam);
-
-        return responseData;
+        tokenService.removeToken(key);
+        return null;
     }
 
     private ResponseData checkToken(AddUserParam addUserParam) {
         addUserParam.setEmail("");
         String key = CacheTokenEnum.CACHE_EMAIL.getKey() + addUserParam.getToken();
         EmailSendParam emailSendParam = tokenService.getCache(key);
-        tokenService.removeToken(key);
         if (ObjectUtils.isEmpty(emailSendParam) || !emailSendParam.getCode().equals(addUserParam.getCode())) {
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_EMAIL_VERIFICATION_ERROR_CODE);
         }
         addUserParam.setEmail(emailSendParam.getAddress());
-        tokenService.removeToken(key);
         return null;
     }
 
@@ -79,9 +81,6 @@ public class RegisterCheckService {
         }
         if (!CheckUsersUtils.regexPassword(addUserParam.getPassword())) {
             return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_PASSWORD_ERROR_CODE);
-        }
-        if (!CheckUsersUtils.regexEmail(addUserParam.getEmail())) {
-            return ResponseData.buildResponse(ResultCodeEnum.ERROR_CODE_EMAIL_ERROR_CODE);
         }
         return null;
     }

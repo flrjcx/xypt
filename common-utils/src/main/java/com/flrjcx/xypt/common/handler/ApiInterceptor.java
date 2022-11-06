@@ -36,13 +36,9 @@ public class ApiInterceptor implements HandlerInterceptor {
         logResult.setPort(request.getServerPort());
         logResult.setUri(request.getRequestURI());
         String logJsonStr = JSONObject.toJSONString(logResult);
-        sendMessageAsync(KafkaTopicEnum.TOPIC_LOG_SEND_MESSAGE,logJsonStr);
+        System.out.println(logJsonStr);
+        kafkaUtils.sendMessageAsync(KafkaTopicEnum.TOPIC_LOG_SEND_MESSAGE,logJsonStr);
         return true;
-    }
-
-    @Async
-    public void sendMessageAsync(String topic, String s) {
-        kafkaUtils.sendMessage(topic, s);
     }
 
 }

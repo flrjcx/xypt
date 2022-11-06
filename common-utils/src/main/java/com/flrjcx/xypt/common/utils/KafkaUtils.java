@@ -3,6 +3,7 @@ package com.flrjcx.xypt.common.utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,5 +30,14 @@ public class KafkaUtils {
         kafkaTemplate.send(topic, value);
     }
 
+    @Async
+    public void sendMessageAsync(String topic, String key, String value) {
+        kafkaTemplate.send(topic, key, value);
+    }
+
+    @Async
+    public void sendMessageAsync(String topic, String value) {
+            kafkaTemplate.send(topic, value);
+    }
 
 }
