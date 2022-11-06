@@ -67,4 +67,25 @@
         FROM   users
         WHERE  user_id = #{userId};
     </select>
+
+    <sql id="myInfo">
+        users.nick_name,
+        users.nick_pic,
+        users.content,
+        users.sex,
+        users.birthday,
+        users.phone,
+        users.email,
+        users.fans_num,
+        users.focus_num,
+        users.address,
+        users.school,
+        real_register.real_name
+    </sql>
+
+    <select id="getMyInfoById" resultType="com.flrjcx.xypt.common.model.dto.MyInfoDto">
+        select <include refid="myInfo"/> from users
+        left join real_register on real_register.real_registe_user_id=users.user_id
+        where user_id=#{userId};
+    </select>
 </mapper>

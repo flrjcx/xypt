@@ -77,10 +77,7 @@ public class PersonalCenterImpl implements PersonalCenterService {
      */
     @Override
     public MyInfoDto getMyInfo(Long userId) {
-        Users user = personalCenterMapper.getUserById(userId);
-        MyInfoDto myInfo = new MyInfoDto();
-        BeanUtils.copyProperties(user,myInfo);
-        return myInfo;
+        return personalCenterMapper.getMyInfoById(userId);
     }
 
     @Override

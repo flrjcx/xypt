@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.mapper;
 
+import com.flrjcx.xypt.common.model.dto.MyInfoDto;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.personal_center.RealNameParam;
 
@@ -68,4 +69,11 @@ public interface PersonalCenterMapper {
      * @return
      */
     long updateUserInfo(Users user);
+
+    /**
+     * 根据用户id获取我的信息
+     * @param userId 我的id
+     * @return
+     */
+    MyInfoDto getMyInfoById(Long userId);
 }

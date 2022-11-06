@@ -35,4 +35,6 @@ public class MyInfoDto implements Serializable {
     private String address;
     @ApiModelProperty(value = "学校", name = "school")
     private String school;
+    @ApiModelProperty(value = "用户真实姓名", name = "realName")
+    private String realName;
 }
