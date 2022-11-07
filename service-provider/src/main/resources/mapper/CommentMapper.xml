@@ -34,23 +34,6 @@
         #{commentParentId})
     </insert>
 
-    <insert id="batchAdd" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="commentId">
-        INSERT INTO comment
-        (comment_bbs_id,
-        comment_user_id,
-        comment_context,
-        comment_create_time,
-        level,)
-        VALUES
-        <foreach collection="list" item="it" index="index" separator=",">
-            (#{it.commentBbsId},
-            #{it.commentUserId},
-            #{it.commentContext},
-            now(),
-            #{it.level},
-            #{it.comment_floor})
-        </foreach>
-    </insert>
 
     <delete id="delete">
         delete

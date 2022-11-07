@@ -10,16 +10,31 @@ import java.util.List;
  */
 public interface CommentMapper {
 
+    /**
+     * 添加评论
+     * @param comment
+     * @return
+     */
     int insert(Comment comment);
 
-    int batchAdd(@Param("list") List<Comment> userDOs);
-
+    /**
+     * 查询全部评论
+     * @return
+     */
     List<Comment> findAll();
 
+    /**
+     * 根据评论id查询评论
+     * @param bbsId
+     * @return
+     */
     List<Comment> findByBbsId(@Param("bbsId") String bbsId);
 
-    List<Comment> findByUserIds(@Param("userIds") List<Long> ids);
-
+    /**
+     * 删除评论
+     * @param commentId
+     * @return
+     */
     int delete(@Param("commentId") long commentId);
 
 }
