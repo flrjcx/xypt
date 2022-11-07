@@ -5,7 +5,7 @@
 <mapper namespace="com.flrjcx.xypt.mapper.LogMapper">
     <resultMap id="accessLog" type="com.flrjcx.xypt.common.model.result.log.InterfaceLogResult">
         <id property="id" column="access_log_id"/>
-        <result property="ip" column="access_log_ip"/>
+        <result property="ip" column="access_log_user_ip"/>
         <result property="uri" column="access_log_uri"/>
         <result property="port" column="access_log_port"/>
         <result property="isp" column="access_log_isp"/>
