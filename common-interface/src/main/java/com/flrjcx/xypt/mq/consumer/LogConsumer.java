@@ -28,7 +28,7 @@ public class LogConsumer {
     @Resource
     private LogConsumerMapper logConsumerMapper;
 
-    @KafkaListener(topics = KafkaTopicEnum.TOPIC_LOG_SEND_MESSAGE)
+    @KafkaListener(topics = KafkaTopicEnum.TOPIC_LOG_SEND_MESSAGE,groupId = "LOG")
     @Async
     public void consumerLogMsg(ConsumerRecord<String, String> record, Acknowledgment ack) throws InterruptedException {
 //        取出kafka消息,反序列化

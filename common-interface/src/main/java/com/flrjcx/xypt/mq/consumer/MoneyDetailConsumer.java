@@ -25,7 +25,7 @@ public class MoneyDetailConsumer {
     @Resource
     private MoneyDetailMapper moneyDetailMapper;
 
-    @KafkaListener(topics = KafkaTopicEnum.TOPIC_MONEY_SEND_DETAIL)
+    @KafkaListener(topics = KafkaTopicEnum.TOPIC_MONEY_SEND_DETAIL,groupId = "MONEY")
     @Async
     public void consumerLogMsg(ConsumerRecord<String, String> record, Acknowledgment ack) throws InterruptedException {
         TransactionParam transactionParam = JSON.parseObject(record.value(), TransactionParam.class);

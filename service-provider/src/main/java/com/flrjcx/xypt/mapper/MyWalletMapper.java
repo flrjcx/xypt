@@ -1,8 +1,11 @@
 package com.flrjcx.xypt.mapper;
 
+import com.flrjcx.xypt.common.model.param.common.TransactionParam;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 我的钱包
@@ -42,4 +45,21 @@ public interface MyWalletMapper {
      * @return
      */
     BigDecimal getBalance(@Param("userId") Long userId);
+
+    /**
+     * 资金明细
+     *
+     * @param userId
+     * @param date
+     * @return
+     */
+    List<TransactionParam> moneyDetails(@Param("userId") Long userId,@Param("date") String date);
+
+    /**
+     * 设置资金变动后的余额
+     *
+     * @param balance
+     * @param userId
+     */
+    void updateBalance(@Param("userId") Long userId,@Param("balance") BigDecimal balance);
 }

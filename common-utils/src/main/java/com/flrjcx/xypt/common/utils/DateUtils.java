@@ -344,6 +344,12 @@ public class DateUtils {
         return date;
     }
 
+    //时间戳转date,年-月
+    public static String StampToDateYM(long times){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+        String date = format.format(times);
+        return date;
+    }
 
 
     //    获取当前时间的过去一小时时间

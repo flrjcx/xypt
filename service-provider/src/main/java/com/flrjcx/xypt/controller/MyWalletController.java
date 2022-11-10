@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.Objects;
 
 /**
@@ -62,9 +63,26 @@ public class MyWalletController {
         return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_DEPOSIT);
     }
 
+    /**
+     * 余额
+     *
+     * @return
+     */
     @GetMapping("/getBalance")
     @Validation
     public ResponseData getBalance() {
         return ResponseData.buildResponse(ResultCodeEnum.SUCCESS.getMessage(), myWalletService.getBalance());
+    }
+
+
+    /**
+     * 资金明细
+     *
+     * @return
+     */
+    @GetMapping("/moneyDetails")
+    @Validation
+    public ResponseData moneyDetails(@RequestParam Long time){
+        return ResponseData.buildResponse(ResultCodeEnum.SUCCESS.getMessage(), myWalletService.moneyDetails(time));
     }
 }

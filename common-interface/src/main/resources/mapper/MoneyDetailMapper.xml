@@ -12,9 +12,13 @@
          <if test="transactionParam.transactionBeUserId != null">
          transaction_be_user_id,
          </if>
+         <if test="transactionParam.transactionBeUserNick != null">
+             transaction_be_user_nick,
+         </if>
          transaction_content,
          transaction_type,
-        transaction_create_time)
+         transaction_balance,
+         transaction_create_time)
          VALUES
         (#{transactionParam.transactionId},
          #{transactionParam.transactionAmount},
@@ -22,8 +26,12 @@
          <if test="transactionParam.transactionBeUserId != null">
           #{transactionParam.transactionBeUserId},
          </if>
+        <if test="transactionParam.transactionBeUserNick != null">
+            #{transactionParam.transactionBeUserNick},
+        </if>
          #{transactionParam.transactionContent},
          #{transactionParam.transactionType},
+         #{transactionParam.transactionBalance},
          #{transactionParam.transactionCreateTime}
          )
     </insert>

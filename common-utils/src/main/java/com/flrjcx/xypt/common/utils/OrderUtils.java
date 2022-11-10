@@ -38,11 +38,12 @@ public class OrderUtils {
      * @param type:类型,充值/提现
      * @return
      */
-    public static TransactionParam makeTransaction(BigDecimal money,Long userId,int type){
+    public static TransactionParam makeTransaction(BigDecimal money,Long userId,int type,BigDecimal balance){
         TransactionParam transactionParam = new TransactionParam();
         transactionParam.setTransactionId(orderNumber());
         transactionParam.setTransactionAmount(money);
         transactionParam.setTransactionUserId(userId);
+        transactionParam.setTransactionBalance(balance);
         transactionParam.setTransactionType(type);
         if (Objects.equals(ValidStatusEnum.InValidStatus.getCode(),type)){
             transactionParam.setTransactionContent(RECHARGE);

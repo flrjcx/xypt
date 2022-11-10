@@ -3,19 +3,23 @@ package com.flrjcx.xypt.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.flrjcx.xypt.common.enums.KafkaTopicEnum;
 import com.flrjcx.xypt.common.enums.ValidStatusEnum;
+import com.flrjcx.xypt.common.model.param.common.TransactionParam;
 import com.flrjcx.xypt.common.model.param.common.Users;
+import com.flrjcx.xypt.common.utils.DateUtils;
 import com.flrjcx.xypt.common.utils.KafkaUtils;
 import com.flrjcx.xypt.common.utils.OrderUtils;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.mapper.MyWalletMapper;
 import com.flrjcx.xypt.service.MyWalletService;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -50,22 +54,25 @@ public class MyWalletServiceImpl implements MyWalletService {
             if (myWalletMapper.checkMoney(money, users.getUserId())) {
 //            提现
                 myWalletMapper.deposit(money, users.getUserId());
+//            查询提现后的余额
+                BigDecimal balance = myWalletMapper.getBalance(users.getUserId());
 //        写入资金明细和平台交易额
-                sendMessageAsync(KafkaTopicEnum.TOPIC_MONEY_SEND_DETAIL, JSON.toJSONString(OrderUtils.makeTransaction(money, users.getUserId(), type)));
+                sendMessageAsync(KafkaTopicEnum.TOPIC_MONEY_SEND_DETAIL, JSON.toJSONString(OrderUtils.makeTransaction(money, users.getUserId(), type, balance)));
                 return ValidStatusEnum.ValidStatus.getCode();
-            }else {
+            } else {
                 return ValidStatusEnum.MinusStatus.getCode();
             }
 
         }
+//            查询充值后的余额
+        BigDecimal balance = myWalletMapper.getBalance(users.getUserId());
 //        写入资金明细和平台交易额
-        sendMessageAsync(KafkaTopicEnum.TOPIC_MONEY_SEND_DETAIL, JSON.toJSONString(OrderUtils.makeTransaction(money, users.getUserId(), type)));
-
+        sendMessageAsync(KafkaTopicEnum.TOPIC_MONEY_SEND_DETAIL, JSON.toJSONString(OrderUtils.makeTransaction(money, users.getUserId(), type, balance)));
         return ValidStatusEnum.InValidStatus.getCode();
     }
 
     /**
-     * 获取用户S币
+     * 获取用户S币(余额)
      *
      * @return
      */
@@ -73,6 +80,17 @@ public class MyWalletServiceImpl implements MyWalletService {
     public BigDecimal getBalance() {
         Users users = UserThreadLocal.get();
         return myWalletMapper.getBalance(users.getUserId());
+    }
+
+    /**
+     * 资金明细
+     *
+     * @return
+     */
+    @Override
+    public List<TransactionParam> moneyDetails(Long time){
+        Users users = UserThreadLocal.get();
+        return myWalletMapper.moneyDetails(users.getUserId(),DateUtils.StampToDateYM(time));
     }
 
     @Async

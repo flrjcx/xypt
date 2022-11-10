@@ -28,27 +28,49 @@ public class DataPlatformController {
     /**
      * 获取平台总交易额度
      *
-     * @param beforeTime:开始时间
-     * @param afterTime:结束时间
      * @return
      */
     @GetMapping("/totalTransaction")
     @Validation
-    public ResponseData totalTransaction(@RequestParam Long beforeTime, @RequestParam Long afterTime){
-        return ResponseData.buildResponse(ResultCodeEnum.SUCCESS.getMessage(),dataPlatFormService.totalTransaction(beforeTime,afterTime));
+    public ResponseData totalTransaction(){
+        return ResponseData.buildResponse(ResultCodeEnum.SUCCESS.getMessage(),dataPlatFormService.totalTransaction());
     }
 
     /**
-     * 获取平台总交易额度
+     * 获取平台总支出额度(提现)
+     *
+     * @return
+     */
+    @GetMapping("/totalDeposit")
+    @Validation
+    public ResponseData totalDeposit(){
+        return ResponseData.buildResponse(ResultCodeEnum.SUCCESS.getMessage(),dataPlatFormService.totalDeposit());
+    }
+
+    /**
+     * 获取平台总交易额度(图表)
      *
      * @param beforeTime:开始时间
      * @param afterTime:结束时间
      * @return
      */
-    @GetMapping("/totalDeposit")
+    @GetMapping("/totalTransactionChart")
     @Validation
-    public ResponseData totalDeposit(@RequestParam Long beforeTime, @RequestParam Long afterTime){
-        return ResponseData.buildResponse(ResultCodeEnum.SUCCESS.getMessage(),dataPlatFormService.totalDeposit(beforeTime,afterTime));
+    public ResponseData totalTransactionChart(@RequestParam Long beforeTime, @RequestParam Long afterTime){
+        return ResponseData.buildResponse(dataPlatFormService.totalTransactionChart(beforeTime,afterTime));
+    }
+
+    /**
+     * 获取平台总支出额度(图表)
+     *
+     * @param beforeTime:开始时间
+     * @param afterTime:结束时间
+     * @return
+     */
+    @GetMapping("/totalDepositChart")
+    @Validation
+    public ResponseData totalDepositChart(@RequestParam Long beforeTime, @RequestParam Long afterTime){
+        return ResponseData.buildResponse(dataPlatFormService.totalDepositChart(beforeTime,afterTime));
     }
 
 }
