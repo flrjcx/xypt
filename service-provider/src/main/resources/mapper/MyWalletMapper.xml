@@ -23,9 +23,6 @@
     <update id="deposit">
         update users set balance = balance - #{money} where user_id = #{userId}
     </update>
-    <update id="updateBalance">
-        update t_transaction set transaction_balance = #{balance} where user_id = #{userId}
-    </update>
 
     <select id="checkMoney" resultType="java.lang.Boolean">
         select (CASE WHEN balance &lt; #{money} THEN 0 else 1 END) as bl from users where user_id = #{userId};
@@ -38,7 +35,7 @@
     <select id="moneyDetails" resultMap="MoneyDetailsResult">
         select * from
         t_transaction
-        where transaction_user_id = #{userId} and transaction_create_time LIKE concat('%',#{date},'%')
+        where transaction_user_id = #{userId} or transaction_be_user_id = #{userId} and transaction_create_time LIKE concat('%',#{date},'%')
         order by transaction_create_time DESC
     </select>
 

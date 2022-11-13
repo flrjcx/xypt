@@ -5,9 +5,7 @@ import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.constants.DigitalConstants;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.enums.ValidStatusEnum;
-import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.result.ResponseData;
-import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.service.MyWalletService;
 import io.swagger.annotations.Api;
 import lombok.extern.log4j.Log4j2;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.text.ParseException;
 import java.util.Objects;
 
 /**

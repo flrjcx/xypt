@@ -17,6 +17,7 @@ import java.util.Objects;
 public class OrderUtils {
     public static final String RECHARGE = "充值";
     public static final String DEPOSIT = "提现";
+    public static final int REWARD = 2;
 
     /**
      * 生成订单号
@@ -58,13 +59,16 @@ public class OrderUtils {
      *
      * @return
      */
-    public static TransactionParam makeTransaction(BigDecimal money,Long userId,Long beUserId,String content){
+    public static TransactionParam makeTransaction(BigDecimal money,Long userId,Long beUserId,String content,String nick,BigDecimal balance){
         TransactionParam transactionParam = new TransactionParam();
         transactionParam.setTransactionId(orderNumber());
         transactionParam.setTransactionAmount(money);
         transactionParam.setTransactionBeUserId(beUserId);
         transactionParam.setTransactionUserId(userId);
+        transactionParam.setTransactionBalance(balance);
         transactionParam.setTransactionContent(content);
+        transactionParam.setTransactionBeUserNick(nick);
+        transactionParam.setTransactionType(REWARD);
         return transactionParam;
     }
 }

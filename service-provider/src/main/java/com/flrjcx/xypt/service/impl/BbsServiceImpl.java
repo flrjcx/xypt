@@ -1,15 +1,25 @@
 package com.flrjcx.xypt.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.flrjcx.xypt.common.enums.KafkaTopicEnum;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.exception.WebServiceEnumException;
 import com.flrjcx.xypt.common.exception.WebServiceException;
+import com.flrjcx.xypt.common.model.param.bbs.BbsReward;
+import com.flrjcx.xypt.common.utils.KafkaUtils;
+import com.flrjcx.xypt.common.utils.OrderUtils;
+import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.mapper.BbsMapper;
 import com.flrjcx.xypt.mapper.BbsNoMapper;
 import com.flrjcx.xypt.mapper.BbsPraiseMapper;
+import com.flrjcx.xypt.mapper.MyWalletMapper;
 import com.flrjcx.xypt.service.BbsService;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 
 /**
  * @author : aftermath
@@ -19,10 +29,18 @@ import javax.annotation.Resource;
 public class BbsServiceImpl implements BbsService {
     @Resource
     BbsMapper bbsMapper;
+
     @Resource
     BbsPraiseMapper bbsPraiseMapper;
+
     @Resource
     BbsNoMapper bbsNoMapper;
+
+    @Resource
+    private KafkaUtils kafkaUtils;
+
+    @Resource
+    private MyWalletMapper myWalletMapper;
 
     /**
      * 点赞
@@ -98,5 +116,30 @@ public class BbsServiceImpl implements BbsService {
             throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERROR_CODE_BBS_UPDATE_ERROR);
         }
         return ResultCodeEnum.SUCCESS;
+    }
+
+    /**
+     * 打赏
+     *
+     * @param bbsReward
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void reward(BbsReward bbsReward) {
+        BigDecimal balance = myWalletMapper.getBalance(UserThreadLocal.get().getUserId());
+        sendMessageAsync(KafkaTopicEnum.TOPIC_BBS_REWARD_SEND,JSONObject.toJSONString(OrderUtils.makeTransaction(bbsReward.getMoney(),UserThreadLocal.get().getUserId(),
+                bbsReward.getBeUserId(),bbsReward.getContent(),bbsReward.getTransactionBeUserNick(),balance)));
+    }
+
+
+    /**
+     * kafka生产者
+     *
+     * @param topic
+     * @param s
+     */
+    @Async
+    public void sendMessageAsync(String topic, String s) {
+        kafkaUtils.sendMessage(topic, s);
     }
 }

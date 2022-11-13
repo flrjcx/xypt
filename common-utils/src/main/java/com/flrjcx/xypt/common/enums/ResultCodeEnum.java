@@ -262,6 +262,8 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_DEPOSIT_NULL(900001, "提现了个寂寞!"),
     ERROR_RECHARGE_NULL(900001, "充值了个寂寞!"),
     ERROR_RECHARGE_MAX(900001, "超出S币单次充值额度!"),
+    ERROR_REWARD_NULL(900001, "打赏0元不是Ikun!"),
+    ERROR_REWARD_MAX(900001, "你的口袋不足以打赏!"),
 
 
     END(900001, "仅用于结尾,无任何作用请勿删除!");

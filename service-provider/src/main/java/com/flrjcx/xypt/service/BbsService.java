@@ -1,6 +1,9 @@
 package com.flrjcx.xypt.service;
 
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.model.param.bbs.BbsReward;
+
+import java.math.BigDecimal;
 
 /**
  * @author : aftermath
@@ -42,4 +45,11 @@ public interface BbsService {
      * @return 点踩是否成功
      */
     ResultCodeEnum cancelNo(Long bbsId, Long userId);
+
+    /**
+     * 打赏
+     *
+     * @param reward
+     */
+    void reward(BbsReward reward);
 }
