@@ -127,8 +127,9 @@ public class BbsServiceImpl implements BbsService {
     @Transactional(rollbackFor = Exception.class)
     public void reward(BbsReward bbsReward) {
         BigDecimal balance = myWalletMapper.getBalance(UserThreadLocal.get().getUserId());
+        BigDecimal subtractBalance = balance.subtract(bbsReward.getMoney());
         sendMessageAsync(KafkaTopicEnum.TOPIC_BBS_REWARD_SEND,JSONObject.toJSONString(OrderUtils.makeTransaction(bbsReward.getMoney(),UserThreadLocal.get().getUserId(),
-                bbsReward.getBeUserId(),bbsReward.getContent(),bbsReward.getTransactionBeUserNick(),balance)));
+                bbsReward.getBeUserId(),bbsReward.getContent(),bbsReward.getTransactionBeUserNick(),subtractBalance)));
     }
 
 
