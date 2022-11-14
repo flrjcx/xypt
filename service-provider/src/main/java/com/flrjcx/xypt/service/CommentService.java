@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.service;
 
+import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.param.comment.Comment;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +41,32 @@ public interface CommentService {
      */
     ResponseData< List<Comment>> query(String bbsId);
 
+
+    /**
+     * 查询评论列表
+     *
+     * @return 评论集合
+     */
     List<Comment> queryCommentsList();
 
+
+    /**
+     * 点赞
+     *
+     * @param commentId 评论id
+     * @param userId 用户id
+     * @param bbsId 帖子id
+     * @return 点赞是否成功
+     */
+    ResultCodeEnum praiseComment(Long commentId, Long userId, Long bbsId);
+
+    /**
+     * 取消点赞
+     *
+     * @param commentId 评论id
+     * @param userId 用户id
+     * @param bbsId 帖子id
+     * @return 取消点赞是否成功
+     */
+    ResultCodeEnum cancelPraiseComment(Long commentId, Long userId, Long bbsId);
 }

@@ -1,8 +1,11 @@
 package com.flrjcx.xypt.service.impl;
 
+import com.flrjcx.xypt.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.exception.WebServiceEnumException;
 import com.flrjcx.xypt.common.model.param.comment.Comment;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.mapper.CommentMapper;
+import com.flrjcx.xypt.mapper.CommentPraiseMapper;
 import com.flrjcx.xypt.service.CommentService;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +27,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Resource
     private CommentMapper commentMapper;
+
+    @Resource
+    private CommentPraiseMapper commentPraiseMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -92,8 +98,54 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.findAll();
     }
 
+
     @Override
     public Boolean delete(Long commentId) {
         return commentMapper.delete(commentId) > 0;
     }
+
+
+    /**
+     * 先查询comment表中是否有对应commentId
+     * if 有 -> 往comment_praise填入数据 返回成功信息
+     * else 返回错误信息
+     *
+     * @param commentId 评论id
+     * @param userId 用户id
+     * @param bbsId 帖子id
+     * @return
+     */
+    @Override
+    public ResultCodeEnum praiseComment(Long commentId, Long userId, Long bbsId) {
+        if (!commentMapper.updateComment(commentId, bbsId, userId)) {
+            throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERROR_CODE_COMMENT_UPDATE_ERROR);
+        }
+        if (!commentPraiseMapper.insertPraiseComment(commentId, userId)) {
+            throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERROR_CODE_COMMENT_PRAISE_INSERT_ERROR);
+        }
+        return ResultCodeEnum.SUCCESS;
+    }
+
+    /**
+     * 先查询comment_praise表中是否有对应userId
+     * if 有 -> 删除comment_praise表中相应字段, 同时更新comment表中点赞数量
+     * else 返回错误信息
+     *
+     * @param commentId 评论id
+     * @param userId 用户id
+     * @param bbsId 帖子id
+     * @return
+     */
+    @Override
+    public ResultCodeEnum cancelPraiseComment(Long commentId, Long userId, Long bbsId) {
+        if (!commentPraiseMapper.deletePraiseComment(commentId, userId)) {
+            throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERROR_CODE_COMMENT_PRAISE_DELETE_ERROR);
+        }
+        if (!commentMapper.cancelComment(commentId, bbsId, userId)) {
+            throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERROR_CODE_COMMENT_UPDATE_ERROR);
+        }
+        return ResultCodeEnum.SUCCESS;
+    }
+
+
 }

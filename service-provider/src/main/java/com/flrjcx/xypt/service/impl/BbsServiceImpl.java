@@ -17,10 +17,13 @@ import javax.annotation.Resource;
  */
 @Service
 public class BbsServiceImpl implements BbsService {
+
     @Resource
     BbsMapper bbsMapper;
+
     @Resource
     BbsPraiseMapper bbsPraiseMapper;
+
     @Resource
     BbsNoMapper bbsNoMapper;
 

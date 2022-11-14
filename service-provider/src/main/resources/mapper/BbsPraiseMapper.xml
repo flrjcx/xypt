@@ -8,8 +8,10 @@
         insert into bbs_praise (praise_bbs_id, praise_user_id)
         VALUES (#{bbsId}, #{userId})
     </insert>
+
     <delete id="deletePraise">
         delete from bbs_praise
         where praise_bbs_id=#{bbsId} and praise_user_id=#{userId}
     </delete>
+
 </mapper>

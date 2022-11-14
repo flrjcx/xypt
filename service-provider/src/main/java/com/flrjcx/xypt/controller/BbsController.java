@@ -6,6 +6,7 @@ import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.service.BbsService;
+import com.flrjcx.xypt.service.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
@@ -25,14 +26,18 @@ import javax.annotation.Resource;
 @ApiRestController("/bbs")
 @Log4j2
 public class BbsController {
+
     @Resource
     BbsService bbsService;
+
+    @Resource
+    CommentService commentService;
 
     /**
      * 用户点赞帖子接口
      *
      * 如果前端接收到错误信息, 不要更新点赞图标, 以免后续取消点赞出现bug
-     * 点/踩接口都加了事务, 有错误会直接回滚,
+     * 点/踩接口都加了事务, 有错误会直接回滚
      * @return 统一响应
      */
     @Validation
@@ -79,4 +84,6 @@ public class BbsController {
         ResultCodeEnum resultCodeEnum = bbsService.cancelNo(bbsId, userId);
         return ResponseData.buildResponse(resultCodeEnum);
     }
+
+
 }

@@ -33,6 +33,9 @@ public class VerificationCodeController {
         }
         return ResponseData.buildResponse(verificationCode);
     }
+
+
+
     @GetMapping("/test")
     public ResponseData test() {
         VerifyCodeDto verificationCode = verificationCodeService.createVerificationCode();

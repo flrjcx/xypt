@@ -25,6 +25,7 @@ import javax.annotation.Resource;
 @Component
 @Slf4j
 public class LogConsumer {
+
     @Resource
     private LogConsumerMapper logConsumerMapper;
 

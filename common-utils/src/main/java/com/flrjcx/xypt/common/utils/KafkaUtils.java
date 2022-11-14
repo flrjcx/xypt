@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class KafkaUtils {
 
-    public KafkaUtils(KafkaProperties kafkaProperties){
+    public KafkaUtils(KafkaProperties kafkaProperties) {
         System.out.println(kafkaProperties.getProducer().getBufferMemory().toString());
     }
 
@@ -37,7 +37,7 @@ public class KafkaUtils {
 
     @Async
     public void sendMessageAsync(String topic, String value) {
-            kafkaTemplate.send(topic, value);
+        kafkaTemplate.send(topic, value);
     }
 
 }

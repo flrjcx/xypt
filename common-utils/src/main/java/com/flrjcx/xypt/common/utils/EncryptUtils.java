@@ -37,6 +37,7 @@ public class EncryptUtils {
         return DigestUtil.md5Hex(str + MD5_SALT);
     }
 
+
     /**
      * 检查密码是否一致
      *
@@ -48,9 +49,9 @@ public class EncryptUtils {
         return BCrypt.checkpw(plaintext, hashed);
     }
 
-//    public static void main(String[] args) {
-//        System.out.println(md5("xiaochai"));
-//        System.out.println(md5AndBCrypt("123456"));
-//    }
+    public static void main(String[] args) {
+        System.out.println(md5("xwl1"));
+        System.out.println(md5AndBCrypt("xwl1"));
+    }
 
 }

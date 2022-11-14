@@ -37,4 +37,27 @@ public interface CommentMapper {
      */
     int delete(@Param("commentId") long commentId);
 
+    /**
+     * 更新评论点赞数量信息是否成功
+     *
+     * @param commentId 评论id
+     * @param bbsId
+     * @param userId
+     * @return 返回更新评论表信息
+     */
+    boolean updateComment(@Param("commentId") Long commentId,
+                          @Param("bbsId") Long bbsId,
+                          @Param("userId")Long userId);
+
+    /**
+     * 更新评论点赞数量信息是否成功
+     *
+     * @param commentId 评论id
+     * @param bbsId 帖子
+     * @param userId
+     * @return 返回更新评论表信息
+     */
+    boolean cancelComment(@Param("commentId") Long commentId,
+                          @Param("bbsId") Long bbsId,
+                          @Param("userId") Long userId);
 }

@@ -34,12 +34,24 @@
         #{commentParentId})
     </insert>
 
-
     <delete id="delete">
         delete
         from comment
         where comment_id=#{commentId}
     </delete>
+
+    <update id="cancelComment" parameterType="long">
+        update comment
+        set comment_praise = comment_praise - 1
+        where comment_id = #{commentId} and comment_bbs_id = #{bbsId} and comment_user_id = #{userId}
+    </update>
+
+    <update id="updateComment" parameterType="long">
+        update comment
+        set comment_praise = comment_praise + 1
+        where comment_id = #{commentId} and comment_bbs_id = #{bbsId} and comment_user_id = #{userId}
+    </update>
+
 
     <select id="findAll" resultMap="commentResultMap">
         select

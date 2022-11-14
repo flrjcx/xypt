@@ -2,8 +2,6 @@ package com.flrjcx.xypt.common.exception;
 
 import com.flrjcx.xypt.common.model.result.ResponseData;
 
-import java.io.Serializable;
-
 /**
  * 业务异常
  * @author malaka
@@ -32,4 +30,5 @@ public abstract class WebServiceException extends RuntimeException {
     public synchronized Throwable fillInStackTrace() {
         return this;
     }
+
 }

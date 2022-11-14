@@ -11,11 +11,13 @@ import java.io.Serializable;
  * @author malaka
  */
 public class WebServiceEnumException extends WebServiceException implements Serializable {
+
     private static final long serialVersionUID = -637171558794830996L;
 
     private ResultCodeEnum resultCodeEnum;
 
     private WebServiceEnumException() {
+
     }
 
     @Override

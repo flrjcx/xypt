@@ -35,6 +35,7 @@ public class GlobalExceptionHandler {
 
     /**
      * 用户验证未通过
+     *
      * @param e
      * @return
      */
@@ -45,6 +46,7 @@ public class GlobalExceptionHandler {
 
     /**
      * 业务异常
+     *
      * @param e
      * @return
      */
@@ -56,12 +58,13 @@ public class GlobalExceptionHandler {
 
     /**
      * 未知异常
+     *
      * @param e
      * @return
      */
     @ExceptionHandler(Exception.class)
     public ResponseData handlerException(Exception e, HttpServletRequest request) {
-        try{
+        try {
             ErrorLog errorLog = new ErrorLog(e, request);
             errorLog.setErrorServiceHost(applicationName);
             log.warn("error: {}, from: {}, uri: {}, message: {}",
@@ -71,7 +74,7 @@ public class GlobalExceptionHandler {
                     errorLog.getErrorMessage());
             e.printStackTrace();
             sendMessageAsync(KafkaTopicEnum.TOPIC_ERROR_LOG, JSONObject.toJSONString(errorLog));
-        }catch (Exception err) {
+        } catch (Exception err) {
             log.warn("error处理失败: {}", err.getMessage());
         }
         return ResponseData.buildErrorResponse(ResultCodeEnum.FAIL.getCode(), e.getMessage(), e);

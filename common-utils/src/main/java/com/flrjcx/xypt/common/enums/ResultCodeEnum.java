@@ -192,7 +192,6 @@ public enum ResultCodeEnum implements IResultCode {
 
     ERROR_CODE_50344(50344, "查询用户信息失败"),
 
-
     /*工作流*/
     ERROR_CODE_COMMENT_ADD_WORKFLOW(600000, "增加指令评论失败！"),
     ERROR_CODE_COMMENT_USER_WORKFLOW(600001, "评论人ID不能为空！"),
@@ -206,6 +205,10 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_CODE_BBS_PRAISE_DELETE_ERROR(60008, "帖子点赞表删除信息失败(数据库原因 或 帖子id及用户id可能不存在)"),
     ERROR_CODE_BBS_NO_INSERT_ERROR(60009, "帖子点踩表增加信息失败(数据库原因)"),
     ERROR_CODE_BBS_NO_DELETE_ERROR(60010, "帖子点踩表删除信息失败(数据库原因 或 帖子id及用户id可能不存在)"),
+
+    ERROR_CODE_COMMENT_UPDATE_ERROR(60010, "修改评论表信息失败(数据库原因 或者 评论id不存在)"),
+    ERROR_CODE_COMMENT_PRAISE_INSERT_ERROR(60011, "评论点赞表增加信息失败(数据库原因)"),
+    ERROR_CODE_COMMENT_PRAISE_DELETE_ERROR(60012, "评论点赞表删除信息失败(数据库原因 或者 评论id及用户id不存在)"),
 
     ERROR_FORM_TABLE_EXIST(61000, "表单名称已经存在！"),
 
