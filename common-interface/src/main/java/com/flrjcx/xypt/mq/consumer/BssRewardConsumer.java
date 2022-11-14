@@ -2,6 +2,7 @@ package com.flrjcx.xypt.mq.consumer;
 
 import com.alibaba.fastjson.JSON;
 import com.flrjcx.xypt.common.enums.KafkaTopicEnum;
+import com.flrjcx.xypt.common.model.param.bbs.Bbs;
 import com.flrjcx.xypt.common.model.param.common.TransactionParam;
 import com.flrjcx.xypt.common.utils.DateUtils;
 import com.flrjcx.xypt.mapper.MoneyDetailMapper;
@@ -15,23 +16,27 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * kafka消费者
+ * 论坛打赏
  *
  * @author Flrjcx
  */
 @Component
 @Slf4j
-public class MoneyDetailConsumer {
+public class BssRewardConsumer {
+
     @Resource
     private MoneyDetailMapper moneyDetailMapper;
 
-    @KafkaListener(topics = KafkaTopicEnum.TOPIC_MONEY_SEND_DETAIL,groupId = "MONEY")
-    @Async
+
+    @KafkaListener(topics = KafkaTopicEnum.TOPIC_BBS_REWARD_SEND,groupId = "REWARD")
     public void consumerLogMsg(ConsumerRecord<String, String> record, Acknowledgment ack){
         TransactionParam transactionParam = JSON.parseObject(record.value(), TransactionParam.class);
         transactionParam.setTransactionCreateTime(DateUtils.dateToStamp(record.timestamp()));
+//        打赏
+        moneyDetailMapper.reward(transactionParam.getTransactionUserId(),transactionParam.getTransactionAmount());
+        moneyDetailMapper.beReward(transactionParam.getTransactionBeUserId(),transactionParam.getTransactionAmount());
+//        记录到t_transaction表
         moneyDetailMapper.moneyDetail(transactionParam);
         ack.acknowledge();
     }
-
 }

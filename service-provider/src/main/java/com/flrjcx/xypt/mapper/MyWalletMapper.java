@@ -55,11 +55,4 @@ public interface MyWalletMapper {
      */
     List<TransactionParam> moneyDetails(@Param("userId") Long userId,@Param("date") String date);
 
-    /**
-     * 设置资金变动后的余额
-     *
-     * @param balance
-     * @param userId
-     */
-    void updateBalance(@Param("userId") Long userId,@Param("balance") BigDecimal balance);
 }

@@ -29,11 +29,18 @@ public class LogConsumer {
     @Resource
     private LogConsumerMapper logConsumerMapper;
 
+    public static final String LOCALHOST = "127.0.1.1";
+    public static final String LOCALHOST2 = "0:0:0:0:0:0:0:1";
+
     @KafkaListener(topics = KafkaTopicEnum.TOPIC_LOG_SEND_MESSAGE,groupId = "LOG")
     @Async
     public void consumerLogMsg(ConsumerRecord<String, String> record, Acknowledgment ack) throws InterruptedException {
 //        取出kafka消息,反序列化
         InterfaceLogResult logResult = JSON.parseObject(record.value(),InterfaceLogResult.class);
+        if (ObjectUtils.equals(logResult.getIp(),LOCALHOST) || ObjectUtils.equals(logResult.getIp(),LOCALHOST2)){
+            ack.acknowledge();
+            return;
+        }
         log.info("Topic:"+record.topic()+", value:"+record.value()+", time:"+record.timestamp());
         logResult.setTimestamp(DateUtils.dateToStamp(record.timestamp()));
 //        将ip进行查询
@@ -42,7 +49,7 @@ public class LogConsumer {
         IpLocalResult ipLocalResultObject = JSON.parseObject(ipLocalResultJson, IpLocalResult.class);
 
         if (ObjectUtils.isNotEmpty(ipLocalResultObject.getData().getIsp())){
-        logResult.setIsp(ipLocalResultObject.getData().getIsp());
+            logResult.setIsp(ipLocalResultObject.getData().getIsp());
         }
         if (ObjectUtils.isNotEmpty(ipLocalResultObject.getData().getArea())){
             logResult.setArea(ipLocalResultObject.getData().getArea());
