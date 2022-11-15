@@ -80,8 +80,8 @@ public class ErrorLog implements Serializable {
 
         // 请求信息
         if (!Objects.isNull(request)) {
-            Map<String, Object> requestInfo = RequestUtils.getRequestInfo(request);
-            this.errorParam = JSONObject.toJSONString(requestInfo);
+            JSONObject requestInfo = RequestUtils.getRequestInfoJson(request);
+            this.errorParam = requestInfo.toJSONString();
             this.errorUri = request.getRequestURI();
             this.errorServiceIp = IPUtils.getLocalIP();
         }

@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.common.model.dto.log;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.flrjcx.xypt.common.model.domain.log.ErrorLog;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -18,6 +20,7 @@ import java.util.Date;
  * @date 2022/11/5 17:56
  */
 @Data
+@ToString
 public class ErrorLogDto  implements Serializable {
     private static final long serialVersionUID = 7872487683467307200L;
 
@@ -34,10 +37,10 @@ public class ErrorLogDto  implements Serializable {
         this.errorServiceHost = errorLog.getErrorServiceHost();
         this.errorServiceIp = errorLog.getErrorServiceIp();
         this.errorUri = errorLog.getErrorUri();
-        this.errorCreateTime = errorLog.getErrorCreateTime();
-        errorParam = new ErrorLogParamDto();
+        this.errorCreateTime = errorLog.getErrorCreateTime().getTime();
+        this.errorParam = new ErrorLogParamDto();
         String errorParamStr = errorLog.getErrorParam();
-        this.errorParam = JSONObject.parseObject(errorParamStr, ErrorLogParamDto.class);
+        this.errorParam = JSON.parseObject(errorParamStr, ErrorLogParamDto.class);
     }
 
 
@@ -77,8 +80,7 @@ public class ErrorLogDto  implements Serializable {
     private String errorUri;
 
     @ApiModelProperty(value = "创建时间", name = "errorCreateTime")
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
-    private Date errorCreateTime;
+    private Long errorCreateTime;
 
 
 }

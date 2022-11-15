@@ -1,6 +1,7 @@
 package com.flrjcx.xypt.common.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
@@ -23,8 +24,8 @@ public class RequestUtils {
     public final static String KEY_BODY = "body";
     public final static String KEY_IP = "ip";
 
-    public static Map<String, Object> getRequestInfo(@NotNull HttpServletRequest request) {
-        Map<String, Object> res = new HashMap<>();
+    public static JSONObject getRequestInfoJson(@NotNull HttpServletRequest request) {
+        JSONObject res = new JSONObject();
         res.put(KEY_METHOD, request.getMethod());
         res.put(KEY_HEADERS, getHeaders(request));
         res.put(KEY_BODY, getBody(request));
