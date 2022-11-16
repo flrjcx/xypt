@@ -82,6 +82,10 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_ROLE_QUERY_STATUS_LIST(110016, "获取指定状态角色列表信息失败！"),
     ERROR_ROLE_QUERY_REGISTER_TIME_LIST(110017, "获取指定注册时间范围的角色列表信息失败！"),
 
+    /**
+     * 校验错误
+     */
+    ERROR_SENSITIVE_TEXT(120000, "文本含有敏感信息"),
 
     /**
      * 日志信息
@@ -149,6 +153,7 @@ public enum ResultCodeEnum implements IResultCode {
     ERR_CODE_FILE_NAME_NULL_ERROR(508004,"文件名不能为空"),
     ERR_CODE_FACE__NULL_ERROR(508005,"用户头像不能为空"),
     ERR_CODE_QINIU_ERR(508006,"七牛云异常"),
+    ERR_CODE_MENU_NULL_ERROR(508007,"目录为空"),
 
 
     ERROR_CODE_50111(50111, "根据权限查询用户失败 "),

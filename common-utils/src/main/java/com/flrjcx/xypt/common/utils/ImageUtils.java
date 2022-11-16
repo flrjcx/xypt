@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * 图片上传工具类
  */
-public class FileUtil {
+public class ImageUtils {
 
     public static  long IMAGE_FILE_SIZE=1024 * 1024 * 2;
 
@@ -36,5 +36,4 @@ public class FileUtil {
         long size = multipartFile.getSize();
         return size <= IMAGE_FILE_SIZE;
     }
-
 }

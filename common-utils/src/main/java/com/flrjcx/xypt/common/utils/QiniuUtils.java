@@ -63,7 +63,7 @@ public class QiniuUtils {
             throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERR_CODE_FILE_NULL_ERROR);
         }
         //文件大小不超过阈值
-        if (!FileUtil.isFileSizeOK(multipartFile)) {
+        if (!ImageUtils.isFileSizeOK(multipartFile)) {
             throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERR_CODE_FILE_SIZE_FAILED);
         }
         //文件名不能为空
@@ -73,7 +73,7 @@ public class QiniuUtils {
         }
 
         //文件类型符合条件
-        if (!FileUtil.isFileAllowed(multipartFile.getOriginalFilename())) {
+        if (!ImageUtils.isFileAllowed(multipartFile.getOriginalFilename())) {
             throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERR_CODE_FILE_FORMATTER_FAILED);
         }
 

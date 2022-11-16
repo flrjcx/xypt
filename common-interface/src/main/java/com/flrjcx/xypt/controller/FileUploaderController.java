@@ -3,7 +3,7 @@ package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.model.result.ResponseData;
-import com.flrjcx.xypt.common.utils.FileUtil;
+import com.flrjcx.xypt.common.utils.ImageUtils;
 import com.flrjcx.xypt.common.utils.QiniuUtils;
 import com.flrjcx.xypt.service.FileService;
 import io.swagger.annotations.Api;
@@ -55,7 +55,7 @@ public class FileUploaderController {
         String path = "";
 
         //上传
-        path = fileService.uploadToQiNiu(file, FileUtil.getFileSuffix(file.getOriginalFilename()), QiNiuPath);
+        path = fileService.uploadToQiNiu(file, ImageUtils.getFileSuffix(file.getOriginalFilename()), QiNiuPath);
 
         //返回文件路径
         return ResponseData.buildResponseToStandard(path);
@@ -85,7 +85,7 @@ public class FileUploaderController {
 
             String path = "";
             //上传
-            path = fileService.uploadToQiNiu(file, FileUtil.getFileSuffix(file.getOriginalFilename()), QiNiuPath);
+            path = fileService.uploadToQiNiu(file, ImageUtils.getFileSuffix(file.getOriginalFilename()), QiNiuPath);
 
             if (StringUtils.isNotBlank(path)) {
                 imageUrlList.add(path);
