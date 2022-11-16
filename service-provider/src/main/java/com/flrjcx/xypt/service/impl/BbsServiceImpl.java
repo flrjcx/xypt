@@ -52,6 +52,7 @@ public class BbsServiceImpl implements BbsService {
      * @return
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ResultCodeEnum praise(Long bbsId, Long userId) throws WebServiceException {
         if (!bbsMapper.updatePraise(bbsId)) {
             throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERROR_CODE_BBS_UPDATE_ERROR);
@@ -71,6 +72,7 @@ public class BbsServiceImpl implements BbsService {
      * @return 点赞是否成功
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ResultCodeEnum cancelPraise(Long bbsId, Long userId) throws WebServiceException {
         if (!bbsPraiseMapper.deletePraise(bbsId, userId)) {
             throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERROR_CODE_BBS_PRAISE_DELETE_ERROR);
@@ -90,6 +92,7 @@ public class BbsServiceImpl implements BbsService {
      * @return 点踩是否成功
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ResultCodeEnum no(Long bbsId, Long userId) throws WebServiceException {
         if (!bbsMapper.updateNo(bbsId)) {
             throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERROR_CODE_BBS_UPDATE_ERROR);
@@ -109,6 +112,7 @@ public class BbsServiceImpl implements BbsService {
      * @return 点踩是否成功
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ResultCodeEnum cancelNo(Long bbsId, Long userId) throws WebServiceException {
         if (!bbsNoMapper.deleteNo(bbsId, userId)) {
             throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERROR_CODE_BBS_NO_DELETE_ERROR);

@@ -53,7 +53,6 @@ public class BbsController {
     @Validation
     @ApiOperation("点赞")
     @PostMapping("/praise")
-    @Transactional(rollbackFor = Exception.class)
     public ResponseData praise(@RequestParam("bbsId") Long bbsId) {
         Long userId = UserThreadLocal.get().getUserId();
         ResultCodeEnum resultCodeEnum = bbsService.praise(bbsId, userId);
@@ -63,7 +62,6 @@ public class BbsController {
     @Validation
     @ApiOperation("取消点赞")
     @PostMapping("/cancelPraise")
-    @Transactional(rollbackFor = Exception.class)
     public ResponseData cancelPraise(@RequestParam("bbsId") Long bbsId) {
         Long userId = UserThreadLocal.get().getUserId();
         ResultCodeEnum resultCodeEnum = bbsService.cancelPraise(bbsId, userId);
@@ -78,7 +76,6 @@ public class BbsController {
     @Validation
     @ApiOperation("点踩")
     @PostMapping("/no")
-    @Transactional(rollbackFor = Exception.class)
     public ResponseData no(@RequestParam("bbsId") Long bbsId) {
         Long userId = UserThreadLocal.get().getUserId();
         ResultCodeEnum resultCodeEnum = bbsService.no(bbsId, userId);
@@ -88,7 +85,6 @@ public class BbsController {
     @Validation
     @ApiOperation("取消点踩")
     @PostMapping("/cancelNo")
-    @Transactional(rollbackFor = Exception.class)
     public ResponseData cancelNo(@RequestParam("bbsId") Long bbsId) {
         Long userId = UserThreadLocal.get().getUserId();
         ResultCodeEnum resultCodeEnum = bbsService.cancelNo(bbsId, userId);
