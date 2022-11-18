@@ -42,27 +42,45 @@ public class CommentController {
     @Validation
     @ApiOperation(value = "进行评论")
     @PostMapping("/post")
-    public Comment save(@RequestBody Comment comment) {
+    public ResponseData save(@RequestBody Comment comment) {
 
-        commentService.post(comment.getCommentBbsId(), comment.getCommentUserId(), comment.getCommentParentId(),
+        ResponseData < Comment > responseData = commentService.post(comment.getCommentBbsId(), comment.getCommentUserId(), comment.getCommentParentId(),
                 comment.getLevel(), comment.getCommentContext(), comment.getCommentFloor());
 
-        return comment;
+
+        return responseData;
     }
 
     @Validation
     @ApiOperation(value = "删除评论")
     @GetMapping("/del")
-    public Boolean delete(@RequestParam("commentId") Long commentId) {
-        return commentService.delete(commentId);
+    public ResponseData delete(@RequestParam("bbsId") String bbsId) {
+        try {
+            List < Comment > result = commentService.query(bbsId);
+            if (result == null) {
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_QUERY_WORKFLOW);
+            }
+            return ResponseData.buildResponse(commentService.delete(bbsId));
+        } catch (Exception e) {
+            log.error("cancel comment error");
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_DELETE_WORKFLOW);
+        }
+
     }
 
     @OpenPage
     @Validation
     @ApiOperation(value = "查询全部评论")
     @GetMapping("/pageQueryAll")
-    public ResponseData< List <Comment> > query() {
+    public ResponseData< List <Comment> > queryAll() {
         return ResponseData.buildPageResponse(commentService.queryCommentsList());
+    }
+
+    @Validation
+    @ApiOperation(value = "根据BbsId查询评论")
+    @GetMapping("/queryByBbsId")
+    public ResponseData<List<Comment>> queryByBbsId(@RequestParam("bbsId") String bbsId) {
+        return ResponseData.buildResponse(commentService.query(bbsId));
     }
 
 
