@@ -49,7 +49,9 @@ public class DataPlatFormServiceImpl implements DataPlatFormService {
      */
     @Override
     public List<ChartResult> totalTransactionChart(Long beforeTime, Long afterTime) {
-        return dataPlatFormMapper.totalTransactionChart(DateUtils.dateToStamp(beforeTime),DateUtils.dateToStamp(afterTime));
+        List<ChartResult> chartResults = dataPlatFormMapper.totalTransactionChart(DateUtils.dateToStamp(beforeTime), DateUtils.dateToStamp(afterTime));
+        return chartResults;
+
     }
 
     /**
