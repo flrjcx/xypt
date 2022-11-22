@@ -22,25 +22,43 @@
 
     <update id="updatePraise">
         update bbs
-        set bbs_praise=bbs_praise+1
-        where bbs_id=#{bbsId}
+        set bbs_praise=bbs_praise + 1
+        where bbs_id = #{bbsId}
     </update>
 
     <update id="cancelPraise">
         update bbs
-        set bbs_praise=bbs_praise-1
-        where bbs_id=#{bbsId}
+        set bbs_praise=bbs_praise - 1
+        where bbs_id = #{bbsId}
     </update>
 
     <update id="updateNo">
         update bbs
-        set bbs_no=bbs_no+1
-        where bbs_id=#{bbsId}
+        set bbs_no=bbs_no + 1
+        where bbs_id = #{bbsId}
     </update>
 
     <update id="cancelNo">
         update bbs
-        set bbs_no=bbs_no-1
-        where bbs_id=#{bbsId}
+        set bbs_no=bbs_no - 1
+        where bbs_id = #{bbsId}
     </update>
+    <update id="updatePost">
+        update bbs
+        set bbs_context=#{bbsContext},
+            bbs_context_md=#{bbsContextMd},
+            bbs_title=#{bbsTitle}
+        where bbs_id = #{bbsId}
+    </update>
+    <delete id="deletePostById">
+        delete
+        from bbs
+        where bbs_id = #{bbsId}
+    </delete>
+    <select id="selectBbsOwner" resultType="java.lang.Long">
+        select bbs_user_id
+        from bbs
+        where bbs_id = #{bbsId}
+    </select>
+
 </mapper>

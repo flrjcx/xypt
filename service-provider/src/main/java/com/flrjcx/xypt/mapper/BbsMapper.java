@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.mapper;
 
+import com.flrjcx.xypt.common.model.param.bbs.BbsEditParam;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -9,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 public interface BbsMapper {
     /**
      * bbs_praise字段+1
+     *
      * @param bbsId 帖子id
      * @return 字段更新是否成功
      */
@@ -16,6 +18,7 @@ public interface BbsMapper {
 
     /**
      * bbs_praise字段-1
+     *
      * @param bbsId 帖子id
      * @return 字段更新是否成功
      */
@@ -23,6 +26,7 @@ public interface BbsMapper {
 
     /**
      * bbs_no字段+1
+     *
      * @param bbsId 帖子id
      * @return 字段更新是否成功
      */
@@ -30,8 +34,33 @@ public interface BbsMapper {
 
     /**
      * bbs_no字段-1
+     *
      * @param bbsId 帖子id
      * @return 字段更新是否成功
      */
     boolean cancelNo(@Param("bbsId") Long bbsId);
+
+    /**
+     * 更新帖子
+     *
+     * @param param 更新帖子对象
+     * @return 影响行数
+     */
+    int updatePost(BbsEditParam param);
+
+    /**
+     * 获得发帖人
+     *
+     * @param bbsId 帖子id
+     * @return 发帖人id
+     */
+    Long selectBbsOwner(Long bbsId);
+
+    /**
+     * 根据id删除帖子
+     *
+     * @param bbsId 帖子id
+     * @return 影响行数
+     */
+    int deletePostById(Long bbsId);
 }
