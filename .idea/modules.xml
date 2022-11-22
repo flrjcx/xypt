@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/backend-service-provider/backend-service-provider.iml" filepath="$PROJECT_DIR$/backend-service-provider/backend-service-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common-interface/common-interface.iml" filepath="$PROJECT_DIR$/common-interface/common-interface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common-utils/common-utils.iml" filepath="$PROJECT_DIR$/common-utils/common-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jobs/jobs.iml" filepath="$PROJECT_DIR$/jobs/jobs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-client/service-client.iml" filepath="$PROJECT_DIR$/service-client/service-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-gateway/service-gateway.iml" filepath="$PROJECT_DIR$/service-gateway/service-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-provider/service-provider.iml" filepath="$PROJECT_DIR$/service-provider/service-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xypt.iml" filepath="$PROJECT_DIR$/xypt.iml" />
+    </modules>
+  </component>
+</project>

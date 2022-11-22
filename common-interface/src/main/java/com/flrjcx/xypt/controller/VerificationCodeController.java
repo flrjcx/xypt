@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @author malaka
  */
 @Api(tags = "验证码模块")
-@ApiRestController("/api/common/verificationcode")
+@ApiRestController("/verificationcode")
 @Log4j2
 public class VerificationCodeController {
 

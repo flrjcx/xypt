@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="service-client" />
+        <module name="common-interface" />
+        <module name="common-utils" />
+        <module name="backend-service-provider" />
+        <module name="jobs" />
+        <module name="service-provider" />
+        <module name="service-gateway" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="backend-log" target="1.8" />
+      <module name="backend-service-provider" target="1.8" />
+      <module name="common-interface" target="1.8" />
+      <module name="common-utils" target="1.8" />
+      <module name="email-service" target="1.8" />
+      <module name="jobs" target="1.8" />
+      <module name="kafka-consumer-log" target="1.8" />
+      <module name="service-client" target="1.8" />
+      <module name="service-gateway" target="1.8" />
+      <module name="service-provider" target="1.8" />
+      <module name="xypt" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="backend-log" options="-parameters" />
+      <module name="backend-service-provider" options="-parameters" />
+      <module name="common-interface" options="-parameters" />
+      <module name="common-utils" options="-parameters" />
+      <module name="email-service" options="-parameters" />
+      <module name="jobs" options="-parameters" />
+      <module name="kafka-consumer-log" options="-parameters" />
+      <module name="service-client" options="-parameters" />
+      <module name="service-gateway" options="-parameters" />
+      <module name="service-provider" options="-parameters" />
+    </option>
+  </component>
+</project>

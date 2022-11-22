@@ -26,7 +26,7 @@ import java.util.Objects;
  * @date : 2022-11-16 14:31:06
  */
 @Api("通用校验模块")
-@ApiRestController("/api/common/verify")
+@ApiRestController("/verify")
 @Log4j2
 public class CheckController {
 
