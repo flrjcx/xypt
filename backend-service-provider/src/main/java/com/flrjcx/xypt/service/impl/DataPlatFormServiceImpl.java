@@ -49,7 +49,7 @@ public class DataPlatFormServiceImpl implements DataPlatFormService {
      */
     @Override
     public List<ChartResult> totalTransactionChart(Long beforeTime, Long afterTime) {
-        return dataPlatFormMapper.totalTransactionChart(DateUtils.dateSubtract(DateUtils.dateToStamp(beforeTime)), DateUtils.dateAdd(DateUtils.dateToStamp(afterTime)));
+        return dataPlatFormMapper.totalTransactionChart(DateUtils.dateToStamp(beforeTime), DateUtils.dateAdd(DateUtils.dateToStamp(afterTime)));
     }
 
     /**
@@ -61,7 +61,7 @@ public class DataPlatFormServiceImpl implements DataPlatFormService {
      */
     @Override
     public List<ChartResult> totalDepositChart(Long beforeTime, Long afterTime) {
-        return dataPlatFormMapper.totalDepositChart(DateUtils.dateSubtract(DateUtils.dateToStamp(beforeTime)), DateUtils.dateAdd(DateUtils.dateToStamp(afterTime)));
+        return dataPlatFormMapper.totalDepositChart(DateUtils.dateToStamp(beforeTime), DateUtils.dateAdd(DateUtils.dateToStamp(afterTime)));
     }
 
 
