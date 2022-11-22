@@ -15,7 +15,7 @@
     <select id="totalTransactionChart" resultType="com.flrjcx.xypt.common.model.result.data.plat.form.ChartResult">
         select sum(transaction_amount) as amount,date_format(transaction_create_time,'%Y-%m-%d') as date
         from t_transaction
-        where transaction_type = 0 and transaction_create_time &lt; #{afterTime} and transaction_create_time &gt; #{beforeTime} or transaction_type = 2
+        where transaction_type = 0 and transaction_create_time &lt; #{afterTime} and transaction_create_time &gt; #{beforeTime}
         GROUP BY date_format(transaction_create_time,'%Y-%m-%d')
         order by transaction_create_time DESC
     </select>
