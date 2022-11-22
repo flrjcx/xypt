@@ -89,6 +89,10 @@ public class BbsServiceImpl implements BbsService {
     public boolean deletePostById(Long bbsId, Users users) {
         //判断需要删帖的人与帖子的主人是否为同一个人
         Long ownerId = bbsMapper.selectBbsOwner(bbsId);
+        //为空则代表帖子不存在
+        if (ObjectUtil.isNull(ownerId)) {
+            return false;
+        }
         if (users.getUserId().equals(ownerId)) {
             int deletePostById = bbsMapper.deletePostById(bbsId);
             return deletePostById > 0;
