@@ -9,7 +9,8 @@ import java.util.*;
  */
 //https://blog.csdn.net/weixin_44146379/article/details/109009257
 public class DateUtils {
-    private static final String SDFTYPE = "yyyy-MM-dd HH:mm:ss";
+    private static final String SDFTYPE_PGSQL = "yyyy-MM-dd HH:mm:ss";
+    private static final String SDFTYPE_MYSQL = "YYYY-MM-dd HH:mm:ss";
 
     //    获取本月有多少天
     public static Integer getDay(Date date) {
@@ -289,7 +290,7 @@ public class DateUtils {
     public static String getNowTime() {
         Date date = new Date();
         long time = date.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat(SDFTYPE);
+        SimpleDateFormat sdf = new SimpleDateFormat(SDFTYPE_PGSQL);
         String nowTime = sdf.format(time);
         return nowTime;
     }
@@ -342,6 +343,24 @@ public class DateUtils {
     public static Date dateToStamp(long times) {
         Date date = new Date(times);
         return date;
+    }
+
+//    时间减1天
+    public static Date dateSubtract(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        SimpleDateFormat format = new SimpleDateFormat(SDFTYPE_MYSQL);
+        return calendar.getTime();
+    }
+
+    //    时间加1天
+    public static Date dateAdd(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, +1);
+        SimpleDateFormat format = new SimpleDateFormat(SDFTYPE_MYSQL);
+        return calendar.getTime();
     }
 
     //时间戳转date,年-月

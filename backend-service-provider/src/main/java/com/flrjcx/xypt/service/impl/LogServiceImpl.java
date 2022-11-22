@@ -39,7 +39,7 @@ public class LogServiceImpl implements LogService {
      */
     @Override
     public List<InterfaceLogResult> getApiLogList(Long beforeTime,Long afterTime,String ip,String uri,String city) {
-        return logMapper.getApiLogList(DateUtils.dateToStamp(beforeTime),DateUtils.dateToStamp(afterTime),ip,uri,city);
+        return logMapper.getApiLogList(DateUtils.dateSubtract(DateUtils.dateToStamp(beforeTime)), DateUtils.dateAdd(DateUtils.dateToStamp(afterTime)),ip,uri,city);
     }
 
     /**
