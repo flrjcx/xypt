@@ -23,7 +23,7 @@ import java.util.Map;
 @Service
 public class LogServiceImpl implements LogService {
 
-    public static final String DETAILS_IP = "https://api.vore.top/api/IPdata";
+    public static final String DETAILS_IP = "http://whois.pconline.com.cn/ipJson.jsp";
     @Resource
     private LogMapper logMapper;
 
@@ -39,7 +39,7 @@ public class LogServiceImpl implements LogService {
      */
     @Override
     public List<InterfaceLogResult> getApiLogList(Long beforeTime,Long afterTime,String ip,String uri,String city) {
-        return logMapper.getApiLogList(DateUtils.dateToStamp(beforeTime), DateUtils.dateAdd(DateUtils.dateToStamp(afterTime)),ip,uri,city);
+        return logMapper.getApiLogList(DateUtils.dateToStamp(beforeTime),DateUtils.dateToStamp(afterTime),ip,uri,city);
     }
 
     /**
@@ -51,6 +51,7 @@ public class LogServiceImpl implements LogService {
     public DetailsIpParam detailsIp(String ip) {
         Map<String , Object> param = new HashMap<>();
         param.put("ip",ip);
+        param.put("json","true");
         String s = HttpPoolUtils.get(DETAILS_IP, param, null);
         return JSONObject.parseObject(s, DetailsIpParam.class);
     }
