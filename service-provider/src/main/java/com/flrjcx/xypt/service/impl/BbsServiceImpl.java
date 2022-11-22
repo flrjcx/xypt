@@ -1,11 +1,15 @@
 package com.flrjcx.xypt.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.flrjcx.xypt.common.enums.KafkaTopicEnum;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.exception.WebServiceEnumException;
 import com.flrjcx.xypt.common.exception.WebServiceException;
+import com.flrjcx.xypt.common.model.param.bbs.BbsEditParam;
 import com.flrjcx.xypt.common.model.param.bbs.BbsReward;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.utils.KafkaUtils;
 import com.flrjcx.xypt.common.utils.OrderUtils;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
@@ -42,6 +46,55 @@ public class BbsServiceImpl implements BbsService {
 
     @Resource
     private MyWalletMapper myWalletMapper;
+
+    /**
+     * 编辑帖子
+     *
+     * @param param 帖子更新对象
+     * @param users 发送修改帖子请求的用户
+     * @return 是否修改成功
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean editPost(BbsEditParam param, Users users) {
+        Long bbsId = param.getBbsId();
+        String bbsContext = param.getBbsContext();
+        String bbsTitle = param.getBbsTitle();
+        String bbsContextMd = param.getBbsContextMd();
+        if (!StrUtil.isAllNotBlank(bbsContextMd, bbsContext) && StrUtil.isEmpty(bbsTitle)) {
+            return false;
+        }
+        //检查该用户是否为帖子的发帖人
+        Long userId = bbsMapper.selectBbsOwner(bbsId);
+        if (ObjectUtil.isNull(userId)) {
+            return false;
+        }
+        if (!userId.equals(users.getUserId())) {
+            return false;
+        }
+        //编辑帖子
+        int updatePost = bbsMapper.updatePost(param);
+        return updatePost > 0;
+    }
+
+    /**
+     * 根据id删除帖子
+     *
+     * @param bbsId 帖子id
+     * @param users 发送删帖请求的用户
+     * @return 是否删除成功
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deletePostById(Long bbsId, Users users) {
+        //判断需要删帖的人与帖子的主人是否为同一个人
+        Long ownerId = bbsMapper.selectBbsOwner(bbsId);
+        if (users.getUserId().equals(ownerId)) {
+            int deletePostById = bbsMapper.deletePostById(bbsId);
+            return deletePostById > 0;
+        }
+        return false;
+    }
 
     /**
      * 点赞
@@ -133,8 +186,8 @@ public class BbsServiceImpl implements BbsService {
     public void reward(BbsReward bbsReward) {
         BigDecimal balance = myWalletMapper.getBalance(UserThreadLocal.get().getUserId());
         BigDecimal subtractBalance = balance.subtract(bbsReward.getMoney());
-        sendMessageAsync(KafkaTopicEnum.TOPIC_BBS_REWARD_SEND,JSONObject.toJSONString(OrderUtils.makeTransaction(bbsReward.getMoney(),UserThreadLocal.get().getUserId(),
-                bbsReward.getBeUserId(),bbsReward.getContent(),bbsReward.getTransactionBeUserNick(),subtractBalance)));
+        sendMessageAsync(KafkaTopicEnum.TOPIC_BBS_REWARD_SEND, JSONObject.toJSONString(OrderUtils.makeTransaction(bbsReward.getMoney(), UserThreadLocal.get().getUserId(),
+                bbsReward.getBeUserId(), bbsReward.getContent(), bbsReward.getTransactionBeUserNick(), subtractBalance)));
     }
 
 

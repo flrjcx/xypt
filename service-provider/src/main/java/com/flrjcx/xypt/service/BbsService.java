@@ -1,19 +1,21 @@
 package com.flrjcx.xypt.service;
 
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.model.param.bbs.BbsEditParam;
 import com.flrjcx.xypt.common.model.param.bbs.BbsReward;
-
-import java.math.BigDecimal;
+import com.flrjcx.xypt.common.model.param.common.Users;
 
 /**
  * @author : aftermath
  * @date : 2022-11-04 09:36:20
  */
 public interface BbsService {
+
+
     /**
      * 点赞
      *
-     * @param bbsId 点赞贴子id
+     * @param bbsId  点赞贴子id
      * @param userId 点赞用户id
      * @return 点赞是否成功
      */
@@ -22,7 +24,7 @@ public interface BbsService {
     /**
      * 取消点赞
      *
-     * @param bbsId 取消点赞贴子id
+     * @param bbsId  取消点赞贴子id
      * @param userId 取消点赞用户id
      * @return 点赞是否成功
      */
@@ -31,7 +33,7 @@ public interface BbsService {
     /**
      * 点踩
      *
-     * @param bbsId 点赞贴子id
+     * @param bbsId  点赞贴子id
      * @param userId 点赞用户id
      * @return 点踩是否成功
      */
@@ -40,7 +42,7 @@ public interface BbsService {
     /**
      * 取消点踩
      *
-     * @param bbsId 取消点踩贴子id
+     * @param bbsId  取消点踩贴子id
      * @param userId 取消点踩用户id
      * @return 点踩是否成功
      */
@@ -52,4 +54,22 @@ public interface BbsService {
      * @param reward
      */
     void reward(BbsReward reward);
+
+    /**
+     * 编辑帖子
+     *
+     * @param param 帖子更新对象
+     * @param users 发送修改帖子请求的用户
+     * @return 是否修改成功
+     */
+    boolean editPost(BbsEditParam param, Users users);
+
+    /**
+     * 根据id删除帖子
+     *
+     * @param bbsId 帖子id
+     * @param users 发送删帖请求的用户
+     * @return 是否删除成功
+     */
+    boolean deletePostById(Long bbsId, Users users);
 }

@@ -147,13 +147,13 @@ public enum ResultCodeEnum implements IResultCode {
      * 文件
      */
     ERROR_UPLOADFILE_FAILED(508000, "上传文件失败！"),
-    ERR_CODE_FILE_SIZE_FAILED(508001,"文件大小最大为2M"),
-    ERR_CODE_FILE_FORMATTER_FAILED(508002,"文件格式不支持"),
-    ERR_CODE_FILE_NULL_ERROR(508003,"文件不能为空"),
-    ERR_CODE_FILE_NAME_NULL_ERROR(508004,"文件名不能为空"),
-    ERR_CODE_FACE__NULL_ERROR(508005,"用户头像不能为空"),
-    ERR_CODE_QINIU_ERR(508006,"七牛云异常"),
-    ERR_CODE_MENU_NULL_ERROR(508007,"目录为空"),
+    ERR_CODE_FILE_SIZE_FAILED(508001, "文件大小最大为2M"),
+    ERR_CODE_FILE_FORMATTER_FAILED(508002, "文件格式不支持"),
+    ERR_CODE_FILE_NULL_ERROR(508003, "文件不能为空"),
+    ERR_CODE_FILE_NAME_NULL_ERROR(508004, "文件名不能为空"),
+    ERR_CODE_FACE__NULL_ERROR(508005, "用户头像不能为空"),
+    ERR_CODE_QINIU_ERR(508006, "七牛云异常"),
+    ERR_CODE_MENU_NULL_ERROR(508007, "目录为空"),
 
 
     ERROR_CODE_50111(50111, "根据权限查询用户失败 "),
@@ -214,6 +214,9 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_CODE_COMMENT_UPDATE_ERROR(60010, "修改评论表信息失败(数据库原因 或者 评论id不存在)"),
     ERROR_CODE_COMMENT_PRAISE_INSERT_ERROR(60011, "评论点赞表增加信息失败(数据库原因)"),
     ERROR_CODE_COMMENT_PRAISE_DELETE_ERROR(60012, "评论点赞表删除信息失败(数据库原因 或者 评论id及用户id不存在)"),
+
+    ERROR_CODE_BBS_EDIT_ERROR(60013, "编辑帖子失败"),
+    ERROR_CODE_BBS_DEL_ERROR(60014, "删除帖子失败"),
 
     ERROR_FORM_TABLE_EXIST(61000, "表单名称已经存在！"),
 

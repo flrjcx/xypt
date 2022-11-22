@@ -50,8 +50,8 @@ public class EncryptUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(md5("xwl1"));
-        System.out.println(md5AndBCrypt("xwl1"));
+        System.out.println(md5("123456"));
+        System.out.println(md5AndBCrypt("123456"));
     }
 
 }
