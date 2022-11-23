@@ -246,6 +246,8 @@ public enum ResultCodeEnum implements IResultCode {
 
     ERROR_EXCEL_EXPORT(610011, "excel导出失败！"),
     ERROR_CODE_USER_UPDATE_USER_INFO(610012, "更新用户信息失败"),
+    ERROR_CODE_SEARCH_POST_EMPTY(610013, "查询帖子为空"),
+
     //错误码范围102001-103000
     ERROR_CODE_PARAM_ERROR(102001, "请求参数非法"),
     ERROR_CODE_USER_SYSTEM_ERROR(102002, "用户服务内部异常"),

@@ -50,15 +50,29 @@
             bbs_title=#{bbsTitle}
         where bbs_id = #{bbsId}
     </update>
-    <delete id="deletePostById">
-        delete
-        from bbs
+    <update id="deletePostById">
+        update
+            bbs
+        set bbs_delete=1
         where bbs_id = #{bbsId}
-    </delete>
+    </update>
     <select id="selectBbsOwner" resultType="java.lang.Long">
         select bbs_user_id
         from bbs
         where bbs_id = #{bbsId}
+          and bbs_delete = 0
+    </select>
+    <select id="searchPostByKeys" resultType="com.flrjcx.xypt.common.model.param.bbs.Bbs">
+        select
+        <include refid="allBbsInfo"></include>
+        from bbs
+        <where>
+            <foreach collection="searchKeys" item="searchKey" separator="or" open="(" close=")">
+                binary bbs_title like CONCAT('%',#{searchKey},'%')
+            </foreach>
+            and bbs_delete = 0
+        </where>
+        order by bbs_update_time DESC
     </select>
 
 </mapper>

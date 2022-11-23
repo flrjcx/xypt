@@ -2,10 +2,13 @@ package com.flrjcx.xypt.controller;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.flrjcx.xypt.common.annotation.ApiRestController;
+import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.model.param.bbs.Bbs;
 import com.flrjcx.xypt.common.model.param.bbs.BbsEditParam;
 import com.flrjcx.xypt.common.model.param.bbs.BbsReward;
+import com.flrjcx.xypt.common.model.param.bbs.BbsSearchParam;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
@@ -21,7 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 与论坛表相关的操作
@@ -141,5 +147,29 @@ public class BbsController {
         } else {
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_BBS_DEL_ERROR);
         }
+    }
+
+    @ApiOperation("搜索帖子")
+    @PostMapping("/search")
+    @OpenPage
+    public ResponseData searchPost(@RequestBody BbsSearchParam bbsSearchParam,
+                                   @RequestParam Integer pageSize,
+                                   @RequestParam Integer pageNum) {
+        String searchBody = bbsSearchParam.getSearchBody();
+        if (ObjectUtil.isNull(bbsSearchParam) || ObjectUtil.isNull(searchBody)) {
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_DELETE_FORM_UPDATE_EMPTY);
+        }
+        if (ObjectUtil.isNull(pageNum)) {
+            pageNum = 1;
+        }
+        if (ObjectUtil.isNull(pageSize)) {
+            pageSize = 10;
+        }
+        List<String> searchKeys = Arrays.stream(searchBody.split(" ")).collect(Collectors.toList());
+        List<Bbs> bbs = bbsService.searchPosts(searchKeys, pageNum, pageSize);
+        if (ObjectUtil.isNull(bbs)) {
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_SEARCH_POST_EMPTY);
+        }
+        return ResponseData.buildResponse(bbs);
     }
 }

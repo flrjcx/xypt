@@ -1,9 +1,12 @@
 package com.flrjcx.xypt.service;
 
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.model.param.bbs.Bbs;
 import com.flrjcx.xypt.common.model.param.bbs.BbsEditParam;
 import com.flrjcx.xypt.common.model.param.bbs.BbsReward;
 import com.flrjcx.xypt.common.model.param.common.Users;
+
+import java.util.List;
 
 /**
  * @author : aftermath
@@ -72,4 +75,14 @@ public interface BbsService {
      * @return 是否删除成功
      */
     boolean deletePostById(Long bbsId, Users users);
+
+    /**
+     * 根据keys搜索帖子
+     *
+     * @param searchKeys 关键词集合
+     * @param pageNum    当前页数
+     * @param pageSize   每页大小
+     * @return 帖子集合
+     */
+    List<Bbs> searchPosts(List<String> searchKeys, Integer pageNum, Integer pageSize);
 }

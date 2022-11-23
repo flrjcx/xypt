@@ -1,7 +1,10 @@
 package com.flrjcx.xypt.mapper;
 
+import com.flrjcx.xypt.common.model.param.bbs.Bbs;
 import com.flrjcx.xypt.common.model.param.bbs.BbsEditParam;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author : aftermath
@@ -63,4 +66,12 @@ public interface BbsMapper {
      * @return 影响行数
      */
     int deletePostById(Long bbsId);
+
+    /**
+     * 根据关键词搜索帖子 标题模糊查询
+     *
+     * @param searchKeys 关键词List
+     * @return 帖子集合
+     */
+    List<Bbs> searchPostByKeys(List<String> searchKeys);
 }

@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.service.impl;
 
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
@@ -7,11 +8,13 @@ import com.flrjcx.xypt.common.enums.KafkaTopicEnum;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.exception.WebServiceEnumException;
 import com.flrjcx.xypt.common.exception.WebServiceException;
+import com.flrjcx.xypt.common.model.param.bbs.Bbs;
 import com.flrjcx.xypt.common.model.param.bbs.BbsEditParam;
 import com.flrjcx.xypt.common.model.param.bbs.BbsReward;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.utils.KafkaUtils;
 import com.flrjcx.xypt.common.utils.OrderUtils;
+import com.flrjcx.xypt.common.utils.RedisCache;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.mapper.BbsMapper;
 import com.flrjcx.xypt.mapper.BbsNoMapper;
@@ -24,6 +27,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.*;
 
 /**
  * @author : aftermath
@@ -32,20 +40,36 @@ import java.math.BigDecimal;
 @Service
 public class BbsServiceImpl implements BbsService {
 
+    public static final String SEARCH_UPDATETIME_POST_KEY = "search:post:updatetime:key:";
+
+    private static final ExecutorService CACHE_SEARCH_POST_SERVICE = new ThreadPoolExecutor(
+            // 核心线程数量
+            10,
+            // 线程池容量
+            10,
+            // 线程保持活动时间
+            1000,
+            // 线程保持活动单位
+            TimeUnit.SECONDS,
+            // 线程任务队列
+            new LinkedBlockingQueue<>(1024),
+            // 线程创建工厂
+            Executors.defaultThreadFactory(),
+            // 线程拒绝策略
+            new ThreadPoolExecutor.AbortPolicy());
+
     @Resource
     BbsMapper bbsMapper;
-
     @Resource
     BbsPraiseMapper bbsPraiseMapper;
-
     @Resource
     BbsNoMapper bbsNoMapper;
-
     @Resource
     private KafkaUtils kafkaUtils;
-
     @Resource
     private MyWalletMapper myWalletMapper;
+    @Resource
+    private RedisCache redisCache;
 
     /**
      * 编辑帖子
@@ -98,6 +122,63 @@ public class BbsServiceImpl implements BbsService {
             return deletePostById > 0;
         }
         return false;
+    }
+
+    /**
+     * 根据keys搜索帖子
+     *
+     * @param searchKeys 关键词集合
+     * @param pageNum    当前页数
+     * @param pageSize   每页大小
+     * @return 帖子集合
+     */
+    @Override
+    public List<Bbs> searchPosts(List<String> searchKeys, Integer pageNum, Integer pageSize) {
+
+        Set<Bbs> cacheBbs = new HashSet<>();
+        searchKeys.forEach(key -> {
+            String redisKey = SEARCH_UPDATETIME_POST_KEY + key + ":" + pageSize + ":" + pageNum;
+            Set<Bbs> cacheSet = redisCache.getCacheSet(redisKey);
+            if (!ObjectUtil.isNull(cacheSet) && !cacheSet.isEmpty()) {
+                cacheBbs.addAll(cacheSet);
+            }
+        });
+
+        if (!cacheBbs.isEmpty()) {
+            List<Bbs> bbsList = new ArrayList<>(cacheBbs);
+            //按更新时间降序排列
+            bbsList.sort((a, b) -> -a.getBbsUpdateTime().compareTo(b.getBbsUpdateTime()));
+            //返回切割后的帖子
+            return ListUtil.sub(bbsList, (pageNum - 1) * pageSize, pageNum * pageSize);
+        }
+
+        List<Bbs> bbs = bbsMapper.searchPostByKeys(searchKeys);
+        if (ObjectUtil.isNull(bbs)) {
+            return ListUtil.empty();
+        }
+        //将缓存构建放入一个新的线程中进行，防止主线程堵塞 new Runnable
+        CACHE_SEARCH_POST_SERVICE.submit(() -> {
+            //将搜索到的帖子根据key缓存到redis中
+            searchKeys.forEach(key -> {
+                        Set<Bbs> bbsByKey = new HashSet<>();
+                        //根据key将bbs进行分类
+                        bbs.forEach(bbs1 -> {
+                            if (bbs1.getBbsTitle().contains(key)) {
+                                bbsByKey.add(bbs1);
+                            }
+                        });
+                        String redisKey = SEARCH_UPDATETIME_POST_KEY + key + ":" + pageSize + ":" + pageNum;
+                        Set<Bbs> cacheSet = redisCache.getCacheSet(redisKey);
+                        //防止redis中的内容丢失
+                        if (!ObjectUtil.isNull(cacheSet) && !cacheSet.isEmpty()) {
+                            bbsByKey.addAll(cacheSet);
+                        }
+                        redisCache.setCacheSet(redisKey, bbsByKey);
+                        redisCache.expire(redisKey, 30, TimeUnit.MINUTES);
+                    }
+            );
+        });
+        return bbs;
     }
 
     /**
