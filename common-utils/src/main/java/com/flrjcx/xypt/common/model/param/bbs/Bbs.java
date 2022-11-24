@@ -34,7 +34,7 @@ public class Bbs implements Serializable {
     @ApiModelProperty(value = "踩数量", name = "bbsNo")
     private Integer bbsNo;
     @ApiModelProperty(value = "类型", name = "type")
-    private Integer type;
+    private Integer bbsType;
     @ApiModelProperty(value = "更新时间", name = "bbsUpdateTime")
     private Date bbsUpdateTime;
     @ApiModelProperty(value = "创建时间", name = "bbsCreateTime")
