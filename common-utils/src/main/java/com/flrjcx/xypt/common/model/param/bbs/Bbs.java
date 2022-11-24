@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author : aftermath
@@ -38,4 +39,21 @@ public class Bbs implements Serializable {
     private Date bbsUpdateTime;
     @ApiModelProperty(value = "创建时间", name = "bbsCreateTime")
     private Date bbsCreateTime;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Bbs bbs = (Bbs) o;
+        return bbsId.equals(bbs.bbsId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bbsId);
+    }
 }

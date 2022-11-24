@@ -146,17 +146,24 @@ public class BbsServiceImpl implements BbsService {
 
         if (!cacheBbs.isEmpty()) {
             List<Bbs> bbsList = new ArrayList<>(cacheBbs);
+            //如果list数量少于每页显示数量，则再去数据库查询，补充完整
+            if (bbsList.size() < pageSize) {
+                return getBbs(searchKeys, pageNum, pageSize);
+            }
             //按更新时间降序排列
             bbsList.sort((a, b) -> -a.getBbsUpdateTime().compareTo(b.getBbsUpdateTime()));
             //返回切割后的帖子
             return ListUtil.sub(bbsList, (pageNum - 1) * pageSize, pageNum * pageSize);
         }
 
+        return getBbs(searchKeys, pageNum, pageSize);
+    }
+
+    private List<Bbs> getBbs(List<String> searchKeys, Integer pageNum, Integer pageSize) {
         List<Bbs> bbs = bbsMapper.searchPostByKeys(searchKeys);
         if (ObjectUtil.isNull(bbs)) {
             return ListUtil.empty();
         }
-        //将缓存构建放入一个新的线程中进行，防止主线程堵塞 new Runnable
         CACHE_SEARCH_POST_SERVICE.submit(() -> {
             //将搜索到的帖子根据key缓存到redis中
             searchKeys.forEach(key -> {
