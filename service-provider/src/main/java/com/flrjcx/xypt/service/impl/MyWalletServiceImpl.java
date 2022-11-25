@@ -18,9 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 我的钱包
@@ -90,7 +92,13 @@ public class MyWalletServiceImpl implements MyWalletService {
     @Override
     public List<TransactionParam> moneyDetails(Long time){
         Users users = UserThreadLocal.get();
-        return myWalletMapper.moneyDetails(users.getUserId(),DateUtils.StampToDateYM(time));
+        List<TransactionParam> details = myWalletMapper.moneyDetails(users.getUserId(), DateUtils.StampToDateYM(time));
+        List<TransactionParam> detailsTwo = myWalletMapper.moneyDetailsTwo(users.getUserId(), DateUtils.StampToDateYM(time));
+        for (TransactionParam data : detailsTwo) {
+            details.add(data);
+        }
+        List<TransactionParam> collect = details.stream().sorted(Comparator.comparing(TransactionParam::getTransactionId).reversed()).collect(Collectors.toList());
+        return collect;
     }
 
     @Async
