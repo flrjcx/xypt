@@ -21,7 +21,7 @@
         <module>backend-service-provider</module>
         <module>common-utils</module>
         <module>common-interface</module>
-        <module>jobs</module>
+        <module>campus-jobs-cron</module>
     </modules>
 
     <properties>
