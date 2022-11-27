@@ -20,8 +20,8 @@ public class XssFilter implements Filter {
     //配置接口过滤
     private  final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(new HashSet<>(
             Arrays.asList(
-                    "/xypt/api/client/fileUploader/uploadSomeFiles",
-                    "/xypt/api/client/fileUploader/uploadFile"
+                    "/xypt/api/common/fileUploader/uploadPic",
+                    "/xypt/api/common/fileUploader/updateAvatar"
             )));
 
     @Override

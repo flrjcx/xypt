@@ -2,6 +2,7 @@ package com.flrjcx.xypt.common.utils;
 
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.exception.WebServiceEnumException;
+import com.flrjcx.xypt.common.model.dto.FileDto;
 import com.qiniu.common.QiniuException;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
@@ -14,73 +15,94 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 /**
  * 七牛云工具类
+ * @author aftermath
  */
 @Component
 public class QiniuUtils {
     @Value("${qiniu.accessKey}")
-    private static String accessKey;
+    private String accessKey;
 
     @Value("${qiniu.accessSecretKey}")
-    private static String accessSecretKey;
+    private String accessSecretKey;
 
     @Value("${qiniu.bucket}")
-    private static String bucket;
+    private String bucket;
 
     @Value("${qiniu.domain}")
-    private static String domain;
+    private String domain;
 
 
     /**
-     * @param multipartFile 上传文件
-     * @param finalFilename 文件最终名字    qiNui路径+文件名
-     * @return 图片访问路径
+     * 处理多文件
+     * @param fileDtoList 文件实体类列表
+     * @return 路径列表
      */
-    public static String uploadImage2Qiniu(MultipartFile multipartFile, String finalFilename) {
+    public Map<String, List<String>> uploadImage2Qiniu(List<FileDto> fileDtoList){
         try {
-
-            //1.构造一个带指定 Region 对象的配置类
-            Configuration cfg = new Configuration(Region.huanan());
-            UploadManager uploadManager = new UploadManager(cfg);
-
-            //2.获取七牛云提供的 token
-            Auth auth = Auth.create(accessKey, accessSecretKey);
-            String upToken = auth.uploadToken(bucket);
-            uploadManager.put(multipartFile.getBytes(), finalFilename, upToken);
-
-            return domain + "/" + finalFilename;
+            Map<String, List<String>> map = new HashMap<>(8);
+            List<String> imageUrls = new ArrayList<>();
+            fileDtoList.forEach(fileDto -> {
+                            MultipartFile file = fileDto.getFile();
+                            checkImage(file);
+                            imageUrls.add(uploadImage2Qiniu(fileDto));
+                        });
+            map.put("imageUrls", imageUrls);
+            return map;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    //文件条件判断
+    /**
+     * 上传图片到七牛云
+     * @param fileDto 文件实体类
+     * @return
+     */
+    private String uploadImage2Qiniu(FileDto fileDto){
+        try {
+            MultipartFile file = fileDto.getFile();
+            String fileName = fileDto.getPath();
+            //1、获取文件上传的流
+            byte[] fileBytes = file.getBytes();
+
+            //2.构造一个带指定 Region 对象的配置类
+            Configuration cfg = new Configuration(Region.huanan());
+            UploadManager uploadManager = new UploadManager(cfg);
+
+            //3.获取七牛云提供的 token
+            Auth auth = Auth.create(accessKey, accessSecretKey);
+            String upToken = auth.uploadToken(bucket);
+            uploadManager.put(fileBytes,fileName,upToken);
+
+            return domain+"/"+fileName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void checkImage(MultipartFile multipartFile) {
-        //文件不为空
         if (ObjectUtils.isEmpty(multipartFile)) {
             throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERR_CODE_FILE_NULL_ERROR);
         }
-        //文件大小不超过阈值
-        if (!ImageUtils.isFileSizeOK(multipartFile)) {
+        if (!ImageUtils.isFileSizeQualify(multipartFile)) {
             throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERR_CODE_FILE_SIZE_FAILED);
         }
-        //文件名不能为空
-        if (StringUtils.isBlank(multipartFile.getOriginalFilename())) {
-            System.out.println("1111");
-            throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERR_CODE_FILE_NAME_NULL_ERROR);
-        }
-
-        //文件类型符合条件
         if (!ImageUtils.isFileAllowed(multipartFile.getOriginalFilename())) {
             throw WebServiceEnumException.buildResponseData(ResultCodeEnum.ERR_CODE_FILE_FORMATTER_FAILED);
         }
-
     }
 
-    //删除文件
-    public static void deleteFileFromQiniu(String fileName) {
+    /**
+     * 删除文件
+     */
+    public void deleteFileFromQiniu(String fileName) {
         //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(Region.huanan());
         String key = fileName;
