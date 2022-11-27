@@ -60,9 +60,8 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public ResponseData < List<Comment> > query(String bbsId) {
+    public List<Comment> query(String bbsId) {
 
-        ResponseData< List<Comment> > response = new ResponseData <>();
 //        查询所有的评论记录包含回复的
         List < Comment > comments = commentMapper.findByBbsId(bbsId);
 //        构建map结构
@@ -88,9 +87,7 @@ public class CommentServiceImpl implements CommentService {
 //        得到所有的一级评论
         List<Comment> data = commentMap.get(0L).getChildren();
 
-        response.setData(data);
-
-        return response;
+        return data;
     }
 
     @Override
@@ -100,8 +97,8 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public Boolean delete(Long commentId) {
-        return commentMapper.delete(commentId) > 0;
+    public Boolean delete(String bbsId) {
+        return commentMapper.delete(bbsId) > 0;
     }
 
 

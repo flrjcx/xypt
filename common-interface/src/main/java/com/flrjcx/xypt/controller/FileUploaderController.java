@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * @author 疯了~   10-28-23:00
  */
 @Api(tags = "文件上传")
-@ApiRestController("/api/client/fileUploader")
+@ApiRestController("/fileUploader")
 @Log4j2
 public class FileUploaderController {
 

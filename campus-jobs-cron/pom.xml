@@ -7,16 +7,15 @@
         <groupId>com.flrjcx.xypt</groupId>
         <version>1.0.0</version>
     </parent>
+    <packaging>jar</packaging>
+    <artifactId>campus-jobs-cron</artifactId>
     <modelVersion>4.0.0</modelVersion>
 
     <dependencies>
+        <!--        定时器-->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz-jobs</artifactId>
         </dependency>
         <dependency>
             <groupId>com.flrjcx.xypt</groupId>
@@ -59,25 +58,30 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+
     </dependencies>
 
-    <artifactId>jobs</artifactId>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
     <build>
         <!--        指定打包后的名字-->
-        <finalName>jobs</finalName>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
 
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!--                如果有jsp文件，必须指定maven-plugin插件版本是1.4.2.RELEASE-->
-                <!--                <version>1.4.2.RELEASE</version>-->
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                    <mainClass>com.flrjcx.xypt.jobs.ClearImgJob2991</mainClass>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

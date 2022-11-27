@@ -1,10 +1,15 @@
 package com.flrjcx.xypt.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.flrjcx.xypt.common.annotation.ApiRestController;
+import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
-import com.flrjcx.xypt.common.enums.ValidStatusEnum;
+import com.flrjcx.xypt.common.model.param.bbs.Bbs;
+import com.flrjcx.xypt.common.model.param.bbs.BbsEditParam;
 import com.flrjcx.xypt.common.model.param.bbs.BbsReward;
+import com.flrjcx.xypt.common.model.param.bbs.BbsSearchParam;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.mapper.MyWalletMapper;
@@ -13,14 +18,16 @@ import com.flrjcx.xypt.service.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 与论坛表相关的操作
@@ -34,13 +41,11 @@ import java.util.Objects;
 public class BbsController {
 
     @Resource
+    CommentService commentService;
+    @Resource
     private BbsService bbsService;
-
     @Resource
     private MyWalletMapper myWalletMapper;
-
-    @Resource
-    CommentService commentService;
 
     /**
      * 用户点赞帖子接口
@@ -48,6 +53,7 @@ public class BbsController {
      * 如果前端接收到错误信息, 不要更新点赞图标, 以免后续取消点赞出现bug
      * 点/踩接口都加了事务, 有错误会直接回滚
      * 点/踩接口都加了事务, 有错误会直接回滚,
+     *
      * @return 统一响应
      */
     @Validation
@@ -104,10 +110,66 @@ public class BbsController {
         if (Objects.equals(reward.getMoney(), new BigDecimal(0))) {
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_REWARD_NULL);
         }
-        if (myWalletMapper.checkMoney(reward.getMoney(),UserThreadLocal.get().getUserId())) {
+        if (myWalletMapper.checkMoney(reward.getMoney(), UserThreadLocal.get().getUserId())) {
             bbsService.reward(reward);
             return ResponseData.buildResponse();
         }
-            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_REWARD_MAX);
+        return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_REWARD_MAX);
+    }
+
+    @Validation
+    @ApiOperation("编辑帖子")
+    @PostMapping("/edit")
+    public ResponseData editPost(@RequestBody BbsEditParam param) {
+        if (ObjectUtil.isNull(param) && ObjectUtil.isNull(param.getBbsId())) {
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_DELETE_FORM_UPDATE_EMPTY, "参数不能为空");
+        }
+        Users users = UserThreadLocal.get();
+        boolean editPost = bbsService.editPost(param, users);
+        if (editPost) {
+            return ResponseData.buildResponse(editPost);
+        } else {
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_BBS_EDIT_ERROR);
+        }
+    }
+
+    @Validation
+    @ApiOperation("删除帖子")
+    @PostMapping("/delete")
+    public ResponseData deletePost(@RequestParam Long bbsId) {
+        if (ObjectUtil.isNull(bbsId)) {
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_DELETE_FORM_UPDATE_EMPTY, "bbsId不能为空");
+        }
+        Users users = UserThreadLocal.get();
+        boolean deletePost = bbsService.deletePostById(bbsId, users);
+        if (deletePost) {
+            return ResponseData.buildResponse(deletePost);
+        } else {
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_BBS_DEL_ERROR);
+        }
+    }
+
+    @ApiOperation("搜索帖子")
+    @PostMapping("/search")
+    @OpenPage
+    public ResponseData searchPost(@RequestBody BbsSearchParam bbsSearchParam,
+                                   @RequestParam Integer pageSize,
+                                   @RequestParam Integer pageNum) {
+        String searchBody = bbsSearchParam.getSearchBody();
+        if (ObjectUtil.isNull(bbsSearchParam) || ObjectUtil.isNull(searchBody)) {
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_DELETE_FORM_UPDATE_EMPTY);
+        }
+        if (ObjectUtil.isNull(pageNum)) {
+            pageNum = 1;
+        }
+        if (ObjectUtil.isNull(pageSize)) {
+            pageSize = 10;
+        }
+        List<String> searchKeys = Arrays.stream(searchBody.split(" ")).collect(Collectors.toList());
+        List<Bbs> bbs = bbsService.searchPosts(searchKeys, pageNum, pageSize);
+        if (ObjectUtil.isNull(bbs)) {
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_SEARCH_POST_EMPTY);
+        }
+        return ResponseData.buildResponse(bbs);
     }
 }

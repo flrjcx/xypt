@@ -121,7 +121,14 @@ public class CheckUsersUtils {
     }
 
     private static String getBirthDayPart(String cardNumber) {
-        return cardNumber.substring(6, 14);
+        String birthDate = cardNumber.substring(6, 14);
+        return new StringBuilder()
+                .append(birthDate, 0, 4)
+                .append("-")
+                .append(birthDate, 4, 6)
+                .append("-")
+                .append(birthDate, 6, 8)
+                .toString();
     }
 
     /**

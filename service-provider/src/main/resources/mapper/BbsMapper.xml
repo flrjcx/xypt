@@ -22,25 +22,57 @@
 
     <update id="updatePraise">
         update bbs
-        set bbs_praise=bbs_praise+1
-        where bbs_id=#{bbsId}
+        set bbs_praise=bbs_praise + 1
+        where bbs_id = #{bbsId}
     </update>
 
     <update id="cancelPraise">
         update bbs
-        set bbs_praise=bbs_praise-1
-        where bbs_id=#{bbsId}
+        set bbs_praise=bbs_praise - 1
+        where bbs_id = #{bbsId}
     </update>
 
     <update id="updateNo">
         update bbs
-        set bbs_no=bbs_no+1
-        where bbs_id=#{bbsId}
+        set bbs_no=bbs_no + 1
+        where bbs_id = #{bbsId}
     </update>
 
     <update id="cancelNo">
         update bbs
-        set bbs_no=bbs_no-1
-        where bbs_id=#{bbsId}
+        set bbs_no=bbs_no - 1
+        where bbs_id = #{bbsId}
     </update>
+    <update id="updatePost">
+        update bbs
+        set bbs_context=#{bbsContext},
+            bbs_context_md=#{bbsContextMd},
+            bbs_title=#{bbsTitle}
+        where bbs_id = #{bbsId}
+    </update>
+    <update id="deletePostById">
+        update
+            bbs
+        set bbs_delete=1
+        where bbs_id = #{bbsId}
+    </update>
+    <select id="selectBbsOwner" resultType="java.lang.Long">
+        select bbs_user_id
+        from bbs
+        where bbs_id = #{bbsId}
+          and bbs_delete = 0
+    </select>
+    <select id="searchPostByKeys" resultType="com.flrjcx.xypt.common.model.param.bbs.Bbs">
+        select
+        <include refid="allBbsInfo"></include>
+        from bbs
+        <where>
+            <foreach collection="searchKeys" item="searchKey" separator="or" open="(" close=")">
+                binary bbs_title like CONCAT('%',#{searchKey},'%')
+            </foreach>
+            and bbs_delete = 0
+        </where>
+        order by bbs_update_time DESC
+    </select>
+
 </mapper>

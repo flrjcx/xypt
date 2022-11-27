@@ -17,6 +17,7 @@ import java.util.Objects;
 public class OrderUtils {
     public static final String RECHARGE = "充值";
     public static final String DEPOSIT = "提现";
+    public static final String SYSTEM_MESSAGE = "系统初始化";
     public static final int REWARD = 2;
 
     /**
@@ -51,6 +52,18 @@ public class OrderUtils {
         }else {
             transactionParam.setTransactionContent(DEPOSIT);
         }
+        return transactionParam;
+    }
+
+    public static TransactionParam makeTransaction(BigDecimal money,Long userId,int type,BigDecimal balance,Date time){
+        TransactionParam transactionParam = new TransactionParam();
+        transactionParam.setTransactionId(orderNumber());
+        transactionParam.setTransactionAmount(money);
+        transactionParam.setTransactionUserId(userId);
+        transactionParam.setTransactionBalance(balance);
+        transactionParam.setTransactionType(type);
+        transactionParam.setTransactionCreateTime(time);
+        transactionParam.setTransactionContent(SYSTEM_MESSAGE);
         return transactionParam;
     }
 

@@ -82,7 +82,7 @@ public class SafetyCenterController {
         Long userId = user.getUserId();
         boolean setPrivacy = safetyCenterService.setPrivacy(userId, privacy);
         if (!setPrivacy) {
-            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_USER_UPDATE_USER_INFO, "更新隐私设置失败");
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_USER_UPDATE_USER_INFO);
         }
         return ResponseData.buildResponse(setPrivacy);
     }

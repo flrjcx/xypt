@@ -35,8 +35,12 @@
     <select id="moneyDetails" resultMap="MoneyDetailsResult">
         select * from
         t_transaction
-        where transaction_user_id = #{userId} or transaction_be_user_id = #{userId} and transaction_create_time LIKE concat('%',#{date},'%')
-        order by transaction_create_time DESC
+        where transaction_user_id = #{userId} and transaction_create_time LIKE concat(#{date},'%')
+    </select>
+    <select id="moneyDetailsTwo" resultMap="MoneyDetailsResult">
+        select * from
+        t_transaction
+        where transaction_be_user_id = #{userId} and transaction_create_time LIKE concat(#{date},'%')
     </select>
 
 

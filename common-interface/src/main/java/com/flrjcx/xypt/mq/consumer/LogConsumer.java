@@ -31,13 +31,14 @@ public class LogConsumer {
 
     public static final String LOCALHOST = "127.0.1.1";
     public static final String LOCALHOST2 = "0:0:0:0:0:0:0:1";
+    public static final String LOCALHOST3 = "127.0.0.1";
 
     @KafkaListener(topics = KafkaTopicEnum.TOPIC_LOG_SEND_MESSAGE,groupId = "LOG")
     @Async
     public void consumerLogMsg(ConsumerRecord<String, String> record, Acknowledgment ack) throws InterruptedException {
 //        取出kafka消息,反序列化
         InterfaceLogResult logResult = JSON.parseObject(record.value(),InterfaceLogResult.class);
-        if (ObjectUtils.equals(logResult.getIp(),LOCALHOST) || ObjectUtils.equals(logResult.getIp(),LOCALHOST2)){
+        if (ObjectUtils.equals(logResult.getIp(),LOCALHOST) || ObjectUtils.equals(logResult.getIp(),LOCALHOST2) || ObjectUtils.equals(logResult.getIp(),LOCALHOST3)){
             ack.acknowledge();
             return;
         }

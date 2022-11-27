@@ -37,7 +37,7 @@
     <delete id="delete">
         delete
         from comment
-        where comment_id=#{commentId}
+        where comment_bbs_id=#{commentBbsId}
     </delete>
 
     <update id="cancelComment" parameterType="long">

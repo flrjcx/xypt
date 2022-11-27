@@ -32,10 +32,10 @@ public interface CommentMapper {
 
     /**
      * 删除评论
-     * @param commentId
+     * @param bbsId
      * @return
      */
-    int delete(@Param("commentId") long commentId);
+    int delete(@Param("bbsId") String bbsId);
 
     /**
      * 更新评论点赞数量信息是否成功

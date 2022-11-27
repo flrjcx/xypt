@@ -4,10 +4,7 @@ import com.flrjcx.xypt.common.model.dto.MyInfoDto;
 import com.flrjcx.xypt.common.model.dto.UserInfoDto;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.param.personal_center.RealNameParam;
-import com.flrjcx.xypt.common.utils.EmailSendUtils;
-import com.flrjcx.xypt.common.utils.RedisCache;
-import com.flrjcx.xypt.common.utils.TokenService;
-import com.flrjcx.xypt.common.utils.ValidateCodeUtils;
+import com.flrjcx.xypt.common.utils.*;
 import com.flrjcx.xypt.mapper.PersonalCenterMapper;
 import com.flrjcx.xypt.service.PersonalCenterService;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +37,9 @@ public class PersonalCenterImpl implements PersonalCenterService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void realUser(RealNameParam realNameParam) {
+        //身份证号加密
+        String encryptedIdCard = IdCardEncryptUtils.encryptIdCard(realNameParam.getIdCard());
+        realNameParam.setIdCard(encryptedIdCard);
         personalCenterMapper.realUser(realNameParam);
     }
 

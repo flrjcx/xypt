@@ -31,15 +31,20 @@ public interface CommentService {
     ResponseData < Comment > post(long bbsId, long userId, long parentId, int level,
                                   String context, int commentFloor);
 
-    Boolean delete(@RequestParam("id") Long commentId);
+    /**
+     * 删除评论
+     * @param bbsId
+     * @return
+     */
+    Boolean delete(@RequestParam("bbsId") String bbsId);
 
     /**
-     * 查询评论
+     * 根据帖子id查询评论
      *
      * @param bbsId
      * @return
      */
-    ResponseData< List<Comment>> query(String bbsId);
+    List<Comment> query(String bbsId);
 
 
     /**
