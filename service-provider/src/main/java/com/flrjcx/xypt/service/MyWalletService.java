@@ -34,7 +34,8 @@ public interface MyWalletService {
      * 资金明细
      *
      * @param time
+     * @param type
      * @return
      */
-    List<TransactionParam> moneyDetails(Long time);
+    List<TransactionParam> moneyDetails(Long time,Integer type);
 }

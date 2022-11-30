@@ -4,6 +4,7 @@ import com.flrjcx.xypt.common.model.result.data.plat.form.ChartResult;
 import com.flrjcx.xypt.common.utils.DateUtils;
 import com.flrjcx.xypt.mapper.DataPlatFormMapper;
 import com.flrjcx.xypt.service.DataPlatFormService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -45,11 +46,16 @@ public class DataPlatFormServiceImpl implements DataPlatFormService {
      *
      * @param beforeTime:开始时间
      * @param afterTime:结束时间
+     * @param yyyy:年份
      * @return
      */
     @Override
-    public List<ChartResult> totalTransactionChart(Long beforeTime, Long afterTime) {
-        return dataPlatFormMapper.totalTransactionChart(DateUtils.dateToStamp(beforeTime),DateUtils.dateToStamp(afterTime));
+    public List<ChartResult> totalTransactionChart(Long beforeTime, Long afterTime,Long yyyy) {
+        if (ObjectUtils.isEmpty(yyyy)){
+            return dataPlatFormMapper.totalTransactionChart(DateUtils.dateToStamp(beforeTime),DateUtils.dateToStamp(afterTime));
+        }
+        List<ChartResult> chartResults = dataPlatFormMapper.totalTransactionChartYear(DateUtils.StampToDateY(yyyy));
+        return chartResults;
     }
 
     /**
@@ -57,11 +63,15 @@ public class DataPlatFormServiceImpl implements DataPlatFormService {
      *
      * @param beforeTime:开始时间
      * @param afterTime:结束时间
+     * @param yyyy:年份
      * @return
      */
     @Override
-    public List<ChartResult> totalDepositChart(Long beforeTime, Long afterTime) {
-        return dataPlatFormMapper.totalDepositChart(DateUtils.dateToStamp(beforeTime),DateUtils.dateToStamp(afterTime));
+    public List<ChartResult> totalDepositChart(Long beforeTime, Long afterTime,Long yyyy) {
+        if (ObjectUtils.isEmpty(yyyy)){
+            return dataPlatFormMapper.totalDepositChart(DateUtils.dateToStamp(beforeTime),DateUtils.dateToStamp(afterTime));
+        }
+        return dataPlatFormMapper.totalDepositChartYear(DateUtils.StampToDateY(yyyy));
     }
 
 

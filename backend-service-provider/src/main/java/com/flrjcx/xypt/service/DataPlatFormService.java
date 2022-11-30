@@ -31,16 +31,18 @@ public interface DataPlatFormService {
      *
      * @param beforeTime:开始时间
      * @param afterTime:结束时间
+     * @param yyyy:年份
      * @return
      */
-    List<ChartResult> totalTransactionChart(Long beforeTime, Long afterTime);
+    List<ChartResult> totalTransactionChart(Long beforeTime, Long afterTime, Long yyyy);
 
     /**
      * 获取平台总支出额度(图表)
      *
      * @param beforeTime:开始时间
      * @param afterTime:结束时间
+     * @param yyyy:年份
      * @return
      */
-    List<ChartResult> totalDepositChart(Long beforeTime,Long afterTime);
+    List<ChartResult> totalDepositChart(Long beforeTime,Long afterTime, Long yyyy);
 }

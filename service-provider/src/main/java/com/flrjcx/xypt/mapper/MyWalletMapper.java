@@ -51,9 +51,10 @@ public interface MyWalletMapper {
      *
      * @param userId
      * @param date
+     * @param type
      * @return
      */
-    List<TransactionParam> moneyDetails(@Param("userId") Long userId,@Param("date") String date);
+    List<TransactionParam> moneyDetails(@Param("userId") Long userId,@Param("date") String date,@Param("type") Integer type);
 
     /**
      * 资金明细(打赏收入)

@@ -21,4 +21,5 @@ public class ChartResult implements Serializable {
     @ApiModelProperty(value = "日期", name = "date")
     @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss",locale = "zh",timezone = "GMT+8")
     private Date date;
+
 }

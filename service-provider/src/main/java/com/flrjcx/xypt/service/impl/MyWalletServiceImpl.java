@@ -11,6 +11,7 @@ import com.flrjcx.xypt.common.utils.OrderUtils;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.mapper.MyWalletMapper;
 import com.flrjcx.xypt.service.MyWalletService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -87,16 +85,25 @@ public class MyWalletServiceImpl implements MyWalletService {
     /**
      * 资金明细
      *
+     * @param time
+     * @param type
      * @return
      */
     @Override
-    public List<TransactionParam> moneyDetails(Long time){
+    public List<TransactionParam> moneyDetails(Long time,Integer type){
         Users users = UserThreadLocal.get();
-        List<TransactionParam> details = myWalletMapper.moneyDetails(users.getUserId(), DateUtils.StampToDateYM(time));
-        List<TransactionParam> detailsTwo = myWalletMapper.moneyDetailsTwo(users.getUserId(), DateUtils.StampToDateYM(time));
-        for (TransactionParam data : detailsTwo) {
-            details.add(data);
+        List<TransactionParam> details;
+        List<TransactionParam> detailsTwo;
+        if (ObjectUtils.isEmpty(type)){
+            details = myWalletMapper.moneyDetails(users.getUserId(), DateUtils.StampToDateYM(time),null);
+            detailsTwo = myWalletMapper.moneyDetailsTwo(users.getUserId(), DateUtils.StampToDateYM(time));
+            for (TransactionParam data : detailsTwo) {
+                details.add(data);
+            }
+        }else {
+            details = myWalletMapper.moneyDetails(users.getUserId(), DateUtils.StampToDateYM(time),type);
         }
+
         List<TransactionParam> collect = details.stream().sorted(Comparator.comparing(TransactionParam::getTransactionId).reversed()).collect(Collectors.toList());
         return collect;
     }

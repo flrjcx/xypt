@@ -18,13 +18,13 @@
     <select id="getApiLogList" resultMap="accessLog">
         SELECT * FROM api_access_log WHERE access_time <![CDATA[ <= ]]> #{afterTime} and access_time <![CDATA[ >= ]]> #{beforeTime}
         <if test="ip != null">
-            AND access_log_user_ip like '%' #{ip} '%'
+            AND access_log_user_ip like CONCAT('%',#{ip},'%')
         </if>
         <if test="city != null">
-            AND access_log_city like '%' #{city} '%'
+            AND access_log_city like CONCAT('%',#{city},'%')
         </if>
         <if test="uri != null">
-            AND access_log_uri like '%' #{uri} '%'
+            AND access_log_uri like CONCAT('%',#{uri},'%')
         </if>
         ORDER BY access_log_id DESC
     </select>

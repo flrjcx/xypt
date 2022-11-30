@@ -79,7 +79,7 @@ public class MyWalletController {
      */
     @GetMapping("/moneyDetails")
     @Validation
-    public ResponseData moneyDetails(@RequestParam Long time){
-        return ResponseData.buildResponse(ResultCodeEnum.SUCCESS.getMessage(), myWalletService.moneyDetails(time));
+    public ResponseData moneyDetails(@RequestParam Long time,Integer type){
+        return ResponseData.buildResponse(ResultCodeEnum.SUCCESS.getMessage(), myWalletService.moneyDetails(time,type));
     }
 }

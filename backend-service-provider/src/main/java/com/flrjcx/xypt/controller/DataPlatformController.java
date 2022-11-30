@@ -56,8 +56,8 @@ public class DataPlatformController {
      */
     @GetMapping("/totalTransactionChart")
     @Validation
-    public ResponseData totalTransactionChart(@RequestParam Long beforeTime, @RequestParam Long afterTime){
-        return ResponseData.buildResponse(dataPlatFormService.totalTransactionChart(beforeTime,afterTime));
+    public ResponseData totalTransactionChart(Long beforeTime,Long afterTime,Long yyyy){
+        return ResponseData.buildResponse(dataPlatFormService.totalTransactionChart(beforeTime,afterTime,yyyy));
     }
 
     /**
@@ -69,8 +69,8 @@ public class DataPlatformController {
      */
     @GetMapping("/totalDepositChart")
     @Validation
-    public ResponseData totalDepositChart(@RequestParam Long beforeTime, @RequestParam Long afterTime){
-        return ResponseData.buildResponse(dataPlatFormService.totalDepositChart(beforeTime,afterTime));
+    public ResponseData totalDepositChart(Long beforeTime,Long afterTime,Long yyyy){
+        return ResponseData.buildResponse(dataPlatFormService.totalDepositChart(beforeTime,afterTime,yyyy));
     }
 
 }
