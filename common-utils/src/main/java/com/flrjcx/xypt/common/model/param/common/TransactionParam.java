@@ -1,6 +1,7 @@
 package com.flrjcx.xypt.common.model.param.common;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -10,10 +11,12 @@ import java.util.Date;
 
 /**
  * 资金明细,平台交易额实体类
+ * @JsonInclude(JsonInclude.Include.NON_NULL):为空的属性不返回
  *
  * @author Flrjcx
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TransactionParam implements Serializable {
     private static final long serialVersionUID = -1901513045220126055L;
     @ApiModelProperty(value = "订单号", name = "transactionId")

@@ -22,6 +22,8 @@ public class DataPlatFormServiceImpl implements DataPlatFormService {
     @Resource
     private DataPlatFormMapper dataPlatFormMapper;
 
+    public static final String DATE_NULL = "DATE_NULL";
+
 
     /**
      * 获取平台总交易额度
@@ -46,16 +48,15 @@ public class DataPlatFormServiceImpl implements DataPlatFormService {
      *
      * @param beforeTime:开始时间
      * @param afterTime:结束时间
-     * @param yyyy:年份
+     * @param date:年份
      * @return
      */
     @Override
-    public List<ChartResult> totalTransactionChart(Long beforeTime, Long afterTime,Long yyyy) {
-        if (ObjectUtils.isEmpty(yyyy)){
+    public List<ChartResult> totalTransactionChart(Long beforeTime, Long afterTime,String date) {
+        if (ObjectUtils.equals(date,DATE_NULL)){
             return dataPlatFormMapper.totalTransactionChart(DateUtils.dateToStamp(beforeTime),DateUtils.dateToStamp(afterTime));
         }
-        List<ChartResult> chartResults = dataPlatFormMapper.totalTransactionChartYear(DateUtils.StampToDateY(yyyy));
-        return chartResults;
+        return dataPlatFormMapper.totalTransactionChartYear((date));
     }
 
     /**
@@ -63,15 +64,15 @@ public class DataPlatFormServiceImpl implements DataPlatFormService {
      *
      * @param beforeTime:开始时间
      * @param afterTime:结束时间
-     * @param yyyy:年份
+     * @param date:年份
      * @return
      */
     @Override
-    public List<ChartResult> totalDepositChart(Long beforeTime, Long afterTime,Long yyyy) {
-        if (ObjectUtils.isEmpty(yyyy)){
+    public List<ChartResult> totalDepositChart(Long beforeTime, Long afterTime,String date) {
+        if (ObjectUtils.equals(date,DATE_NULL)){
             return dataPlatFormMapper.totalDepositChart(DateUtils.dateToStamp(beforeTime),DateUtils.dateToStamp(afterTime));
         }
-        return dataPlatFormMapper.totalDepositChartYear(DateUtils.StampToDateY(yyyy));
+        return dataPlatFormMapper.totalDepositChartYear((date));
     }
 
 

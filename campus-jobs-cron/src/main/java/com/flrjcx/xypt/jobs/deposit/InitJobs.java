@@ -27,7 +27,13 @@ public class InitJobs{
      * 初始化每天平台交易额
      */
     @Scheduled(cron = "${custom.initTransaction.cron}")
-    public void initTransaction(){
+    public void initTransaction() throws InterruptedException {
+        for (int i = 0; i < 1; i++) {
+            initData();
+            Thread.sleep(1);
+        }
+    }
+    public void initData(){
         long system = 999999999999999999L;
         log.info("总交易额数据初始化执行时间: " + DateUtil.now());
         initMapper.initInsert(OrderUtils.makeTransaction(new BigDecimal(0),system,3,new BigDecimal(0), new Date()));

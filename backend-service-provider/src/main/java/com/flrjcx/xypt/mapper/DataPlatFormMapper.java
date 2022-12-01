@@ -48,16 +48,16 @@ public interface DataPlatFormMapper {
     /**
      * 获取平台总支出额度(图表),取年份
      *
-     * @param yyyy
+     * @param date
      * @return
      */
-    List<ChartResult> totalDepositChartYear(@Param("yyyy") String yyyy);
+    List<ChartResult> totalDepositChartYear(@Param("date") String date);
 
     /**
      * 获取平台总交易额度(图表),取年份
      *
-     * @param yyyy
+     * @param date
      * @return
      */
-    List<ChartResult> totalTransactionChartYear(@Param("yyyy") String yyyy);
+    List<ChartResult> totalTransactionChartYear(@Param("date") String date);
 }
