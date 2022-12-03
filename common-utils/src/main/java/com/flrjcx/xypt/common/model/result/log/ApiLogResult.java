@@ -13,7 +13,7 @@ import java.util.Date;
  * @author Flrjcx
  */
 @Data
-public class InterfaceLogResult implements Serializable {
+public class ApiLogResult implements Serializable {
     private static final long serialVersionUID = -1186565379246250355L;
     @ApiModelProperty(value = "日志id", name = "id")
     private Integer id;

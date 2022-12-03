@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flrjcx.xypt.mapper.LogMapper">
-    <resultMap id="accessLog" type="com.flrjcx.xypt.common.model.result.log.InterfaceLogResult">
+    <resultMap id="accessLog" type="com.flrjcx.xypt.common.model.result.log.ApiLogResult">
         <id property="id" column="access_log_id"/>
         <result property="ip" column="access_log_user_ip"/>
         <result property="uri" column="access_log_uri"/>

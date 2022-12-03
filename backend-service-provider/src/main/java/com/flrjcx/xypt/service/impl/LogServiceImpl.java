@@ -1,9 +1,8 @@
 package com.flrjcx.xypt.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.flrjcx.xypt.common.model.result.ip.DetailsIpParam;
-import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
+import com.flrjcx.xypt.common.model.result.log.ApiLogResult;
 import com.flrjcx.xypt.common.utils.DateUtils;
 import com.flrjcx.xypt.common.utils.HttpPoolUtils;
 import com.flrjcx.xypt.mapper.LogMapper;
@@ -38,7 +37,7 @@ public class LogServiceImpl implements LogService {
      * @return
      */
     @Override
-    public List<InterfaceLogResult> getApiLogList(Long beforeTime,Long afterTime,String ip,String uri,String city) {
+    public List<ApiLogResult> getApiLogList(Long beforeTime, Long afterTime, String ip, String uri, String city) {
         return logMapper.getApiLogList(DateUtils.dateToStamp(beforeTime),DateUtils.dateToStamp(afterTime),ip,uri,city);
     }
 

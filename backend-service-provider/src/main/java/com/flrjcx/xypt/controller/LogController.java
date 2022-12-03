@@ -4,7 +4,6 @@ import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.result.ResponseData;
-import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
 import com.flrjcx.xypt.common.utils.EmailSendUtils;
 import com.flrjcx.xypt.service.LogService;
 import io.swagger.annotations.Api;

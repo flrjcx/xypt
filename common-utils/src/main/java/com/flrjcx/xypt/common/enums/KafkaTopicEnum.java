@@ -12,7 +12,9 @@ public class KafkaTopicEnum {
     /** 错误日志 */
     public static final String TOPIC_ERROR_LOG = "TOPIC_ERROR_LOG";
     /** 访问日志 */
-    public static final String TOPIC_LOG_SEND_MESSAGE = "TOPIC_LOG_SEND_MESSAGE";
+    public static final String TOPIC_API_LOG_SEND_MESSAGE = "TOPIC_API_LOG_SEND_MESSAGE";
+    /** 操作日志 */
+    public static final String TOPIC_OPER_LOG_SEND_MESSAGE = "TOPIC_OPER_LOG_SEND_MESSAGE";
     /** 交易记录 */
     public static final String TOPIC_MONEY_SEND_DETAIL = "TOPIC_MONEY_SEND_DETAIL";
     /** 论坛打赏 */

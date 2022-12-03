@@ -3,7 +3,7 @@ package com.flrjcx.xypt.mq.consumer;
 import com.alibaba.fastjson.JSON;
 import com.flrjcx.xypt.common.enums.KafkaTopicEnum;
 import com.flrjcx.xypt.common.model.result.ip.IpLocalResult;
-import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
+import com.flrjcx.xypt.common.model.result.log.ApiLogResult;
 import com.flrjcx.xypt.common.utils.DateUtils;
 import com.flrjcx.xypt.common.utils.HttpPoolUtils;
 import com.flrjcx.xypt.mapper.LogConsumerMapper;
@@ -33,11 +33,11 @@ public class LogConsumer {
     public static final String LOCALHOST2 = "0:0:0:0:0:0:0:1";
     public static final String LOCALHOST3 = "127.0.0.1";
 
-    @KafkaListener(topics = KafkaTopicEnum.TOPIC_LOG_SEND_MESSAGE,groupId = "LOG")
+    @KafkaListener(topics = KafkaTopicEnum.TOPIC_API_LOG_SEND_MESSAGE, groupId = "LOG")
     @Async
-    public void consumerLogMsg(ConsumerRecord<String, String> record, Acknowledgment ack) throws InterruptedException {
+    public void consumerApiLogMsg(ConsumerRecord<String, String> record, Acknowledgment ack) throws InterruptedException {
 //        取出kafka消息,反序列化
-        InterfaceLogResult logResult = JSON.parseObject(record.value(),InterfaceLogResult.class);
+        ApiLogResult logResult = JSON.parseObject(record.value(), ApiLogResult.class);
         if (ObjectUtils.equals(logResult.getIp(),LOCALHOST) || ObjectUtils.equals(logResult.getIp(),LOCALHOST2) || ObjectUtils.equals(logResult.getIp(),LOCALHOST3)){
             ack.acknowledge();
             return;

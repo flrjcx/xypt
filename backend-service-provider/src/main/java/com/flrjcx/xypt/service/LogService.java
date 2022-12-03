@@ -2,7 +2,7 @@ package com.flrjcx.xypt.service;
 
 
 import com.flrjcx.xypt.common.model.result.ip.DetailsIpParam;
-import com.flrjcx.xypt.common.model.result.log.InterfaceLogResult;
+import com.flrjcx.xypt.common.model.result.log.ApiLogResult;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public interface LogService {
      * @param city
      * @return
      */
-    List<InterfaceLogResult> getApiLogList(Long beforeTime,Long afterTime,String ip,String uri,String city);
+    List<ApiLogResult> getApiLogList(Long beforeTime, Long afterTime, String ip, String uri, String city);
 
     /**
      * 查询ip详情信息
