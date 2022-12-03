@@ -1,8 +1,11 @@
 package com.flrjcx.xypt.controller;
 
 import com.flrjcx.xypt.common.annotation.ApiRestController;
+import com.flrjcx.xypt.common.annotation.OperationLog;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
+import com.flrjcx.xypt.common.enums.operate.OperateTypeEnum;
+import com.flrjcx.xypt.common.enums.operate.OperatorTypeEnum;
 import com.flrjcx.xypt.common.model.dto.MyInfoDto;
 import com.flrjcx.xypt.common.model.dto.UserInfoDto;
 import com.flrjcx.xypt.common.model.param.common.Users;
@@ -135,6 +138,9 @@ public class PersonalCenterController {
     @Validation
     @ApiOperation(value = "个人信息详情")
     @GetMapping("/myInfo")
+    @OperationLog(title = "user:personalCenter:myInfo",
+                  operateType = OperateTypeEnum.SELECT,
+                  operatorType = OperatorTypeEnum.USER)
     public ResponseData myInfo(){
         try {
             Long userId = UserThreadLocal.get().getUserId();

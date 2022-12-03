@@ -2,6 +2,7 @@ package com.flrjcx.xypt.mq.consumer;
 
 import com.alibaba.fastjson.JSON;
 import com.flrjcx.xypt.common.enums.KafkaTopicEnum;
+import com.flrjcx.xypt.common.model.domain.log.OperLog;
 import com.flrjcx.xypt.common.model.result.ip.IpLocalResult;
 import com.flrjcx.xypt.common.model.result.log.ApiLogResult;
 import com.flrjcx.xypt.common.utils.DateUtils;
@@ -70,4 +71,18 @@ public class LogConsumer {
 
     }
 
+    @KafkaListener(topics = KafkaTopicEnum.TOPIC_OPER_LOG_SEND_MESSAGE, groupId = "LOG")
+    @Async
+    public void consumerOperLogMsg(ConsumerRecord<String, String> record, Acknowledgment ack) {
+        OperLog operLog = JSON.parseObject(record.value(), OperLog.class);
+        //String operIp = operLog.getOperIp();
+        //if (LOCALHOST.equals(operIp) || LOCALHOST2.equals(operIp) || LOCALHOST3.equals(operIp)) {
+        //    ack.acknowledge();
+        //    return;
+        //}
+        log.info("Topic:"+record.topic()+", value:"+record.value()+", time:"+record.timestamp());
+        operLog.setOperTime(DateUtils.dateToStamp(record.timestamp()));
+        logConsumerMapper.insertOperMsg(operLog);
+        ack.acknowledge();
+    }
 }
