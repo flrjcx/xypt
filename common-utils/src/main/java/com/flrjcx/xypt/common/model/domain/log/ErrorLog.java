@@ -1,46 +1,20 @@
 package com.flrjcx.xypt.common.model.domain.log;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.flrjcx.xypt.common.handler.filter.XssFilter;
-import com.flrjcx.xypt.common.utils.HttpPoolUtils;
-import com.flrjcx.xypt.common.utils.IPUtils;
+import com.flrjcx.xypt.common.utils.IpUtils;
 import com.flrjcx.xypt.common.utils.RequestUtils;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
-import org.apache.catalina.authenticator.AuthenticatorBase;
-import org.apache.catalina.connector.CoyoteAdapter;
-import org.apache.catalina.core.ApplicationFilterChain;
-import org.apache.catalina.valves.ErrorReportValve;
-import org.apache.coyote.AbstractProcessorLight;
-import org.apache.coyote.AbstractProtocol;
-import org.apache.coyote.http11.Http11Processor;
-import org.apache.tomcat.util.http.RequestUtil;
-import org.apache.tomcat.util.net.NioEndpoint;
-import org.apache.tomcat.util.net.SocketProcessorBase;
-import org.apache.tomcat.util.threads.TaskThread;
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.filter.FormContentFilter;
-import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.filter.RequestContextFilter;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.FrameworkServlet;
-import org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
-import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -83,7 +57,7 @@ public class ErrorLog implements Serializable {
             JSONObject requestInfo = RequestUtils.getRequestInfoJson(request);
             this.errorParam = requestInfo.toJSONString();
             this.errorUri = request.getRequestURI();
-            this.errorServiceIp = IPUtils.getLocalIP();
+            this.errorServiceIp = IpUtils.getHostIp();
         }
     }
 
