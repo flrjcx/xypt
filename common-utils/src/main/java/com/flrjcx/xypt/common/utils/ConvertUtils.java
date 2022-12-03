@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * 类型转换器
  *
- * @author 唐僧
+ * @author aftermath
  */
 public class ConvertUtils {
     /**
