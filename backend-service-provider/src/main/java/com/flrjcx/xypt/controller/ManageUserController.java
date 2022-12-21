@@ -97,12 +97,12 @@ public class ManageUserController {
     }
 
     @Validation
-    @ApiOperation(value = "删除用户")
+    @ApiOperation(value = "封禁用户")
     @Transactional(rollbackFor = Exception.class)
     @PostMapping("/deleteUser")
-    public ResponseData deleteUser(@RequestParam("userId") long userId) {
+    public ResponseData deleteUser(@RequestBody Users user) {
         try {
-            if(manageUserService.deleteUser(userId)) {
+            if(manageUserService.deleteUser(user.getUserId(),user.getBanReason())) {
                 return ResponseData.buildSuccess();
             } else {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_DELETE);
@@ -129,6 +129,19 @@ public class ManageUserController {
         } catch (Exception e) {
             log.error("/findByNickNameOrAccount error " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_QUERY_LIST);
+        }
+    }
+
+    @Validation
+    @ApiOperation(value = "解除封禁用户")
+    @GetMapping("/rescindUser")
+    public ResponseData rescindUser(@RequestParam long userId) {
+        try {
+            manageUserService.rescindUser(userId);
+            return ResponseData.buildResponse();
+        } catch (Exception e) {
+            log.error("/banUser error " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_BAN_REASON_NULL);
         }
     }
 

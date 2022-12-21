@@ -25,4 +25,9 @@ public class MessageConstants {
     public static final String SEND_EMAIL_FAIL = "邮件发送失败，目标邮箱错误！";
     public static final String SEND_EMAIL_PASS = "邮件发送成功,请注意查收！";
     public static final String VERIFY_NAME_RESULT_MSG = "恭喜小姿力，信息校验通过！";
+    public static final String BAN_EMAIL = "账户封禁通知";
+    public static final String BAN_EMAIL_MESSAGE = "您的账户已被封禁!封禁原因:";
+    public static final String BAN_RESCIND_USER_EMAIL = "账户解除封禁通知";
+    public static final String BAN_RESCIND_USER_EMAIL_MESSAGE = "您的账户已解除封禁!";
+
 }

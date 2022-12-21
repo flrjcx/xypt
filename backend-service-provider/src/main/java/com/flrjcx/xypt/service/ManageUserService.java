@@ -21,7 +21,14 @@ public interface ManageUserService {
 
     long updateUser(Users user, String token);
 
-    boolean deleteUser(long userId);
+    /**
+     * 封禁用户
+     *
+     * @param userId
+     * @param banReason
+     * @return
+     */
+    boolean deleteUser(long userId,String banReason);
 
     Users getUserInfo(long userId);
 
@@ -34,5 +41,12 @@ public interface ManageUserService {
      * @return 用户列表
      */
     List<Users> findByNickNameOrAccount(String account);
+
+    /**
+     * 解除封禁用户
+     *
+     * @param userId:用户id
+     */
+    void rescindUser(long userId);
 }
 

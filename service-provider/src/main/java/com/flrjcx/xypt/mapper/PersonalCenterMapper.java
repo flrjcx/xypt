@@ -68,7 +68,7 @@ public interface PersonalCenterMapper {
      * @param user 新的用户信息 userId必填
      * @return
      */
-    long updateUserInfo(Users user);
+    void updateUserInfo(Users user);
 
     /**
      * 根据用户id获取我的信息

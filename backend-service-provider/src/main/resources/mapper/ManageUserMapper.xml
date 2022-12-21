@@ -30,35 +30,34 @@
         create_time,
         update_time,
         status,
-        privacy_setting
+        privacy_setting,
+        ban_reason
     </sql>
 
     <sql id="manageUserInfo">
         user_id,
         nick_name,
+        nick_pic,
+        content,
         account,
         sex,
         birthday,
         phone,
-        email
+        email,
+        create_time
     </sql>
 
     <select id="getUserList" resultType="com.flrjcx.xypt.common.model.param.common.Users">
         select
-        <include refid="manageUserInfo"/>
+        <include refid="allUserInfo"/>
         from users
     </select>
 
     <select id="getUserListByStatus" resultType="com.flrjcx.xypt.common.model.param.common.Users">
         select
-        <include refid="manageUserInfo"/>
+        <include refid="allUserInfo"/>
         from users
-        <where>
-            <if test="status != null">
-                and
-                status = #{status}
-            </if>
-        </where>
+        where status = 1 or status = 2
     </select>
 
     <select id="getUserListByRegisterTime" resultType="com.flrjcx.xypt.common.model.param.common.Users">
@@ -115,8 +114,14 @@
 
     <update id="deleteUser">
         update users
-        set status = 2
+        set status = 2,
+        ban_reason = #{banReason}
         where user_id = #{userId}
+    </update>
+    <update id="rescindUser">
+        update users set status = 1,
+         ban_reason = null
+         where user_id = #{userId}
     </update>
 
     <select id="findByNickNameOrAccount" resultType="com.flrjcx.xypt.common.model.param.common.Users">

@@ -119,13 +119,13 @@ public class PersonalCenterController {
 
     @ApiOperation(value = "用户详情")
     @GetMapping("/userInfo")
-    public ResponseData userInfo(@RequestParam Long userId){
+    public ResponseData userInfo(@RequestParam Long userId) {
         try {
-            if (ObjectUtils.isEmpty(userId)){
+            if (ObjectUtils.isEmpty(userId)) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_50202);
             }
             UserInfoDto userInfo = personalCenterService.getUserInfo(userId);
-            if (ObjectUtils.isEmpty(userInfo)){
+            if (ObjectUtils.isEmpty(userInfo)) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.FAIL);
             }
             return ResponseData.buildResponse(userInfo);
@@ -139,16 +139,16 @@ public class PersonalCenterController {
     @ApiOperation(value = "个人信息详情")
     @GetMapping("/myInfo")
     @OperationLog(title = "user:personalCenter:myInfo",
-                  operateType = OperateTypeEnum.SELECT,
-                  operatorType = OperatorTypeEnum.USER)
-    public ResponseData myInfo(){
+            operateType = OperateTypeEnum.SELECT,
+            operatorType = OperatorTypeEnum.USER)
+    public ResponseData myInfo() {
         try {
             Long userId = UserThreadLocal.get().getUserId();
-            if (ObjectUtils.isEmpty(userId)){
+            if (ObjectUtils.isEmpty(userId)) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_50202);
             }
             MyInfoDto myInfo = personalCenterService.getMyInfo(userId);
-            if (ObjectUtils.isEmpty(myInfo)){
+            if (ObjectUtils.isEmpty(myInfo)) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.FAIL);
             }
             return ResponseData.buildResponse(myInfo);
@@ -170,25 +170,25 @@ public class PersonalCenterController {
     @Transactional(rollbackFor = Exception.class)
     @ApiOperation(value = "修改用户信息")
     @PostMapping("/updateUserInfo")
-    public ResponseData updateUserInfo(@RequestBody Users user, @RequestHeader("Authorization") String token) {
+    public ResponseData updateUserInfo(@RequestBody Users user) {
         try {
-            if (ObjectUtils.isEmpty(user.getUserId())) {
-                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_EMPTY_ID);
+            if (!ObjectUtils.isEmpty(user.getNickName())) {
+                if (!CheckUsersUtils.regexNickName(user.getNickName())) {
+                    return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_NICKNAME_ERROR_CODE);
+                }
             }
-            String nickName = user.getNickName();
-            if (!ObjectUtils.isEmpty(nickName) && !CheckUsersUtils.regexNickName(nickName)) {
-                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_NICKNAME_ERROR_CODE);
+            if (!ObjectUtils.isEmpty(user.getEmail())){
+                if (!CheckUsersUtils.regexEmail(user.getEmail())) {
+                    return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_EMAIL_ERROR_CODE);
+                }
             }
-            String email = user.getEmail();
-            if (!ObjectUtils.isEmpty(email) && !CheckUsersUtils.regexEmail(email)) {
-                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_EMAIL_ERROR_CODE);
+            if (!ObjectUtils.isEmpty(user.getPhone())){
+                if (!CheckUsersUtils.regexPhone(user.getPhone())) {
+                    return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_INVALID_PHONE);
+                }
             }
-            String phone = user.getPhone();
-            if(!ObjectUtils.isEmpty(phone) && !CheckUsersUtils.regexPhone(phone)) {
-                return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_INVALID_PHONE);
-            }
-            long rows = personalCenterService.updateUserInfo(user, token);
-            return ResponseData.buildResponse(rows);
+            personalCenterService.updateUserInfo(user);
+            return ResponseData.buildResponse();
         } catch (Exception e) {
             log.error("/updateUserInfo error" + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_ROLE_UPDATE);
@@ -198,16 +198,16 @@ public class PersonalCenterController {
     @Validation
     @ApiOperation(value = "发送注销账户验证码邮件")
     @GetMapping("/accountDeleteMail")
-    public ResponseData accountDeleteSendMail(){
+    public ResponseData accountDeleteSendMail() {
         Users users = UserThreadLocal.get();
         Long userId = users.getUserId();
         String email = users.getEmail();
         try {
-            if (ObjectUtils.isEmpty(email)){
+            if (ObjectUtils.isEmpty(email)) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_EMAIL_REQUIRED);
             }
             boolean result = personalCenterService.sendAccountDeleteMail(userId, email);
-            if (!result){
+            if (!result) {
                 //邮件发送异常
                 return ResponseData.buildErrorResponse(ResultCodeEnum.FAIL);
             }
@@ -221,14 +221,14 @@ public class PersonalCenterController {
     @Validation
     @ApiOperation(value = "账户注销")
     @DeleteMapping("/accountDeleted/{validateCode}")
-    public ResponseData accountDeleted(@PathVariable String validateCode){
+    public ResponseData accountDeleted(@PathVariable String validateCode) {
         Users currentUser = UserThreadLocal.get();
         try {
-            if (ObjectUtils.isEmpty(validateCode)){
+            if (ObjectUtils.isEmpty(validateCode)) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_VERIFICATION_REQUIRED);
             }
             boolean result = personalCenterService.deletedAccount(currentUser.getUserId(), validateCode);
-            if (!result){
+            if (!result) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.FAIL);
             }
             return ResponseData.buildResponse();

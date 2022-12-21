@@ -18,13 +18,26 @@ public interface ManageUserMapper {
      * @param status 用户状态
      * @return Users列表
      */
-    List<Users> getUserListByStatus(int status);
+    List<Users> getUserListByStatus(@Param("status") int status);
 
-    Users getUserInfo(long userId);
+    /**
+     * 查询用户详情
+     *
+     * @param userId
+     * @return
+     */
+    Users getUserInfo(@Param("userId") long userId);
 
     long updateUser(Users user);
 
-    boolean deleteUser(long userId);
+    /**
+     * 封禁用户
+     *
+     * @param userId
+     * @param banReason
+     * @return
+     */
+    boolean deleteUser(@Param("userId") long userId,@Param("banReason") String banReason);
 
     List<Users> getUserListByRegisterTime(@Param("begin") String begin, @Param("end") String end);
 
@@ -35,4 +48,11 @@ public interface ManageUserMapper {
      * @return 用户列表
      */
     List<Users> findByNickNameOrAccount(String account);
+
+    /**
+     * 解除封禁用户
+     *
+     * @param userId
+     */
+    void rescindUser(@Param("userId") long userId);
 }

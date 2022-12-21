@@ -277,6 +277,8 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_RECHARGE_MAX(900001, "超出S币单次充值额度!"),
     ERROR_REWARD_NULL(900001, "打赏0元不是Ikun!"),
     ERROR_REWARD_MAX(900001, "你的口袋不足以打赏!"),
+    ERROR_BAN_REASON_NULL(900001, "封禁原因不能为空!"),
+    ERROR_BAN_USER(900001, "账户已被封禁!"),
 
 
     END(900001, "仅用于结尾,无任何作用请勿删除!");

@@ -73,8 +73,7 @@ public interface PersonalCenterService {
     /**
      * 更新用户信息
      * @param user 新的用户信息
-     * @param token
      * @return
      */
-    long updateUserInfo(Users user, String token);
+    void updateUserInfo(Users user);
 }

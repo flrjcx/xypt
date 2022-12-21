@@ -1,6 +1,7 @@
 package com.flrjcx.xypt.mapper;
 
 import com.flrjcx.xypt.common.model.param.common.Users;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -45,4 +46,12 @@ public interface LoginMapper {
      * @return
      */
     int updateUserPasswordById(Long userId, String md5AndBCryptPassword);
+
+    /**
+     * 查询账户的封禁状态
+     *
+     * @param account
+     * @return
+     */
+    String checkUserStatus(@Param("account") String account);
 }

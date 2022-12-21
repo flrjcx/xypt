@@ -53,5 +53,7 @@ public class Users implements Serializable {
     private String status;
     @ApiModelProperty(value = "隐私状态", name = "privacySetting")
     private String privacySetting;
+    @ApiModelProperty(value = "封禁原因", name = "banReason")
+    private String banReason;
 
 }

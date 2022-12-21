@@ -11,6 +11,7 @@ import com.flrjcx.xypt.common.model.param.email.ForgetPasswordParam;
 import com.flrjcx.xypt.common.model.param.register.LoginParam;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.*;
+import com.flrjcx.xypt.mapper.LoginMapper;
 import com.flrjcx.xypt.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,6 +42,9 @@ public class LoginController {
     @Resource
     private TokenService tokenService;
 
+    @Resource
+    private LoginMapper loginMapper;
+
 
     @Validation
     @ApiOperation("退出登录")
@@ -55,6 +59,9 @@ public class LoginController {
     @PostMapping
     public ResponseData login(@RequestBody LoginParam loginParam) {
         try {
+            if ("2".equals(loginMapper.checkUserStatus(loginParam.getUser()))){
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_BAN_USER);
+            }
             if (Objects.isNull(loginParam.getUser())) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_NAME_REQUIRED);
             }

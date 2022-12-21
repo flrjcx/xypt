@@ -67,4 +67,7 @@
         limit
             1
     </select>
+    <select id="checkUserStatus" resultType="java.lang.String">
+        select status from users where account = #{account}
+    </select>
 </mapper>

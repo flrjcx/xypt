@@ -4,7 +4,7 @@ package com.flrjcx.xypt.common.utils;
  * @author
  * @title CheckIdCardUtils
  * @description 信息校验工具
- * @date 2022/3/30 11:16
+ * @dat/                                                                                                                                                            e 2022/3/30 11:16
  */
 
 
@@ -24,7 +24,7 @@ public class CheckUsersUtils {
      */
     private static final String REGEX_PHONE = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$";
     private static final String REGEX_EMAIL =  "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
-    private static final String REGEX_NICK_NAME = "^[a-zA-Z0-9_-]{4,16}$";
+    private static final String REGEX_NICK_NAME = "/^[\\u4E00-\\u9FA5A-Za-z0-9_-]{2,10}$/";
     private static final String REGEX_REAL_NAME = "^[\\u4E00-\\u9FA5]{2,6}$";
     private static final String REGEX_ACCOUNT = "^[a-zA-Z0-9_-]{4,16}$";
     private static final String REGEX_PWD = "^[a-zA-Z0-9_-]{4,16}$";

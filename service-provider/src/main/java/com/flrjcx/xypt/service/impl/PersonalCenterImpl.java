@@ -125,15 +125,12 @@ public class PersonalCenterImpl implements PersonalCenterService {
      * 更新用户信息
      *
      * @param user 新的用户信息 userId必填
-     * @param token
      * @return
      */
     @Override
-    public long updateUserInfo(Users user, String token) {
-        long rows = personalCenterMapper.updateUserInfo(user);
-        if (rows>0) {
-            tokenService.updateCache(token, user);
-        }
-        return rows;
+    @Transactional(rollbackFor = Exception.class)
+    public void updateUserInfo(Users user) {
+        user.setUserId(UserThreadLocal.get().getUserId());
+        personalCenterMapper.updateUserInfo(user);
     }
 }

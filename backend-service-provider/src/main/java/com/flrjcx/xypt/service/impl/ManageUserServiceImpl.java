@@ -1,6 +1,9 @@
 package com.flrjcx.xypt.service.impl;
 
+import com.flrjcx.xypt.common.constants.MessageConstants;
 import com.flrjcx.xypt.common.model.param.common.Users;
+import com.flrjcx.xypt.common.utils.EmailSendUtils;
+import com.flrjcx.xypt.common.utils.KafkaUtils;
 import com.flrjcx.xypt.common.utils.TokenService;
 import com.flrjcx.xypt.mapper.ManageUserMapper;
 import com.flrjcx.xypt.service.ManageUserService;
@@ -23,6 +26,9 @@ public class ManageUserServiceImpl implements ManageUserService {
     @Resource
     TokenService tokenService;
 
+    @Resource
+    private EmailSendUtils emailSendUtils;
+
     /**
      * 获取全部用户(分页)
      *
@@ -30,7 +36,8 @@ public class ManageUserServiceImpl implements ManageUserService {
      */
     @Override
     public List<Users> getUserList() {
-        return manageUserMapper.getUserList();
+        List<Users> userList = manageUserMapper.getUserList();
+        return userList;
     }
 
     @Override
@@ -45,11 +52,21 @@ public class ManageUserServiceImpl implements ManageUserService {
         return rows;
     }
 
+    /**
+     * 封禁用户
+     *
+     * @param userId
+     * @param banReason
+     * @return
+     */
     @Override
-    public boolean deleteUser(long userId) {
-        boolean flag = manageUserMapper.deleteUser(userId);
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteUser(long userId,String banReason) {
+        boolean flag = manageUserMapper.deleteUser(userId,banReason);
         if (flag) {
             tokenService.removeUserToken(userId);
+            Users users = manageUserMapper.getUserInfo(userId);
+            emailSendUtils.sendMail(users.getEmail(), MessageConstants.BAN_EMAIL,MessageConstants.BAN_EMAIL_MESSAGE+banReason);
         }
         return flag;
     }
@@ -74,4 +91,19 @@ public class ManageUserServiceImpl implements ManageUserService {
     public List<Users> findByNickNameOrAccount(String account) {
         return manageUserMapper.findByNickNameOrAccount(account);
     }
+
+    /**
+     * 解除封禁用户
+     *
+     * @param userId:用户id
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void rescindUser(long userId) {
+        manageUserMapper.rescindUser(userId);
+        Users users = manageUserMapper.getUserInfo(userId);
+        emailSendUtils.sendMail(users.getEmail(), MessageConstants.BAN_RESCIND_USER_EMAIL,MessageConstants.BAN_RESCIND_USER_EMAIL_MESSAGE);
+    }
+
+
 }
