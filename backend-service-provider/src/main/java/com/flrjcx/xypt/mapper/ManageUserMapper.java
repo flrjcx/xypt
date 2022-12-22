@@ -11,6 +11,11 @@ import java.util.List;
  * @Desc:
  */
 public interface ManageUserMapper {
+    /**
+     * 获取用户列表
+     *
+     * @return
+     */
     List<Users> getUserList();
 
     /**

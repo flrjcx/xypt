@@ -82,9 +82,7 @@
         select
             <include refid="allUserInfo"></include>
         from users
-        <where>
-            user_id = #{userId}
-        </where>
+        where user_id = #{userId}
     </select>
 
     <update id="updateUser">
