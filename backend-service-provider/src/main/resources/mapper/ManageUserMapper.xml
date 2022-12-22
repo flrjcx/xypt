@@ -50,7 +50,7 @@
     <select id="getUserList" resultType="com.flrjcx.xypt.common.model.param.common.Users">
         select
         <include refid="allUserInfo"/>
-        from users
+        from users order by create_time DESC
     </select>
 
     <select id="getUserListByStatus" resultType="com.flrjcx.xypt.common.model.param.common.Users">
