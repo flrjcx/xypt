@@ -94,7 +94,7 @@ public class EmailSendUtils {
 
                             "                                                                <p class=\"cTMail-content\" style=\"line-height: 24px; margin: 6px 0px 0px; overflow-wrap: break-word; word-break: break-all;\">\n" +
                             "                                                                    <span style=\"color: rgb(51, 51, 51); font-size: 14px;\">"+body+"<br/><b>"+validateCode+"</b>\n" +
-                            "                                                                        <br/><span >验证码30分钟过期,如非本人操作请忽略！</span>\n" +
+                            "                                                                        <br/><span >如非本人操作请忽略！</span>\n" +
                             "                                                                    </span>\n" +
                             "                                                                </p>\n" +
 //                            "                                                                <p class=\"cTMail-content\"\n" +
