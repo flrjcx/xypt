@@ -41,9 +41,9 @@ public class CommentController {
     @ApiOperation(value = "进行评论")
     @PostMapping("/post")
     public ResponseData save(@RequestBody Comment comment) {
-        ResponseData<Comment> responseData = commentService.post(comment.getCommentBbsId(), comment.getCommentUserId(), comment.getCommentParentId(),
+        Comment data = commentService.post(comment.getCommentBbsId(), comment.getCommentUserId(), comment.getCommentParentId(),
                 comment.getLevel(), comment.getCommentContext(), comment.getCommentFloor());
-        return responseData;
+        return ResponseData.buildResponse(data);
     }
 
     @Validation

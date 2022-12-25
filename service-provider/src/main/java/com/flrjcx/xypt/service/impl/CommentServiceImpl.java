@@ -33,29 +33,19 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResponseData < Comment > post(long bbsId, long userId,long parentId,
+    public Comment post(long bbsId, long userId,long parentId,
                                          int level, String context, int commentFloor) {
-        ResponseData<Comment> response = new ResponseData <>();
-
-        if (bbsId == 0 || userId == 0 || StringUtils.isEmpty(context) || level == 0) {
-            response.setCode(500);
-            response.setMessage("BbsId, userId, level, context不能为空");
-        }
-
-        String body = StringEscapeUtils.escapeHtml(context);
 
         Comment comment = new Comment();
         comment.setCommentBbsId(bbsId);
         comment.setCommentUserId(userId);
         comment.setLevel(level);
         comment.setCommentFloor(commentFloor);
-        comment.setCommentContext(body);
+        comment.setCommentContext(context);
         comment.setCommentParentId(parentId);
         commentMapper.insert(comment);
 
-        response.setData(comment);
-
-        return response;
+        return comment;
     }
 
 

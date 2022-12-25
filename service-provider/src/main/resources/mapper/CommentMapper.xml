@@ -15,6 +15,17 @@
         <result column="comment_parent_id" property="commentParentId"/>
     </resultMap>
 
+    <sql id="allInfo">
+        comment_id,
+        comment_bbs_id,
+        comment_user_id,
+        comment_context,
+        comment_create_time,
+        comment_level,
+        comment_floor,
+        comment_parent_id
+    </sql>
+
     <insert id="insert" parameterType="com.flrjcx.xypt.common.model.param.comment.Comment" useGeneratedKeys="true"
             keyProperty="commentId">
         INSERT INTO comment
@@ -55,7 +66,7 @@
 
     <select id="findAll" resultMap="commentResultMap">
         select
-        *
+        <include refid="allInfo"></include>
         from
         comment
     </select>

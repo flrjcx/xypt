@@ -28,7 +28,7 @@ public interface CommentService {
      * @param commentFloor 评论楼层
      * @return
      */
-    ResponseData < Comment > post(long bbsId, long userId, long parentId, int level,
+    Comment post(long bbsId, long userId, long parentId, int level,
                                   String context, int commentFloor);
 
     /**

@@ -2,7 +2,9 @@ package com.flrjcx.xypt.common.model.param.comment;
 
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,9 +19,11 @@ import java.util.List;
  */
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Comment implements Serializable {
 
-    private static final long serialVersionUID = 6732007467136712741L;
+    private static final long serialVersionUID = -1155012494731516296L;
     @ApiModelProperty(value = "主键id", name = "commentId")
     private Long commentId;
     @ApiModelProperty(value = "帖子id", name = "commentBbsId")
