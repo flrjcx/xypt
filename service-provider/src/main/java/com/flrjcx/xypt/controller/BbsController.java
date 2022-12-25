@@ -18,6 +18,7 @@ import com.flrjcx.xypt.service.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -171,5 +172,19 @@ public class BbsController {
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_SEARCH_POST_EMPTY);
         }
         return ResponseData.buildResponse(bbs);
+    }
+
+    @ApiOperation("发帖")
+    @PostMapping("/production")
+    @Validation
+    public ResponseData production(@RequestBody Bbs bbs) {
+        if (ObjectUtils.isEmpty(bbs.getBbsTitle())) {
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_BBS_TITLE_NULL);
+        }
+        if (ObjectUtils.isEmpty(bbs.getBbsContext())) {
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_BBS_CONTEXT_NULL);
+        }
+        bbsService.production(bbs);
+        return ResponseData.buildResponse();
     }
 }

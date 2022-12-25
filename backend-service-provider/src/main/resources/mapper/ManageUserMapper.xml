@@ -133,4 +133,10 @@
             </if>
         </where>
     </select>
+    <select id="getUserListByStatusNotNull" resultType="com.flrjcx.xypt.common.model.param.common.Users">
+        select
+        <include refid="allUserInfo"/>
+        from users
+        where status = #{status}
+    </select>
 </mapper>

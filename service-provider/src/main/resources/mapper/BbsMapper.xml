@@ -19,6 +19,9 @@
         bbs_update_time,
         bbs_delete
     </sql>
+    <insert id="production">
+        insert into bbs (bbs_id,bbs_user_id,bbs_title,bbs_context)VALUES (#{bbs.bbsId},#{bbs.bbsUserId},#{bbs.bbsTitle},#{bbs.bbsContext})
+    </insert>
 
     <update id="updatePraise">
         update bbs

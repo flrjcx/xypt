@@ -17,7 +17,13 @@ public interface ManageUserService {
      */
     List<Users> getUserList();
 
-    List<Users> getUserListByStatus(int status);
+    /**
+     * 查询异常用户列表
+     *
+     * @param status
+     * @return
+     */
+    List<Users> getUserListByStatus(Integer status);
 
     long updateUser(Users user, String token);
 

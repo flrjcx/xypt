@@ -36,7 +36,8 @@ public class InitJobs{
     public void initData(){
         long system = 999999999999999999L;
         log.info("总交易额数据初始化执行时间: " + DateUtil.now());
-        initMapper.initInsert(OrderUtils.makeTransaction(new BigDecimal(0),system,3,new BigDecimal(0), new Date()));
+        initMapper.initInsert(OrderUtils.makeTransaction(new BigDecimal(0),system,0,new BigDecimal(0), new Date()));
+        initMapper.initInsert(OrderUtils.makeTransaction(new BigDecimal(0),system,1,new BigDecimal(0), new Date()));
         log.info("总交易额数据初始化执行结束时间: " + DateUtil.now());
     }
 }

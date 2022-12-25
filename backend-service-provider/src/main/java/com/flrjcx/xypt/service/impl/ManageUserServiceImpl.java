@@ -9,6 +9,7 @@ import com.flrjcx.xypt.mapper.ManageUserMapper;
 import com.flrjcx.xypt.service.ManageUserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,12 +38,18 @@ public class ManageUserServiceImpl implements ManageUserService {
     @Override
     public List<Users> getUserList() {
         List<Users> userList = manageUserMapper.getUserList();
+        for (Users users : userList) {
+            users.setUserIdTwo(users.getUserId().toString());
+        }
         return userList;
     }
 
     @Override
-    public List<Users> getUserListByStatus(int status) {
-        return manageUserMapper.getUserListByStatus(status);
+    public List<Users> getUserListByStatus(Integer status) {
+        if (ObjectUtils.isEmpty(status)){
+        return manageUserMapper.getUserListByStatus();
+        }
+        return manageUserMapper.getUserListByStatusNotNull(status);
     }
 
     @Override

@@ -74,4 +74,11 @@ public interface BbsMapper {
      * @return 帖子集合
      */
     List<Bbs> searchPostByKeys(List<String> searchKeys);
+
+    /**
+     * 发帖
+     *
+     * @param bbs
+     */
+    void production(@Param("bbs") Bbs bbs);
 }

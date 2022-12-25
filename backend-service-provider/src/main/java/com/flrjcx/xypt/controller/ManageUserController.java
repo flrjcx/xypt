@@ -48,7 +48,7 @@ public class ManageUserController {
     @Validation
     @ApiOperation(value = "查询正常或异常用户列表")
     @GetMapping("/getUserListByStatus")
-    public ResponseData getUserListByStatus(@RequestParam(value = "status") int status) {
+    public ResponseData getUserListByStatus(Integer status) {
         try {
             return ResponseData.buildPageResponse(manageUserService.getUserListByStatus(status));
         } catch (Exception e) {

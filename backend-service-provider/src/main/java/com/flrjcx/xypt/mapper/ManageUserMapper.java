@@ -19,11 +19,19 @@ public interface ManageUserMapper {
     List<Users> getUserList();
 
     /**
-     * 根据用户状态获取列表
-     * @param status 用户状态
+     * 查询所有异常用户状态获取列表
+     *
      * @return Users列表
      */
-    List<Users> getUserListByStatus(@Param("status") int status);
+    List<Users> getUserListByStatus();
+
+    /**
+     * 根据用户状态获取列表
+     *
+     * @param status
+     * @return
+     */
+    List<Users> getUserListByStatusNotNull(@Param("status") Integer status);
 
     /**
      * 查询用户详情

@@ -85,4 +85,12 @@ public interface BbsService {
      * @return 帖子集合
      */
     List<Bbs> searchPosts(List<String> searchKeys, Integer pageNum, Integer pageSize);
+
+    /**
+     * 发帖
+     *
+     * @param bbs
+     * @return
+     */
+    void production(Bbs bbs);
 }

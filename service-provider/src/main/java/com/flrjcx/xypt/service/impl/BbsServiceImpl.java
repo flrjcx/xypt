@@ -12,10 +12,7 @@ import com.flrjcx.xypt.common.model.param.bbs.Bbs;
 import com.flrjcx.xypt.common.model.param.bbs.BbsEditParam;
 import com.flrjcx.xypt.common.model.param.bbs.BbsReward;
 import com.flrjcx.xypt.common.model.param.common.Users;
-import com.flrjcx.xypt.common.utils.KafkaUtils;
-import com.flrjcx.xypt.common.utils.OrderUtils;
-import com.flrjcx.xypt.common.utils.RedisCache;
-import com.flrjcx.xypt.common.utils.UserThreadLocal;
+import com.flrjcx.xypt.common.utils.*;
 import com.flrjcx.xypt.mapper.BbsMapper;
 import com.flrjcx.xypt.mapper.BbsNoMapper;
 import com.flrjcx.xypt.mapper.BbsPraiseMapper;
@@ -70,6 +67,8 @@ public class BbsServiceImpl implements BbsService {
     private MyWalletMapper myWalletMapper;
     @Resource
     private RedisCache redisCache;
+    @Resource
+    private SnowflakeIdWorker snowflakeIdWorker;
 
     /**
      * 编辑帖子
@@ -157,6 +156,18 @@ public class BbsServiceImpl implements BbsService {
         }
 
         return getBbs(searchKeys, pageNum, pageSize);
+    }
+
+    /**
+     * 发帖
+     *
+     * @param bbs
+     */
+    @Override
+    public void production(Bbs bbs) {
+        bbs.setBbsUserId(UserThreadLocal.get().getUserId());
+        bbs.setBbsId(snowflakeIdWorker.nextId());
+        bbsMapper.production(bbs);
     }
 
     private List<Bbs> getBbs(List<String> searchKeys, Integer pageNum, Integer pageSize) {

@@ -23,11 +23,9 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- *
  * 评论
  *
  * @author Yyyyyyy
- *
  */
 
 @Api(tags = "评论")
@@ -43,11 +41,8 @@ public class CommentController {
     @ApiOperation(value = "进行评论")
     @PostMapping("/post")
     public ResponseData save(@RequestBody Comment comment) {
-
-        ResponseData < Comment > responseData = commentService.post(comment.getCommentBbsId(), comment.getCommentUserId(), comment.getCommentParentId(),
+        ResponseData<Comment> responseData = commentService.post(comment.getCommentBbsId(), comment.getCommentUserId(), comment.getCommentParentId(),
                 comment.getLevel(), comment.getCommentContext(), comment.getCommentFloor());
-
-
         return responseData;
     }
 
@@ -56,7 +51,7 @@ public class CommentController {
     @GetMapping("/del")
     public ResponseData delete(@RequestParam("bbsId") String bbsId) {
         try {
-            List < Comment > result = commentService.query(bbsId);
+            List<Comment> result = commentService.query(bbsId);
             if (result == null) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_QUERY_WORKFLOW);
             }
@@ -72,7 +67,7 @@ public class CommentController {
     @Validation
     @ApiOperation(value = "查询全部评论")
     @GetMapping("/pageQueryAll")
-    public ResponseData< List <Comment> > queryAll() {
+    public ResponseData<List<Comment>> queryAll() {
         return ResponseData.buildPageResponse(commentService.queryCommentsList());
     }
 
@@ -82,7 +77,6 @@ public class CommentController {
     public ResponseData<List<Comment>> queryByBbsId(@RequestParam("bbsId") String bbsId) {
         return ResponseData.buildResponse(commentService.query(bbsId));
     }
-
 
 
     /**
@@ -112,14 +106,6 @@ public class CommentController {
         Long userId = UserThreadLocal.get().getUserId();
         ResultCodeEnum resultCodeEnum = commentService.cancelPraiseComment(commentId, userId, bbsId);
         return ResponseData.buildResponse(resultCodeEnum);
-    }
-
-
-    @ApiOperation(value = "测试")
-    @GetMapping("/test")
-    public String test() {
-
-        return "success";
     }
 
 }
