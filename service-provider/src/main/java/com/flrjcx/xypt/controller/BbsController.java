@@ -184,6 +184,12 @@ public class BbsController {
         if (ObjectUtils.isEmpty(bbs.getBbsContext())) {
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_BBS_CONTEXT_NULL);
         }
+        if (ObjectUtils.isEmpty(bbs.getBbsDescription())){
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_BBS_DESCRIPTION_NULL);
+        }
+        if (ObjectUtils.isEmpty(bbs.getBbsCoverPic())){
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_BBS_COVERPIC_NULL);
+        }
         bbsService.production(bbs);
         return ResponseData.buildResponse();
     }

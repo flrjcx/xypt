@@ -281,6 +281,8 @@ public enum ResultCodeEnum implements IResultCode {
     ERROR_BAN_USER(900001, "账户已被封禁!"),
     ERROR_BBS_CONTEXT_NULL(900001, "帖子内容不能为空!"),
     ERROR_BBS_TITLE_NULL(900001, "帖子标题不能为空!"),
+    ERROR_BBS_DESCRIPTION_NULL(900001, "帖子文章描述为空!"),
+    ERROR_BBS_COVERPIC_NULL(900001, "文章封面为空!"),
 
 
     END(900001, "仅用于结尾,无任何作用请勿删除!");

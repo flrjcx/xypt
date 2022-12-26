@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -41,6 +42,20 @@ public class Bbs implements Serializable {
     private Date bbsUpdateTime;
     @ApiModelProperty(value = "创建时间", name = "bbsCreateTime")
     private Date bbsCreateTime;
+    @ApiModelProperty(value = "删除标记", name = "bbsDelete")
+    private int bbsDelete;
+    @ApiModelProperty(value = "文章描述", name = "bbsDescription")
+    private String bbsDescription;
+    @ApiModelProperty(value = "文章封面", name = "bbsCoverPic")
+    private String bbsCoverPic;
+    @ApiModelProperty(value = "文章标签", name = "bbsLabel")
+    private List<String> bbsLabel;
+    @ApiModelProperty(value = "文章标签Json串", name = "bbsLabelJson")
+    private String bbsLabelJson;
+    @ApiModelProperty(value = "作者头像", name = "accountPic")
+    private String accountPic;
+    @ApiModelProperty(value = "作者昵称", name = "nickName")
+    private String nickName;
 
     @Override
     public boolean equals(Object o) {

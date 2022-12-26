@@ -20,7 +20,14 @@
         bbs_delete
     </sql>
     <insert id="production">
-        insert into bbs (bbs_id,bbs_user_id,bbs_title,bbs_context)VALUES (#{bbs.bbsId},#{bbs.bbsUserId},#{bbs.bbsTitle},#{bbs.bbsContext})
+        insert into bbs (bbs_id,bbs_user_id,bbs_title,bbs_context,bbs_description,bbs_cover_pic
+        <if test="bbs.bbsLabelJson != null">
+        ,bbs_label
+        </if>)
+        VALUES (#{bbs.bbsId},#{bbs.bbsUserId},#{bbs.bbsTitle},#{bbs.bbsContext},#{bbs.bbsDescription},#{bbs.bbsCoverPic}
+        <if test="bbs.bbsLabelJson != null">
+        ,#{bbs.bbsLabelJson}
+        </if>)
     </insert>
 
     <update id="updatePraise">

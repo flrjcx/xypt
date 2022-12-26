@@ -21,6 +21,7 @@ import com.flrjcx.xypt.service.BbsService;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -167,6 +168,9 @@ public class BbsServiceImpl implements BbsService {
     public void production(Bbs bbs) {
         bbs.setBbsUserId(UserThreadLocal.get().getUserId());
         bbs.setBbsId(snowflakeIdWorker.nextId());
+        if (!ObjectUtils.isEmpty(bbs.getBbsLabel())){
+        bbs.setBbsLabelJson(JSONObject.toJSONString(bbs.getBbsLabel()));
+        }
         bbsMapper.production(bbs);
     }
 
