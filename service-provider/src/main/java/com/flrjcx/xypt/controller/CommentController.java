@@ -47,6 +47,15 @@ public class CommentController {
     }
 
     @Validation
+    @ApiOperation(value = "回复评论")
+    @PostMapping("/reply")
+    public ResponseData reply(@RequestBody Comment comment) {
+        Comment data = commentService.post(comment.getCommentBbsId(), comment.getCommentUserId(), comment.getCommentParentId(),
+                comment.getLevel(), comment.getCommentContext(), comment.getCommentFloor());
+        return ResponseData.buildResponse(data);
+    }
+
+    @Validation
     @ApiOperation(value = "删除评论")
     @GetMapping("/del")
     public ResponseData delete(@RequestParam("bbsId") String bbsId) {
