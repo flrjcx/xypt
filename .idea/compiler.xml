@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="service-client" />
+        <module name="service-gateway" />
+        <module name="campus-jobs-cron" />
+        <module name="backend-service-provider" />
+        <module name="common-interface" />
+        <module name="common-utils" />
+        <module name="service-provider" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="jobs" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="backend-service-provider" options="-parameters" />
+      <module name="campus-jobs-cron" options="-parameters" />
+      <module name="common-interface" options="-parameters" />
+      <module name="common-utils" options="-parameters" />
+      <module name="jobs" options="-parameters" />
+      <module name="service-client" options="-parameters" />
+      <module name="service-gateway" options="-parameters" />
+      <module name="service-provider" options="-parameters" />
+    </option>
+  </component>
+</project>
