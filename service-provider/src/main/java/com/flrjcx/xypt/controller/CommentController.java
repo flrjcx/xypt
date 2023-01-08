@@ -77,14 +77,34 @@ public class CommentController {
     @ApiOperation(value = "查询全部评论")
     @GetMapping("/pageQueryAll")
     public ResponseData<List<Comment>> queryAll() {
-        return ResponseData.buildPageResponse(commentService.queryCommentsList());
+        try {
+            List<Comment> res = commentService.queryCommentsList();
+            if (res.size() < 0) {
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_QUERY_WORKFLOW);
+            } else {
+                return ResponseData.buildResponse(res);
+            }
+        } catch (Exception e) {
+            log.error("Error querying comments", e);
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
     }
 
     @Validation
     @ApiOperation(value = "根据BbsId查询评论")
     @GetMapping("/queryByBbsId")
     public ResponseData<List<Comment>> queryByBbsId(@RequestParam("bbsId") String bbsId) {
-        return ResponseData.buildResponse(commentService.query(bbsId));
+        try {
+            List<Comment> res = commentService.query(bbsId);
+            if (res.size() < 0) {
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_QUERY_WORKFLOW);
+            } else {
+                return ResponseData.buildResponse(res);
+            }
+        } catch (Exception e) {
+            log.error("Error querying comments", e);
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR.getCode(), e.getMessage());
+        }
     }
 
 

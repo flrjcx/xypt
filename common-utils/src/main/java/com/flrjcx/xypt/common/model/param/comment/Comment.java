@@ -43,5 +43,9 @@ public class Comment implements Serializable {
     @ApiModelProperty(value = "子评论", name = "children")
     private List <Comment> children;
 
+    @ApiModelProperty(value = "昵称", name = "nickName")
+    private String nickName;
+    @ApiModelProperty(value = "头像", name = "nickPic")
+    private String nickPic;
 
 }

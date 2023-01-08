@@ -54,8 +54,30 @@ public class CommentServiceImpl implements CommentService {
 
 //        查询所有的评论记录包含回复的
         List < Comment > comments = commentMapper.findByBbsId(bbsId);
+//        构建map结构
+        Map<Long, Comment> commentMap = new HashMap <>();
+//        初始化一个虚拟根节点，0可以对应的是所有一级评论的父亲
+        commentMap.put(0L, new Comment());
+//        把所有的评论转化为map数据
+        comments.forEach(comment -> commentMap.put(comment.getCommentId(), comment));
+//        再次遍历评论数据
+        comments.forEach(comment -> {
+//            得到父评论
+            Comment parent = commentMap.get(comment.getCommentParentId());
+            if (parent != null) {
+//                初始化 children变量
+                if (parent.getChildren() == null) {
+                    parent.setChildren(new ArrayList <>());
+                }
+//                在父评论里添加回复数据
+                parent.getChildren().add(comment);
+            }
+        });
 
-        return comments;
+//        得到所有的一级评论
+        List<Comment> data = commentMap.get(0L).getChildren();
+
+        return data;
     }
 
     @Override
