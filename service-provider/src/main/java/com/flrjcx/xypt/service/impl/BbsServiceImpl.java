@@ -10,13 +10,12 @@ import com.flrjcx.xypt.common.exception.WebServiceEnumException;
 import com.flrjcx.xypt.common.exception.WebServiceException;
 import com.flrjcx.xypt.common.model.param.bbs.Bbs;
 import com.flrjcx.xypt.common.model.param.bbs.BbsEditParam;
+import com.flrjcx.xypt.common.model.param.bbs.BbsHot;
 import com.flrjcx.xypt.common.model.param.bbs.BbsReward;
+import com.flrjcx.xypt.common.model.param.common.TransactionParam;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.utils.*;
-import com.flrjcx.xypt.mapper.BbsMapper;
-import com.flrjcx.xypt.mapper.BbsNoMapper;
-import com.flrjcx.xypt.mapper.BbsPraiseMapper;
-import com.flrjcx.xypt.mapper.MyWalletMapper;
+import com.flrjcx.xypt.mapper.*;
 import com.flrjcx.xypt.service.BbsService;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -25,11 +24,9 @@ import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 /**
  * @author : aftermath
@@ -70,6 +67,8 @@ public class BbsServiceImpl implements BbsService {
     private RedisCache redisCache;
     @Resource
     private SnowflakeIdWorker snowflakeIdWorker;
+    @Resource
+    private ImpowerMapper impowerMapper;
 
     /**
      * 编辑帖子
@@ -133,7 +132,7 @@ public class BbsServiceImpl implements BbsService {
      * @return 帖子集合
      */
     @Override
-    public List<Bbs> searchPosts(List<String> searchKeys, Integer pageNum, Integer pageSize) {
+    public List<Bbs> searchPosts(List<String> searchKeys, Integer pageNum, Integer pageSize,Integer type) {
 
         Set<Bbs> cacheBbs = new HashSet<>();
         searchKeys.forEach(key -> {
@@ -148,7 +147,7 @@ public class BbsServiceImpl implements BbsService {
             List<Bbs> bbsList = new ArrayList<>(cacheBbs);
             //如果list数量少于每页显示数量，则再去数据库查询，补充完整
             if (bbsList.size() < pageSize) {
-                return getBbs(searchKeys, pageNum, pageSize);
+                return getBbs(searchKeys, pageNum, pageSize,type);
             }
             //按更新时间降序排列
             bbsList.sort((a, b) -> -a.getBbsUpdateTime().compareTo(b.getBbsUpdateTime()));
@@ -156,7 +155,7 @@ public class BbsServiceImpl implements BbsService {
             return ListUtil.sub(bbsList, (pageNum - 1) * pageSize, pageNum * pageSize);
         }
 
-        return getBbs(searchKeys, pageNum, pageSize);
+        return getBbs(searchKeys, pageNum, pageSize,type);
     }
 
     /**
@@ -171,11 +170,58 @@ public class BbsServiceImpl implements BbsService {
         if (!ObjectUtils.isEmpty(bbs.getBbsLabel())){
         bbs.setBbsLabelJson(JSONObject.toJSONString(bbs.getBbsLabel()));
         }
+//        如果发帖用户是被授权的用户
+        if (impowerMapper.checkImpower(bbs.getBbsUserId())){
+            bbs.setBbsType(1);
+        }
         bbsMapper.production(bbs);
     }
 
-    private List<Bbs> getBbs(List<String> searchKeys, Integer pageNum, Integer pageSize) {
-        List<Bbs> bbs = bbsMapper.searchPostByKeys(searchKeys);
+    /**
+     * 查询帖子列表
+     *
+     * @return
+     */
+    @Override
+    public List<Bbs> bbsList() {
+        return bbsMapper.bbsList();
+    }
+
+    /**
+     * 查询帖子详情
+     *
+     * @param bbsId
+     * @return
+     */
+    @Override
+    public Bbs bbsDetails(long bbsId) {
+        return bbsMapper.bbsDetails(bbsId);
+    }
+
+    /**
+     * 查询用户热门文章
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<BbsHot> bbsUserHot(long userId) {
+        List<BbsHot> hotListCopy = bbsMapper.bbsUserHot(userId);
+        List<BbsHot> hotList = new ArrayList<>();
+        if (!ObjectUtils.isEmpty(hotListCopy)){
+            if (hotListCopy.size() == 1){
+                hotList.add(hotListCopy.get(0));
+            }
+            hotList.add(hotListCopy.get(0));
+            hotList.add(hotListCopy.get(1));
+        }else {
+            return null;
+        }
+        return hotList;
+    }
+
+    private List<Bbs> getBbs(List<String> searchKeys, Integer pageNum, Integer pageSize,Integer type) {
+        List<Bbs> bbs = bbsMapper.searchPostByKeys(searchKeys,type);
         if (ObjectUtil.isNull(bbs)) {
             return ListUtil.empty();
         }

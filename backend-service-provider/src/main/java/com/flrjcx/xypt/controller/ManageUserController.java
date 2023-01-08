@@ -140,9 +140,44 @@ public class ManageUserController {
             manageUserService.rescindUser(userId);
             return ResponseData.buildResponse();
         } catch (Exception e) {
-            log.error("/banUser error " + e.getMessage());
+            log.error("/rescindUser error " + e.getMessage());
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_BAN_REASON_NULL);
         }
     }
 
+    @Validation
+    @ApiOperation(value = "授权用户")
+    @GetMapping("/impowerUser")
+    public ResponseData impowerUser(@RequestParam long userId) {
+        try {
+            manageUserService.impowerUser(userId);
+            return ResponseData.buildResponse();
+        } catch (Exception e) {
+            log.error("/impowerUser error " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_IMPOWER_USER);
+        }
+    }
+    @Validation
+    @ApiOperation(value = "取消授权用户")
+    @GetMapping("/cancelImpowerUser")
+    public ResponseData cancelImpowerUser(@RequestParam long userId) {
+        try {
+            manageUserService.cancelImpowerUser(userId);
+            return ResponseData.buildResponse();
+        } catch (Exception e) {
+            log.error("/cancelImpowerUser error " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CANCEL_IMPOWER_USER);
+        }
+    }
+    @Validation
+    @ApiOperation(value = "查询已授权用户")
+    @GetMapping("/selectImpowerUser")
+    public ResponseData selectImpowerUser() {
+        try {
+            return ResponseData.buildPageResponse(manageUserService.selectImpowerUser());
+        } catch (Exception e) {
+            log.error("/selectImpowerUser error " + e.getMessage());
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_SELECT_IMPOWER_USER);
+        }
+    }
 }

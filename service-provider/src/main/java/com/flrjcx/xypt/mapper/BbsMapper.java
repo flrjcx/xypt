@@ -1,7 +1,9 @@
 package com.flrjcx.xypt.mapper;
 
+import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.model.param.bbs.Bbs;
 import com.flrjcx.xypt.common.model.param.bbs.BbsEditParam;
+import com.flrjcx.xypt.common.model.param.bbs.BbsHot;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -71,9 +73,10 @@ public interface BbsMapper {
      * 根据关键词搜索帖子 标题模糊查询
      *
      * @param searchKeys 关键词List
+     * @param type 查询类型
      * @return 帖子集合
      */
-    List<Bbs> searchPostByKeys(List<String> searchKeys);
+    List<Bbs> searchPostByKeys(@Param("searchKeys") List<String> searchKeys,@Param("type") Integer type);
 
     /**
      * 发帖
@@ -81,4 +84,28 @@ public interface BbsMapper {
      * @param bbs
      */
     void production(@Param("bbs") Bbs bbs);
+
+    /**
+     * 查询帖子列表
+     *
+     * @return
+     */
+    @OpenPage
+    List<Bbs> bbsList();
+
+    /**
+     * 查询帖子详情
+     *
+     * @param bbsId
+     * @return
+     */
+    Bbs bbsDetails(@Param("bbsId")long bbsId);
+
+    /**
+     * 查询用户热门文章
+     *
+     * @param userId
+     * @return
+     */
+    List<BbsHot> bbsUserHot(@Param("userId")long userId);
 }

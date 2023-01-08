@@ -46,6 +46,12 @@
         email,
         create_time
     </sql>
+    <insert id="impowerUser">
+        insert into impower (impower_id,impower_user_id) VALUES (#{impower.impowerId},#{impower.impowerUserId})
+    </insert>
+    <delete id="cancelImpowerUser">
+        delete from impower where impower_user_id = #{userId}
+    </delete>
 
     <select id="getUserList" resultType="com.flrjcx.xypt.common.model.param.common.Users">
         select
@@ -138,5 +144,13 @@
         <include refid="allUserInfo"/>
         from users
         where status = #{status}
+    </select>
+    <select id="selectImpowerUser" resultType="com.flrjcx.xypt.common.model.param.bbs.Impower">
+        select
+        impower_id as impowerId,
+        impower_user_id as impowerUserId,
+        create_time as createTime,
+        update_time as updateTime
+        from impower
     </select>
 </mapper>

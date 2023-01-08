@@ -1,5 +1,7 @@
 package com.flrjcx.xypt.mapper;
 
+import com.flrjcx.xypt.common.annotation.OpenPage;
+import com.flrjcx.xypt.common.model.param.bbs.Impower;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import org.apache.ibatis.annotations.Param;
 
@@ -50,7 +52,7 @@ public interface ManageUserMapper {
      * @param banReason
      * @return
      */
-    boolean deleteUser(@Param("userId") long userId,@Param("banReason") String banReason);
+    boolean deleteUser(@Param("userId") long userId, @Param("banReason") String banReason);
 
     List<Users> getUserListByRegisterTime(@Param("begin") String begin, @Param("end") String end);
 
@@ -68,4 +70,27 @@ public interface ManageUserMapper {
      * @param userId
      */
     void rescindUser(@Param("userId") long userId);
+
+    /**
+     * 授权用户
+     *
+     * @param impower
+     */
+    void impowerUser(@Param("impower") Impower impower);
+
+    /**
+     * 取消授权用户
+     *
+     * @param userId
+     */
+    void cancelImpowerUser(@Param("userId") long userId);
+
+    /**
+     * 查询已授权用户
+     *
+     * @return
+     */
+    @OpenPage
+    List<Impower> selectImpowerUser();
+
 }

@@ -3,6 +3,7 @@ package com.flrjcx.xypt.service;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.model.param.bbs.Bbs;
 import com.flrjcx.xypt.common.model.param.bbs.BbsEditParam;
+import com.flrjcx.xypt.common.model.param.bbs.BbsHot;
 import com.flrjcx.xypt.common.model.param.bbs.BbsReward;
 import com.flrjcx.xypt.common.model.param.common.Users;
 
@@ -82,9 +83,10 @@ public interface BbsService {
      * @param searchKeys 关键词集合
      * @param pageNum    当前页数
      * @param pageSize   每页大小
+     * @param type       查询类型
      * @return 帖子集合
      */
-    List<Bbs> searchPosts(List<String> searchKeys, Integer pageNum, Integer pageSize);
+    List<Bbs> searchPosts(List<String> searchKeys, Integer pageNum, Integer pageSize,Integer type);
 
     /**
      * 发帖
@@ -93,4 +95,28 @@ public interface BbsService {
      * @return
      */
     void production(Bbs bbs);
+
+    /**
+     * 查询帖子列表
+     *
+     * @return
+     */
+    List<Bbs> bbsList();
+
+    /**
+     * 查询帖子详情
+     *
+     * @param bbsId
+     * @return
+     */
+    Bbs bbsDetails(long bbsId);
+
+    /**
+     * 查询用户热门文章
+     *
+     * @param userId
+     * @return
+     */
+    List<BbsHot> bbsUserHot(long userId);
+
 }

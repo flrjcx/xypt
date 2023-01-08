@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.service;
 
+import com.flrjcx.xypt.common.model.param.bbs.Impower;
 import com.flrjcx.xypt.common.model.param.common.Users;
 
 import java.util.List;
@@ -54,5 +55,27 @@ public interface ManageUserService {
      * @param userId:用户id
      */
     void rescindUser(long userId);
+
+    /**
+     * 授权用户
+     *
+     * @param userId
+     */
+    void impowerUser(long userId);
+
+    /**
+     * 取消授权用户
+     *
+     * @param userId
+     */
+    void cancelImpowerUser(long userId);
+
+    /**
+     * 查询已授权用户
+     *
+     * @return
+     */
+    List<Impower> selectImpowerUser();
+
 }
 

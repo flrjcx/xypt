@@ -5,10 +5,7 @@ import com.flrjcx.xypt.common.annotation.ApiRestController;
 import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.annotation.Validation;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
-import com.flrjcx.xypt.common.model.param.bbs.Bbs;
-import com.flrjcx.xypt.common.model.param.bbs.BbsEditParam;
-import com.flrjcx.xypt.common.model.param.bbs.BbsReward;
-import com.flrjcx.xypt.common.model.param.bbs.BbsSearchParam;
+import com.flrjcx.xypt.common.model.param.bbs.*;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.result.ResponseData;
 import com.flrjcx.xypt.common.utils.UserThreadLocal;
@@ -19,6 +16,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -155,7 +153,8 @@ public class BbsController {
     @OpenPage
     public ResponseData searchPost(@RequestBody BbsSearchParam bbsSearchParam,
                                    @RequestParam Integer pageSize,
-                                   @RequestParam Integer pageNum) {
+                                   @RequestParam Integer pageNum,
+                                   Integer type) {
         String searchBody = bbsSearchParam.getSearchBody();
         if (ObjectUtil.isNull(bbsSearchParam) || ObjectUtil.isNull(searchBody)) {
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_DELETE_FORM_UPDATE_EMPTY);
@@ -167,7 +166,7 @@ public class BbsController {
             pageSize = 10;
         }
         List<String> searchKeys = Arrays.stream(searchBody.split(" ")).collect(Collectors.toList());
-        List<Bbs> bbs = bbsService.searchPosts(searchKeys, pageNum, pageSize);
+        List<Bbs> bbs = bbsService.searchPosts(searchKeys, pageNum, pageSize,type);
         if (ObjectUtil.isNull(bbs)) {
             return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_SEARCH_POST_EMPTY);
         }
@@ -192,5 +191,27 @@ public class BbsController {
         }
         bbsService.production(bbs);
         return ResponseData.buildResponse();
+    }
+
+    @ApiOperation("查询帖子列表")
+    @GetMapping("/bbsList")
+    public ResponseData bbsList() {
+        return ResponseData.buildPageResponse(bbsService.bbsList());
+    }
+
+    @ApiOperation("查询帖子详情")
+    @GetMapping("/bbsDetails")
+    public ResponseData bbsDetails(@RequestParam long bbsId) {
+        return ResponseData.buildResponse(bbsService.bbsDetails(bbsId));
+    }
+
+    @ApiOperation("查询用户热门文章")
+    @GetMapping("/bbsUserHot")
+    public ResponseData bbsUserHot(@RequestParam long userId) {
+        List<BbsHot> hotList = bbsService.bbsUserHot(userId);
+        if (ObjectUtils.isEmpty(hotList)){
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_BBS_HOT_NULL);
+        }
+        return ResponseData.buildResponse(hotList);
     }
 }

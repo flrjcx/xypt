@@ -1,6 +1,7 @@
 package com.flrjcx.xypt.service.impl;
 
 import com.flrjcx.xypt.common.constants.MessageConstants;
+import com.flrjcx.xypt.common.model.param.bbs.Impower;
 import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.utils.EmailSendUtils;
 import com.flrjcx.xypt.common.utils.KafkaUtils;
@@ -13,6 +14,7 @@ import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @Author: aftermath
@@ -110,6 +112,41 @@ public class ManageUserServiceImpl implements ManageUserService {
         manageUserMapper.rescindUser(userId);
         Users users = manageUserMapper.getUserInfo(userId);
         emailSendUtils.sendMail(users.getEmail(), MessageConstants.BAN_RESCIND_USER_EMAIL,MessageConstants.BAN_RESCIND_USER_EMAIL_MESSAGE);
+    }
+
+    /**
+     * 授权用户
+     *
+     * @param userId
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void impowerUser(long userId) {
+        Impower impower = new Impower();
+        impower.setImpowerUserId(userId);
+        impower.setImpowerId(UUID.randomUUID().toString());
+        manageUserMapper.impowerUser(impower);
+    }
+
+    /**
+     * 取消授权用户
+     *
+     * @param userId
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void cancelImpowerUser(long userId) {
+        manageUserMapper.cancelImpowerUser(userId);
+    }
+
+    /**
+     * 查询已授权用户
+     *
+     * @return
+     */
+    @Override
+    public List<Impower> selectImpowerUser() {
+        return manageUserMapper.selectImpowerUser();
     }
 
 
