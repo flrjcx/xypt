@@ -59,7 +59,7 @@ public class CommentServiceImpl implements CommentService {
 //        初始化一个虚拟根节点，0可以对应的是所有一级评论的父亲
         commentMap.put(0L, new Comment());
 //        把所有的评论转化为map数据
-        comments.forEach(comment -> commentMap.put(comment.getCommentId(), comment));
+        comments.forEach(comment -> commentMap.put(comment.getCommentBbsId(), comment));
 //        再次遍历评论数据
         comments.forEach(comment -> {
 //            得到父评论

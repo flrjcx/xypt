@@ -1,5 +1,6 @@
 package com.flrjcx.xypt.mapper;
 
+import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.model.param.comment.Comment;
 import feign.Param;
 
@@ -28,6 +29,7 @@ public interface CommentMapper {
      * @param bbsId
      * @return
      */
+    @OpenPage
     List<Comment> findByBbsId(@Param("bbsId") String bbsId);
 
     /**

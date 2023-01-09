@@ -99,7 +99,7 @@ public class CommentController {
             if (res.size() < 0) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_QUERY_WORKFLOW);
             } else {
-                return ResponseData.buildResponse(res);
+                return ResponseData.buildPageResponse(res);
             }
         } catch (Exception e) {
             log.error("Error querying comments", e);
