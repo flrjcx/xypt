@@ -184,7 +184,19 @@ public class BbsServiceImpl implements BbsService {
      */
     @Override
     public List<Bbs> bbsList() {
-        return bbsMapper.bbsList();
+        List<Bbs> bbsList = bbsMapper.bbsList();
+        for (Bbs bbs : bbsList) {
+            Users users = bbsMapper.selectAccount(bbs.getBbsUserId());
+            if (!ObjectUtils.isEmpty(users.getNickName())){
+            bbs.setNickName(users.getNickName());
+            }
+            if (!ObjectUtils.isEmpty(users.getNickPic())){
+            bbs.setAccountPic(users.getNickPic());
+            }
+            bbs.setBbsIdTwo(bbs.getBbsId().toString());
+            bbs.setBbsUserIdTwo(bbs.getBbsUserId().toString());
+        }
+        return bbsList;
     }
 
     /**

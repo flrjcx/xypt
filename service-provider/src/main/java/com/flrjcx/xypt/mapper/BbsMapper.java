@@ -4,6 +4,7 @@ import com.flrjcx.xypt.common.annotation.OpenPage;
 import com.flrjcx.xypt.common.model.param.bbs.Bbs;
 import com.flrjcx.xypt.common.model.param.bbs.BbsEditParam;
 import com.flrjcx.xypt.common.model.param.bbs.BbsHot;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -108,4 +109,12 @@ public interface BbsMapper {
      * @return
      */
     List<BbsHot> bbsUserHot(@Param("userId")long userId);
+
+    /**
+     * 查询帖子作者昵称和头像
+     *
+     * @param userId
+     * @return
+     */
+    Users selectAccount(@Param("userId")long userId);
 }

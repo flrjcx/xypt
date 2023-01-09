@@ -22,6 +22,8 @@ public class Bbs implements Serializable {
     private String bbsIdTwo;
     @ApiModelProperty(value = "发帖用户id", name = "bbsUserId")
     private Long bbsUserId;
+    @ApiModelProperty(value = "发帖用户id备用", name = "bbsUserIdTwo")
+    private String bbsUserIdTwo;
     @ApiModelProperty(value = "标题", name = "bbsTitle")
     private String bbsTitle;
     @ApiModelProperty(value = "内容markdown格式", name = "bbsContextMd")

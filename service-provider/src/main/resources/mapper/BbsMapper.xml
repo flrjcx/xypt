@@ -104,13 +104,30 @@
         order by bbs_update_time DESC
     </select>
     <select id="bbsList" resultType="com.flrjcx.xypt.common.model.param.bbs.Bbs">
-        select <include refid="allBbsInfo"/> from bbs order by bbs_create_time desc
+        select
+        bbs_id,
+        bbs_user_id,
+        bbs_title,
+        bbs_views,
+        bbs_collect,
+        bbs_praise,
+        bbs_no,
+        bbs_type,
+        bbs_create_time,
+        bbs_update_time,
+        bbs_delete,
+        bbs_description,
+        bbs_cover_pic,
+        bbs_label as bbsLabelJson from bbs order by bbs_create_time desc
     </select>
     <select id="bbsDetails" resultType="com.flrjcx.xypt.common.model.param.bbs.Bbs">
         select <include refid="allBbsInfo"/> from bbs where bbs_id = #{bbsId}
     </select>
     <select id="bbsUserHot" resultType="com.flrjcx.xypt.common.model.param.bbs.BbsHot">
         select bbs_id,bbs_title,bbs_praise from bbs  where bbs_user_id = #{userId} order by bbs_praise desc
+    </select>
+    <select id="selectAccount" resultType="com.flrjcx.xypt.common.model.param.common.Users">
+        select nick_name,nick_pic from users where user_id = #{userId}
     </select>
 
 </mapper>
