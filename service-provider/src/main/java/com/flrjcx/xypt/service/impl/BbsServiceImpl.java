@@ -207,7 +207,17 @@ public class BbsServiceImpl implements BbsService {
      */
     @Override
     public Bbs bbsDetails(long bbsId) {
-        return bbsMapper.bbsDetails(bbsId);
+        Bbs bbs = bbsMapper.bbsDetails(bbsId);
+        Users users = bbsMapper.selectAccount(bbs.getBbsUserId());
+        if (!ObjectUtils.isEmpty(users.getNickName())){
+            bbs.setNickName(users.getNickName());
+        }
+        if (!ObjectUtils.isEmpty(users.getNickPic())){
+            bbs.setAccountPic(users.getNickPic());
+        }
+        bbs.setBbsIdTwo(bbs.getBbsId().toString());
+        bbs.setBbsUserIdTwo(bbs.getBbsUserId().toString());
+        return bbs;
     }
 
     /**

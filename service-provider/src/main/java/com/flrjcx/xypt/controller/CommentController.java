@@ -73,7 +73,6 @@ public class CommentController {
     }
 
     @OpenPage
-    @Validation
     @ApiOperation(value = "查询全部评论")
     @GetMapping("/pageQueryAll")
     public ResponseData<List<Comment>> queryAll() {
@@ -90,7 +89,6 @@ public class CommentController {
         }
     }
 
-    @Validation
     @ApiOperation(value = "根据BbsId查询评论")
     @GetMapping("/queryByBbsId")
     public ResponseData<List<Comment>> queryByBbsId(@RequestParam("bbsId") String bbsId) {
