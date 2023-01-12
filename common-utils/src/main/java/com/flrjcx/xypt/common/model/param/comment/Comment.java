@@ -24,8 +24,9 @@ import java.util.List;
 public class Comment implements Serializable {
 
     private static final long serialVersionUID = -1155012494731516296L;
+
     @ApiModelProperty(value = "主键id", name = "commentId")
-    private Long commentId;
+    private String commentId;
     @ApiModelProperty(value = "帖子id", name = "commentBbsId")
     private Long commentBbsId;
     @ApiModelProperty(value = "用户id", name = "commentUserId")
@@ -39,7 +40,7 @@ public class Comment implements Serializable {
     @ApiModelProperty(value = "评论楼层", name = "commentFloor")
     private Integer commentFloor;
     @ApiModelProperty(value = "父评论id", name = "commentParentId")
-    private Long commentParentId;
+    private String commentParentId;
     @ApiModelProperty(value = "子评论", name = "children")
     private List <Comment> children;
 

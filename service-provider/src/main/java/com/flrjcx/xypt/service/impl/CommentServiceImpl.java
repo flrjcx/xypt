@@ -3,7 +3,9 @@ package com.flrjcx.xypt.service.impl;
 import com.flrjcx.xypt.common.enums.ResultCodeEnum;
 import com.flrjcx.xypt.common.exception.WebServiceEnumException;
 import com.flrjcx.xypt.common.model.param.comment.Comment;
+import com.flrjcx.xypt.common.model.param.common.Users;
 import com.flrjcx.xypt.common.model.result.ResponseData;
+import com.flrjcx.xypt.common.utils.UserThreadLocal;
 import com.flrjcx.xypt.mapper.CommentMapper;
 import com.flrjcx.xypt.mapper.CommentPraiseMapper;
 import com.flrjcx.xypt.service.CommentService;
@@ -13,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Yyyyyyy
@@ -33,12 +32,13 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Comment post(long bbsId, long userId,long parentId,
+    public Comment post(long bbsId,String parentId,
                                          int level, String context, int commentFloor) {
-
+        Users user = UserThreadLocal.get();
         Comment comment = new Comment();
+        comment.setCommentId(UUID.randomUUID().toString());
         comment.setCommentBbsId(bbsId);
-        comment.setCommentUserId(userId);
+        comment.setCommentUserId(user.getUserId());
         comment.setLevel(level);
         comment.setCommentFloor(commentFloor);
         comment.setCommentContext(context);
@@ -55,11 +55,11 @@ public class CommentServiceImpl implements CommentService {
 //        查询所有的评论记录包含回复的
         List < Comment > comments = commentMapper.findByBbsId(bbsId);
 //        构建map结构
-        Map<Long, Comment> commentMap = new HashMap <>();
+        Map<String, Comment> commentMap = new HashMap <>();
 //        初始化一个虚拟根节点，0可以对应的是所有一级评论的父亲
-        commentMap.put(0L, new Comment());
+        commentMap.put("0", new Comment());
 //        把所有的评论转化为map数据
-        comments.forEach(comment -> commentMap.put(comment.getCommentBbsId(), comment));
+        comments.forEach(comment -> commentMap.put(comment.getCommentId(), comment));
 //        再次遍历评论数据
         comments.forEach(comment -> {
 //            得到父评论
@@ -75,7 +75,7 @@ public class CommentServiceImpl implements CommentService {
         });
 
 //        得到所有的一级评论
-        List<Comment> data = commentMap.get(0L).getChildren();
+        List<Comment> data = commentMap.get("0").getChildren();
 
         return data;
     }

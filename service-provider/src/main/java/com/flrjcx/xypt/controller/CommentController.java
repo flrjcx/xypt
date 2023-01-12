@@ -13,6 +13,7 @@ import com.flrjcx.xypt.service.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,18 +42,40 @@ public class CommentController {
     @ApiOperation(value = "进行评论")
     @PostMapping("/post")
     public ResponseData save(@RequestBody Comment comment) {
-        Comment data = commentService.post(comment.getCommentBbsId(), comment.getCommentUserId(), comment.getCommentParentId(),
-                comment.getLevel(), comment.getCommentContext(), comment.getCommentFloor());
-        return ResponseData.buildResponse(data);
+        try {
+            if (StringUtils.isAnyBlank(comment.getCommentParentId(), comment.getCommentContext())) {
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_UPDATE_WORKFLOW);
+            }
+            if (comment.getCommentBbsId() <= 0 || comment.getCommentFloor() < 0 || comment.getLevel() <= 0) {
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_UPDATE_WORKFLOW);
+            }
+            Comment data = commentService.post(comment.getCommentBbsId(), comment.getCommentParentId(),
+                    comment.getLevel(), comment.getCommentContext(), comment.getCommentFloor());
+            return ResponseData.buildResponse(data);
+        } catch (Exception e) {
+            log.error("cancel comment error");
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_DELETE_WORKFLOW);
+        }
     }
 
     @Validation
     @ApiOperation(value = "回复评论")
     @PostMapping("/reply")
     public ResponseData reply(@RequestBody Comment comment) {
-        Comment data = commentService.post(comment.getCommentBbsId(), comment.getCommentUserId(), comment.getCommentParentId(),
-                comment.getLevel(), comment.getCommentContext(), comment.getCommentFloor());
-        return ResponseData.buildResponse(data);
+        try {
+            if (StringUtils.isAnyBlank(comment.getCommentParentId(), comment.getCommentContext())) {
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_UPDATE_WORKFLOW);
+            }
+            if (comment.getCommentBbsId() <= 0 || comment.getCommentFloor() < 0 || comment.getLevel() <= 0) {
+                return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_UPDATE_WORKFLOW);
+            }
+            Comment data = commentService.post(comment.getCommentBbsId(), comment.getCommentParentId(),
+                    comment.getLevel(), comment.getCommentContext(), comment.getCommentFloor());
+            return ResponseData.buildResponse(data);
+        } catch (Exception e) {
+            log.error("cancel comment error");
+            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_DELETE_WORKFLOW);
+        }
     }
 
     @Validation

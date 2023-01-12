@@ -21,14 +21,13 @@ public interface CommentService {
      * 发布评论
      *
      * @param bbsId 帖子id
-     * @param userId 用户id
      * @param parentId 父评论
      * @param level 评论等级
      * @param context 评论内容
      * @param commentFloor 评论楼层
      * @return
      */
-    Comment post(long bbsId, long userId, long parentId, int level,
+    Comment post(long bbsId, String parentId, int level,
                                   String context, int commentFloor);
 
     /**

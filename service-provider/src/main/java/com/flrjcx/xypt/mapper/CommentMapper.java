@@ -25,8 +25,8 @@ public interface CommentMapper {
     List<Comment> findAll();
 
     /**
-     * 根据评论id查询评论
-     * @param bbsId
+     * 根据帖子id查询评论
+     * @param bbsId 帖子id
      * @return
      */
     @OpenPage
