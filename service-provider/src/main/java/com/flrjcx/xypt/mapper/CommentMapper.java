@@ -19,10 +19,31 @@ public interface CommentMapper {
     int insert(Comment comment);
 
     /**
+     * 回复评论
+     * @param comment
+     * @return
+     */
+    int reply(Comment comment);
+
+    /**
      * 查询全部评论
      * @return
      */
     List<Comment> findAll();
+
+    /**
+     * 根据用户id查询评论
+     * @param commentUserId
+     * @return
+     */
+    Comment findByCommentUserId(@Param("commentUserId") long commentUserId);
+
+    /**
+     * 根据评论id查询评论
+     * @param commentId
+     * @return
+     */
+    Comment findByCommentId(@Param("commentId") String commentId);
 
     /**
      * 根据帖子id查询评论

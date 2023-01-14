@@ -34,16 +34,43 @@ public class CommentServiceImpl implements CommentService {
     @Transactional(rollbackFor = Exception.class)
     public Comment post(long bbsId,String parentId,
                                          int level, String context, int commentFloor) {
-        Users user = UserThreadLocal.get();
         Comment comment = new Comment();
-        comment.setCommentId(UUID.randomUUID().toString());
+        comment.setCommentId(UUID.randomUUID().toString().replace("-", "").toLowerCase());
         comment.setCommentBbsId(bbsId);
-        comment.setCommentUserId(user.getUserId());
+        comment.setCommentUserId(UserThreadLocal.get().getUserId());
         comment.setLevel(level);
         comment.setCommentFloor(commentFloor);
         comment.setCommentContext(context);
         comment.setCommentParentId(parentId);
         commentMapper.insert(comment);
+
+        return comment;
+    }
+
+    @Override
+    public Comment reply(long bbsId, String parentId, int level, String context, int commentFloor) {
+        Comment comment = new Comment();
+
+        Long replyUserId = UserThreadLocal.get().getUserId();
+        //获取评论人头像和昵称
+        Comment replyUser = commentMapper.findByCommentUserId(replyUserId);
+        comment.setNickName(replyUser.getNickName());
+        comment.setNickPic(replyUser.getNickPic());
+        //获取指定评论人id
+        Comment commentUserId = commentMapper.findByCommentId(parentId);
+        //获取指定评论人头像和昵称
+        Comment commentUser = commentMapper.findByCommentUserId(commentUserId.getCommentUserId());
+        comment.setReplyNickName(commentUser.getNickName());
+        comment.setReplyNickPic(commentUser.getNickPic());
+
+        comment.setCommentId(UUID.randomUUID().toString().replace("-", "").toLowerCase());
+        comment.setCommentBbsId(bbsId);
+        comment.setCommentUserId(replyUserId);
+        comment.setLevel(level);
+        comment.setCommentFloor(commentFloor);
+        comment.setCommentContext(context);
+        comment.setCommentParentId(parentId);
+        commentMapper.reply(comment);
 
         return comment;
     }

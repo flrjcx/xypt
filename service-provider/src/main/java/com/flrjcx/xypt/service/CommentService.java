@@ -30,6 +30,9 @@ public interface CommentService {
     Comment post(long bbsId, String parentId, int level,
                                   String context, int commentFloor);
 
+    Comment reply(long bbsId, String parentId, int level,
+                  String context, int commentFloor);
+
     /**
      * 删除评论
      * @param bbsId

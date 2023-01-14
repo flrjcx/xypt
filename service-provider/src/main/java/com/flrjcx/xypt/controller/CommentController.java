@@ -53,8 +53,8 @@ public class CommentController {
                     comment.getLevel(), comment.getCommentContext(), comment.getCommentFloor());
             return ResponseData.buildResponse(data);
         } catch (Exception e) {
-            log.error("cancel comment error");
-            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_DELETE_WORKFLOW);
+            log.error("post comment error");
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR);
         }
     }
 
@@ -69,12 +69,12 @@ public class CommentController {
             if (comment.getCommentBbsId() <= 0 || comment.getCommentFloor() < 0 || comment.getLevel() <= 0) {
                 return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_UPDATE_WORKFLOW);
             }
-            Comment data = commentService.post(comment.getCommentBbsId(), comment.getCommentParentId(),
+            Comment data = commentService.reply(comment.getCommentBbsId(), comment.getCommentParentId(),
                     comment.getLevel(), comment.getCommentContext(), comment.getCommentFloor());
             return ResponseData.buildResponse(data);
         } catch (Exception e) {
-            log.error("cancel comment error");
-            return ResponseData.buildErrorResponse(ResultCodeEnum.ERROR_CODE_COMMENT_DELETE_WORKFLOW);
+            log.error("reply comment error");
+            return ResponseData.buildErrorResponse(ResultCodeEnum.CODE_SYSTEM_ERROR);
         }
     }
 

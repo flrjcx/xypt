@@ -26,23 +26,45 @@
         comment_parent_id
     </sql>
 
-    <insert id="insert" parameterType="com.flrjcx.xypt.common.model.param.comment.Comment" useGeneratedKeys="true"
-            keyProperty="commentId">
+    <insert id="insert" parameterType="com.flrjcx.xypt.common.model.param.comment.Comment">
         INSERT INTO comment
-        (comment_bbs_id,
+        (comment_id,
+        comment_bbs_id,
         comment_user_id,
         comment_context,
         comment_create_time,
         comment_level,
         comment_floor,
         comment_parent_id)
-        VALUES (#{commentBbsId},
+        VALUES (#{commentId},
+        #{commentBbsId},
         #{commentUserId},
         #{commentContext},
         now(),
         #{level},
         #{commentFloor},
         #{commentParentId})
+    </insert>
+
+    <insert id="reply" parameterType="com.flrjcx.xypt.common.model.param.comment.Comment">
+        INSERT INTO comment
+        (comment_id,
+         comment_bbs_id,
+         comment_user_id,
+         comment_context,
+         comment_create_time,
+         comment_level,
+         comment_floor,
+         comment_parent_id
+         )
+        VALUES (#{commentId},
+                #{commentBbsId},
+                #{commentUserId},
+                #{commentContext},
+                now(),
+                #{level},
+                #{commentFloor},
+                #{commentParentId})
     </insert>
 
     <delete id="delete">
@@ -86,6 +108,21 @@
         order by
         a.comment_create_time
         desc
+    </select>
+    <select id="findByCommentUserId" resultType="com.flrjcx.xypt.common.model.param.comment.Comment">
+        select
+        nick_name,
+        nick_pic
+        from users
+        where
+        user_id = #{commentUserId}
+    </select>
+    <select id="findByCommentId" resultType="com.flrjcx.xypt.common.model.param.comment.Comment">
+        select
+        comment_user_id
+        from comment
+        where
+        comment_id = #{commentId}
     </select>
 
 </mapper>
